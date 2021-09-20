@@ -8,11 +8,11 @@ var toDos = {
 
 var arr = [{
     name: "Wake up",
-    status: "true",
+    status: "complete",
 },
 {
     name: "Make Bed",
-    status: "false",
+    status: "incomplete",
 }
 ];
 
