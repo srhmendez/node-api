@@ -1,5 +1,5 @@
 
-document.getElementbyId().addEventListener("click", displayDate);
+document.getElementbyId("returnbtn").addEventListener("click", displayDate);
 
 var toDos = {
     name: '',
@@ -9,12 +9,10 @@ var toDos = {
 var arr = [
     {
     name: "Wake up",
-    // status: true,
     complete: true,
 },
 {
     name: "Make Bed",
-    // status: "incomplete",
     complete: false,
 }
 ];
