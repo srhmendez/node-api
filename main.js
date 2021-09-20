@@ -2,8 +2,8 @@
 document.getElementbyId("returnbtn").addEventListener("click", displayDate);
 
 var toDos = {
-    name: '',
-    status: '',
+    // name: '',
+    // status: '',
 };
 
 var arr = [
