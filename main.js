@@ -9,11 +9,12 @@ var toDos = {
 var arr = [
     {
     name: "Wake up",
-    status: "complete", //should we add a boolean value to these?
+    status: true, //should we add a boolean value to these?
 },
 {
     name: "Make Bed",
     status: "incomplete",
+    complete: false //like this? or something else
 }
 ];
 
