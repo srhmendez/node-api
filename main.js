@@ -8,12 +8,10 @@ var toDos = {
 
 var arr = [
     {
-    id: 1,
     name: "Wake up",
-    status: "complete",
+    status: "complete", //should we add a boolean value to these?
 },
 {
-    id: 2,
     name: "Make Bed",
     status: "incomplete",
 }
@@ -21,6 +19,6 @@ var arr = [
 
 
 
-let btn = document.createElement("button");
+/* let btn = document.createElement("button");
 button.innerHTML = "Add";
-document.body.appendChild(btn);
+document.body.appendChild(btn); */
