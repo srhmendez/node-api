@@ -22,11 +22,13 @@
                             <div class="card-body">
                                 <h4 class="card-title">Todo list</h4>
                                 <div class="add-items d-flex"> <input type="text" class="form-control todo-list-input"
-                                        placeholder="What do you need to do today?"> <button id="returnbtn"
+                                        placeholder="What do you need to do today?"
+                                        id="new-task-input"> <button id="returnbtn"
                                         class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button>
                                 </div>
                                 <div class="list-wrapper">
-                                    <ul class="d-flex flex-column-reverse todo-list">
+                                    <ul class="d-flex flex-column-reverse todo-list"
+                                    id="incomplete-ul">
                                         <li>
                                             <div class="form-check"> <label class="form-check-label"> <input
                                                         class="checkbox" type="checkbox"> For what reason would it be
