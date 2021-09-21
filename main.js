@@ -1,40 +1,11 @@
+let todoTasks = [
+    {name: 'wake up', status: true},
+    {name: 'go shopping', status: false}
+]
 
-// let arr = [
-//     {
-//         id: 1,
-//         task: 'Wake up',
-//         status: true
-//     },
-//     {
-//         id: 2,
-//         task: 'Make bed',
-//         status: false
-//     },
-
-// ]
-
-// let arr = [
-//     {id: 1, name: "go shopping"},
-//     {id: 2, name: "make bed"}
-// ]
-
-
-
-let Task1 = {
-    name: 'Wake Up',
-    // complete: true
-  };
-  let Task2 = {
-    name: 'Make Bed',
-    // complete: false
-  };
-  let Task3 = {
-    name: 'Make Breakfast',
-    // complete: true
-  };
 
 let demo = document.getElementById("demo");
-let tasks = [Task1];
+let tasks = [todoTasks[0]];
 tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
 console.log(tasks);
 
