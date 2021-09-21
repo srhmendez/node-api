@@ -1,6 +1,25 @@
+
+// let arr = [
+//     {
+//         id: 1,
+//         task: 'Wake up',
+//         status: true
+//     },
+//     {
+//         id: 2,
+//         task: 'Make bed',
+//         status: false
+//     },
+
+// ]
+
+// let arr = [
+//     {id: 1, name: "go shopping"},
+//     {id: 2, name: "make bed"}
+// ]
 let todoTasks = [
-    {name: 'wake up', status: true},
-    {name: 'go shopping', status: false}
+    {name: 'wake up'},
+    {name: 'go shopping'}
 ]
 
 
@@ -9,6 +28,20 @@ let tasks = [todoTasks[0]];
 tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
 console.log(tasks);
 
+
+// ATTEMPT AT ADDING ARR ITEMS
+// let arr = [
+// {id: 1, name: 'go to work'},
+// {id: 2, name: 'go to school'},
+// {id: 3, name: 'go to dentist'},
+// ];
+
+// let html = 
+// '<ul>' + arr.map(function (arr) {
+//     return '<li>' + arr.name + '<li>';
+// }).join('') + '</ul>';
+// console.log(html);
+// document.querySelector('#demo').innerHTML = html;
 
 
 
