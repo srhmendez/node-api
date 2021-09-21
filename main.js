@@ -23,25 +23,44 @@ let todoTasks = [
 ]
 
 
-let demo = document.getElementById("demo");
-let tasks = [todoTasks[0]];
-tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
-console.log(tasks);
+// let demo = document.getElementById("demo");
+// let tasks = [todoTasks[0]];
+// tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
+// console.log(tasks);
 
 
 // ATTEMPT AT ADDING ARR ITEMS
-// let arr = [
-// {id: 1, name: 'go to work'},
-// {id: 2, name: 'go to school'},
-// {id: 3, name: 'go to dentist'},
-// ];
+let arr = [
+{id: 1, name: 'go to work'},
+{id: 2, name: 'go to school'},
+{id: 3, name: 'go to dentist'},
+];
 
 // let html = 
-// '<ul>' + arr.map(function (arr) {
+// '<ul >' + arr.map(function (arr) {
 //     return '<li>' + arr.name + '<li>';
 // }).join('') + '</ul>';
 // console.log(html);
 // document.querySelector('#demo').innerHTML = html;
+
+let html = 
+'<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">' + arr.map(function (arr) {
+    return '<li>' + 
+    '<div class="form-check">' + 
+    '<label class="form-check-label">' + 
+    '<input class="checkbox" type="checkbox">' + 
+    arr.name +  
+    '<p class="input-helper" id="demo">' +
+    '</p>' +
+    '</label>' + 
+    '</div>' + 
+    '<i class="remove mdi mdi-close-circle-outline">' + 
+    '</i>'
+    '<li>';
+}).join('') + 
+'</ul>';
+console.log(html);
+document.querySelector('#demo').innerHTML = html;
 
 
 
