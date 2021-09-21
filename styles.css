@@ -7,6 +7,7 @@ body {
   background: #fff;
   border: 1px solid black;
 }
+p {display: inline}
 
 .flex {
   -webkit-box-flex: 1;
@@ -215,11 +216,6 @@ body {
   text-align: center
 }
 
-.list-wrapper .completed {
-  text-decoration: line-through;
-  text-decoration-color: #3da5f4
-}
-
 .list-wrapper ul li .form-check {
   max-width: 90%;
   margin-top: .25rem;
@@ -361,7 +357,8 @@ input[type="checkbox"] {
 }
 
 .form-check .form-check-label input[type="checkbox"]:checked+.input-helper:before {
-  background: #405189;
+  background: green;
+  color: green;
   border-width: 0
 }
 
