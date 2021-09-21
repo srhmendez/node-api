@@ -1,21 +1,47 @@
 
-// document.getElementbyId("returnbtn").addEventListener("click", displayDate);
-
-// var toDos = {
-//     // name: '',
-//     // status: '',
-// };
-
-// var arr = [
+// let arr = [
 //     {
-//     name: "Wake up",
-//     complete: true,
-// },
-// {
-//     name: "Make Bed",
-//     complete: false,
-// }
-// ];
+//         id: 1,
+//         task: 'Wake up',
+//         status: true
+//     },
+//     {
+//         id: 2,
+//         task: 'Make bed',
+//         status: false
+//     },
+
+// ]
+
+// let arr = [
+//     {id: 1, name: "go shopping"},
+//     {id: 2, name: "make bed"}
+// ]
+
+
+
+let Task1 = {
+    name: 'Wake Up',
+    // complete: true
+  };
+  let Task2 = {
+    name: 'Make Bed',
+    // complete: false
+  };
+  let Task3 = {
+    name: 'Make Breakfast',
+    // complete: true
+  };
+
+let demo = document.getElementById("demo");
+let tasks = [Task1];
+tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
+console.log(tasks);
+
+
+
+
+
 
 let taskInput = document.getElementById('new-task-input');
 
