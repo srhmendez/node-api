@@ -47,6 +47,12 @@ form.addEventListener("click", (event) => {
   }
 });
 
+//event listener for remove-items
+
+function removeItem() {
+    event.currentTarget.parentElement.remove();
+}
+
 
 
 //html for the original todo tasks
@@ -64,7 +70,7 @@ let html =
         "</p>" +
         "</label>" +
         "</div>" +
-        '<i class="remove mdi mdi-close-circle-outline">' +
+        '<i onclick="removeItem()" class="remove mdi mdi-close-circle-outline">' +
         "</i>"
       );
       ("<li>");
@@ -88,7 +94,7 @@ function createNewTask(todo) {
   </p>
   </label>
   </div>
-  <i id="remove-btn" onclick="return this.parentNode.remove();" class="remove mdi mdi-close-circle-outline">
+  <i onclick="removeItem()" class="remove mdi mdi-close-circle-outline">
   </i>
   </li>
 </ul>`;
