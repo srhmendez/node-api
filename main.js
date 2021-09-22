@@ -117,25 +117,23 @@ function toggleComplete(key) {
 //html for the original todo tasks
 let html =
   '<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">' +
-  todoArray
-    .map(function (task) {
+  todoArray.map(function (task) {
       return (
-        "<li>" +
+        '<li>' +
         '<div class="form-check">' +
         '<label class="form-check-label">' +
         '<input onclick="toggleComplete()" class="checkbox" type="checkbox">' +
         task.name +
         '<p class="input-helper" id="incomplete-list">' +
-        "</p>" +
-        "</label>" +
-        "</div>" +
+        '</p>' +
+        '</label>' +
+        '</div>' +
         '<i onclick="removeItem()" class="remove mdi mdi-close-circle-outline">' +
-        "</i>"
+        '</i>' +
+        '<li>'
       );
-      ("<li>");
-    })
-    .join("") +
-  "</ul>";
+    }).join("") +
+  '</ul>';
 console.log(html);
 document.querySelector("#incomplete-list").innerHTML = html;
 
