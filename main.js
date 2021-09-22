@@ -31,7 +31,7 @@ function addTask(name) {
 }
 
 //event listener for add-items div
-const form = document.querySelector(".add-items");
+const form = document.querySelector("#add-btn");
 form.addEventListener("click", (event) => {
   event.preventDefault();
 
@@ -42,8 +42,8 @@ form.addEventListener("click", (event) => {
     addTask(text);
     input.value = "";
     input.focus();
-  } else {
-      promptError();
+  } else if (text == false) {
+      promptError(text);
   }
 });
 
@@ -95,8 +95,9 @@ function createNewTask(todo) {
   incompleteList.appendChild(listItem);
 }
 
-let promptError = () => {
-    window.alert(
-        'Please enter a task to add a To Do Item.'
-    )
+let promptError = (inputToDoString) => {
+
+    if (inputToDoString === ''){
+        window.alert('Please enter a task to add a To Do Item.');
+    }
 }
