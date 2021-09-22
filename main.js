@@ -44,19 +44,14 @@ let todoArray = [
 //adds a new task object to the array
 function addTask(name) {
   console.log("add task");
+  let id = Date.now()
 
   const todo = {
-    id: Date.now(),
+    id,
     checked: false,
     name,
-    toggleBoolean: function() {
-        console.log('inside boolean function-->', this.checked)
-        if (this.checked == false){
-            this.checked = true;
-        } else if (this.checked == true){
-            this.checked = false;
-        }
-    }
+    toggleBoolean: toggleDone
+    
   };
   todoArray.push(todo);
   createNewTask(todo);
@@ -89,7 +84,12 @@ function removeItem() {
 
 function toggleDone(key) {
 
-}
+
+        const index = todoArray.findIndex(item => item.id === Number(key));
+        todoArray[index].checked = !todoArray[index].checked;
+        createNewTask(todoArray[index]);
+    }
+
 //event listener for toggling checkbox (completed to-do)
 
 function toggleComplete(key) {
@@ -158,7 +158,7 @@ list2.addEventListener('click', event => {
     console.log('clicked complete');
     console.log(event.target);
     if(event.target.classList.contains('js-tick')) {
-        console.log('-------- tick', event.target.parentElement);
+        console.log('-------- tick', event.target);
 
         const itemKey = event.target.id;
         console.log('itemLey--->', itemKey);
@@ -182,7 +182,7 @@ function createNewTask(todo) {
   <div class="form-check">
   <label class="form-check-label">
 
-  <input id="${todo.id}"  onclick="toggleComplete()" class="js-tick checkbox" type="checkbox"/>
+  <input id="${todo.id}"  class="js-tick checkbox" type="checkbox"/>
   ${todo.name}
   <p class="input-helper" id="incomplete-list">
   </p>
