@@ -49,6 +49,14 @@ function addTask(name) {
     id: Date.now(),
     checked: false,
     name,
+    toggleBoolean: function() {
+        console.log('inside boolean function-->', this.checked)
+        if (this.checked == false){
+            this.checked = true;
+        } else if (this.checked == true){
+            this.checked = false;
+        }
+    }
   };
   todoArray.push(todo);
   createNewTask(todo);
@@ -80,11 +88,7 @@ function removeItem() {
 
 
 function toggleDone(key) {
-    console.log('key--->', key);
-    const index = todoArray.findIndex(item => item.id === Number(key));
-    console.log('index------ toggledone', index);
-    todoArray[index].checked = !todoArray[index].checked;
-    createNewTask(todoArray[index]);
+
 }
 //event listener for toggling checkbox (completed to-do)
 
@@ -99,6 +103,11 @@ function toggleComplete(key) {
     let completedSection = document.getElementById('complete-ul');
     completedSection.appendChild(toggledToDo);
 
+    console.log('key--->', key);
+    const index = todoArray.findIndex(item => item.id === Number(key));
+    console.log('index------ toggledone', index);
+    todoArray[index].checked = !todoArray[index].checked;
+    createNewTask(todoArray[index]);
 
 };
 
