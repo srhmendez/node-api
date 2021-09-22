@@ -6,11 +6,11 @@ let todoArray = [
   },
   {
     id: 2,
-    name: "go to school"
+    name: "go to school",
   },
   {
     id: 3,
-    name: "go to dentist"
+    name: "go to dentist",
   },
 ];
 
@@ -36,14 +36,11 @@ function addTask(name, task) {
   createNewTask(todo);
 }
 
-//event listener for add-items div
-const form = document.querySelector("#add-btn");
-form.addEventListener("click", (event) => {
+//turns input into text to be used to create a todo task
+function submitInput(event) {
   event.preventDefault();
-
   const input = document.querySelector(".todo-list-input");
   const text = input.value.trim();
-  console.log("text--->", text);
   if (text !== "") {
     addTask(text, {});
     input.value = "";
@@ -51,6 +48,22 @@ form.addEventListener("click", (event) => {
   } else if (text == false) {
     promptError(text);
   }
+}
+
+// event listener for hitting 'Enter' instead of clicking button
+document
+  .getElementById("new-task-input")
+  .addEventListener("keyup", function (event) {
+    if (event.code === "Enter") {
+      submitInput(event);
+    }
+  });
+
+//event listener for adding task by clicking add button
+document
+.querySelector("#add-btn")
+.addEventListener("click", (event) => {
+  submitInput(event);
 });
 
 //event listener for remove-items
