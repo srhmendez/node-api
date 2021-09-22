@@ -55,7 +55,9 @@ p {display: inline}
   background-color: #fff;
   background-clip: border-box;
   border: 1px solid #d2d2dc;
-  border-radius: 0
+  border-radius: 0;
+  margin: 2rem;
+  padding: 2rem;
 }
 
 .pr-3,
@@ -64,7 +66,7 @@ p {display: inline}
 }
 
 .card .card-body {
-  padding: 1.25rem 1.75rem
+  padding: 1.25rem 1.75rem;
 }
 
 .card-body {
