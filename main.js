@@ -1,107 +1,94 @@
-
-// let arr = [
-//     {
-//         id: 1,
-//         task: 'Wake up',
-//         status: true
-//     },
-//     {
-//         id: 2,
-//         task: 'Make bed',
-//         status: false
-//     },
-
-// ]
-
-// let arr = [
-//     {id: 1, name: "go shopping"},
-//     {id: 2, name: "make bed"}
-// ]
-let todoTasks = [
-    {name: 'wake up'},
-    {name: 'go shopping'}
-]
-
-
-// let demo = document.getElementById("demo");
-// let tasks = [todoTasks[0]];
-// tasks.forEach(task => demo.innerHTML += Object.values(task).join(" "));
-// console.log(tasks);
-
-
-// ATTEMPT AT ADDING ARR ITEMS
-let arr = [
-{id: 1, name: 'go to work'},
-{id: 2, name: 'go to school'},
-{id: 3, name: 'go to dentist'},
+// Array of Todo Items
+let todoArray = [
+  {
+    id: 1,
+    checked: false,
+    name: "go to work",
+  },
+  {
+    id: 2,
+    checked: true,
+    name: "go to school",
+  },
+  {
+    id: 3,
+    checked: false,
+    name: "go to dentist",
+  },
 ];
 
-// let html = 
-// '<ul >' + arr.map(function (arr) {
-//     return '<li>' + arr.name + '<li>';
-// }).join('') + '</ul>';
-// console.log(html);
-// document.querySelector('#demo').innerHTML = html;
+//adds a new task object to the array
+function addTask(name) {
+  console.log("add task");
 
-let html = 
-'<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">' + arr.map(function (arr) {
-    return '<li>' + 
-    '<div class="form-check">' + 
-    '<label class="form-check-label">' + 
-    '<input class="checkbox" type="checkbox">' + 
-    arr.name +  
-    '<p class="input-helper" id="demo">' +
-    '</p>' +
-    '</label>' + 
-    '</div>' + 
-    '<i class="remove mdi mdi-close-circle-outline">' + 
-    '</i>'
-    '<li>';
-}).join('') + 
-'</ul>';
+  const todo = {
+    id: Date.now(),
+    checked: false,
+    name,
+  };
+  todoArray.push(todo);
+  createNewTask(todo);
+}
+
+//event listener for add-items div
+const form = document.querySelector(".add-items");
+form.addEventListener("click", (event) => {
+  event.preventDefault();
+
+  const input = document.querySelector(".todo-list-input");
+  const text = input.value.trim();
+  console.log("text--->", text);
+  if (text !== "") {
+    addTask(text);
+    input.value = "";
+    input.focus();
+  }
+});
+
+
+//html for the original todo tasks
+let html =
+  '<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">' +
+  todoArray
+    .map(function (task) {
+      return (
+        "<li>" +
+        '<div class="form-check">' +
+        '<label class="form-check-label">' +
+        '<input class="checkbox" type="checkbox">' +
+        task.name +
+        '<p class="input-helper" id="demo">' +
+        "</p>" +
+        "</label>" +
+        "</div>" +
+        '<i class="remove mdi mdi-close-circle-outline">' +
+        "</i>"
+      );
+      ("<li>");
+    })
+    .join("") +
+  "</ul>";
 console.log(html);
-document.querySelector('#demo').innerHTML = html;
+document.querySelector("#demo").innerHTML = html;
 
 
+function createNewTask(todo) {
+  const incompleteList = document.querySelector(".list-wrapper");
+  let listItem = document.createElement("ul");
+  listItem.innerHTML = `<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">
+  <li class="list-wrapper">
+  <div class="form-check">
+  <label class="form-check-label">
+  <input class="checkbox" type="checkbox"/>
+  ${todo.name}
+  <p class="input-helper" id="demo">
+  </p>
+  </label>
+  </div>
+  <i class="remove mdi mdi-close-circle-outline">
+  </i>
+  </li>
+</ul>`;
 
-
-
-let taskInput = document.getElementById('new-task-input');
-
-let addBtn = document.getElementById('returnbtn');
-
-let incompleteUl = document.getElementById('incomplete-ul');
-let listWrapper = document.getElementsByClassName('list-wrapper')
-
-let createNewTask = (taskString) => {
-
-    let listItem = document.createElement("li");
-
-    var label = document.createElement("label");
-    label.innerText = taskString;
-
-    let checkBox = document.createElement("input");
-
-    checkBox.type = "checkbox";
-
-    listItem.appendChild(checkBox)    
-    listItem.appendChild(label)
-
-	return listItem;
+  incompleteList.appendChild(listItem);
 }
-
-let addTask = () => {
-    console.log('add task')
-
-    let listItem=createNewTask(taskInput.value);
-
-    incompleteUl.appendChild(listItem)
-
-    console.log('taskInput--->', taskInput.value)
-    return listItem;
-}
-
-addBtn.addEventListener("click",addTask);
-/* let btn = document.createElement("button");
-button.innerHTML = "Add";
-document.body.appendChild(btn); */
