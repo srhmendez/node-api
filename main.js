@@ -1,16 +1,22 @@
 // Array of Todo Items
 let todoArray = [
   {
-    // id: 1,
+    id: 1,
     name: "go to work",
+    status: '',
+    complete: true
   },
   {
-    // id: 2,
+    id: 2,
     name: "go to school",
+    status: '',
+    complete: false
   },
   {
-    // id: 3,
-    name: "go to dentist",
+    id: 3,
+    name: "go to the dentist",
+    status: '',
+    complete: false
   },
 ];
 
@@ -25,16 +31,17 @@ window.addEventListener("load", () => {
 
 //adds a new task object to the array
 function addTask(task) {
-  console.log("add task---");
-  let randomNum = Math.floor(((Math.random()) * 20));
-
+  console.log('task--->', task);
   const todo = {
-    id : randomNum,
-    checked: false,
+    id: task.id ? task.id : todoArray.length,
+    complete: false,
     name: task.name || task,
   };
-  console.log(todo.id, todo.name)
+  console.log('todo----->', todo);
+  //pushes existing to dos to Array with checked values
   todoArray.push(todo);
+
+  //creating a new task to put into the HTML DOM
   createNewTask(todo);
 }
 
@@ -79,17 +86,19 @@ function removeItem() {
 function toggleDone(key) {
   const index = todoArray.findIndex((item) => item.id === Number(key));
   todoArray[index].checked = !todoArray[index].checked;
-  createNewTask(todoArray[index]);
+
+    //create a render lists function that searched for the to do item that contains the key referenced above.
+
 }
 
+
+//Creating Task to add to the HTML DOM
 function createNewTask(todo) {
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
   const item = document.querySelector(`[data-key='${todo.id}']`);
+  console.log('item--', item)
   let listItem = document.createElement("li");
-
-
-
   listItem.setAttribute("data-key", todo.id);
   listItem.innerHTML = `
   <div class="form-check">
@@ -104,28 +113,17 @@ function createNewTask(todo) {
   </i>
 `;
 
-  if (item) {
-    if (todo.checked) {
-      console.log("todo is checked true");
-      completeList.append(listItem);
-    //   listItem.setAttribute('checked')
-      item.remove();
-    }
-    if (!todo.checked) {
-      console.log("not checked");
-
-
-      incompleteList.append(listItem);
-
-      item.remove();
-    }
-  } else {
-    incompleteList.append(listItem);
-  }
+//adds newly created task to incomplete ToDo List Card
+incompleteList.append(listItem);
 }
 
+
+//Error Checking for empty string
 let promptError = (inputToDoString) => {
   if (inputToDoString === "") {
     window.alert("A To-Do item cannot be blank. Please try again.");
   }
 };
+
+
+
