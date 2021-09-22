@@ -75,31 +75,63 @@ let listWrapper = document.getElementsByClassName('list-wrapper')
 
 let createNewTask = (taskString) => {
 
-    let listItem = document.createElement("li");
+    let inputParagraphString = document.createElement('p');
+    inputParagraphString.innerText = taskString;
+
+    let listElement = document.createElement("li");
+
+    let divContainer = document.createElement("div")
+    divContainer.classList.add('form-check');
 
     var label = document.createElement("label");
-    label.innerText = taskString;
+    label.classList.add('form-check-label');
+    
+
+    let deleteIcon = document.createElement('i');
+    let classesToAdd = [ 'remove', 'mdi', 'mdi-close-circle-outline' ];
+    deleteIcon.classList.add(...classesToAdd); 
+    
 
     let checkBox = document.createElement("input");
-
+    checkBox.classList.add("checkbox");
     checkBox.type = "checkbox";
+    
 
-    listItem.appendChild(checkBox)    
-    listItem.appendChild(label)
+    let paragraphElement = document.createElement('p')
+    paragraphElement.classList.add('input-helper');
 
-	return listItem;
+    listElement.appendChild(divContainer)
+    listElement.appendChild(deleteIcon);   
+    divContainer.appendChild(label)
+    label.appendChild(checkBox)
+    label.appendChild(inputParagraphString);
+    
+
+	return listElement;
 }
 
 let addTask = () => {
-    console.log('add task')
+    //console.log('add task')
 
-    let listItem=createNewTask(taskInput.value);
+    let listItem = createNewTask(taskInput.value);
 
-    incompleteUl.appendChild(listItem)
+    checkIfEmptyString(listItem);
 
-    console.log('taskInput--->', taskInput.value)
-    return listItem;
+    //console.log('taskInput--->', taskInput.value)
+
 }
+
+let checkIfEmptyString = (taskInputValue) => {
+    let enteredTask = taskInputValue.innerText;
+    if (enteredTask === '') {
+        console.log('checkingString -->', 'there is an empty string');
+        return
+    } else {
+        console.log('checkingString -->', 'there is a task with value of', taskInputValue.innerText);
+        incompleteUl.appendChild(taskInputValue);
+        return taskInputValue;
+    }
+};
 
 addBtn.addEventListener("click",addTask);
 /* let btn = document.createElement("button");
