@@ -85,6 +85,8 @@ function createNewTask(todo) {
   const item = document.querySelector(`[data-key='${todo.id}']`);
   let listItem = document.createElement("li");
 
+
+
   listItem.setAttribute("data-key", todo.id);
   listItem.innerHTML = `
   <div class="form-check">
@@ -103,11 +105,15 @@ function createNewTask(todo) {
     if (todo.checked) {
       console.log("todo is checked true");
       completeList.append(listItem);
+    //   listItem.setAttribute('checked')
       item.remove();
     }
     if (!todo.checked) {
       console.log("not checked");
+
+
       incompleteList.append(listItem);
+
       item.remove();
     }
   } else {
