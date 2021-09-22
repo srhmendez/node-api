@@ -48,6 +48,7 @@ form.addEventListener("click", (event) => {
 });
 
 
+
 //html for the original todo tasks
 let html =
   '<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">' +
@@ -87,7 +88,7 @@ function createNewTask(todo) {
   </p>
   </label>
   </div>
-  <i class="remove mdi mdi-close-circle-outline">
+  <i id="remove-btn" onclick="return this.parentNode.remove();" class="remove mdi mdi-close-circle-outline">
   </i>
   </li>
 </ul>`;
@@ -98,6 +99,6 @@ function createNewTask(todo) {
 let promptError = (inputToDoString) => {
 
     if (inputToDoString === ''){
-        window.alert('Please enter a task to add a To Do Item.');
+        window.alert('A To-Do item cannot be blank. Please try again.');
     }
 }
