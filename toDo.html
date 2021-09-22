@@ -5,28 +5,30 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SKEMA: Todo App</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+      crossorigin="anonymous"
+    />
 
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
       rel="stylesheet"
     />
-
-
   </head>
 
   <body>
     <main>
       <div class="page-content page-container" id="page-content">
         <div class="padding">
-          
           <div class="card-body">
-            <h4 class="card-title">Todo list</h4>
+            <h4 class="card-title">To Do List</h4>
             <div class="add-items d-flex">
               <input
                 type="text"
-                class="todo-list-input form-control "
+                class="todo-list-input form-control"
                 placeholder="What do you need to do today?"
                 id="new-task-input"
               />
@@ -38,11 +40,26 @@
                 Add
               </button>
             </div>
-            <div class="list-wrapper" id="demo">
-                <ul 
-                class="d-flex flex-column-reverse todo-list" 
-                id="incomplete-ul">
-                </ul>
+
+            <div class="card" style=>
+                <h5 class="card-title">To Do</h5>
+              <div class="list-wrapper" id="demo">
+                <ul
+                  class="d-flex flex-column-reverse todo-list"
+                  id="incomplete-ul"
+                ></ul>
+              </div>
+            </div>
+
+
+            <div class="card" >
+                <h5 class="card-title">Completed</h5>
+              <div class="list-wrapper" id="demo">
+                <ul
+                  class="d-flex flex-column-reverse todo-list"
+                  id="complete-ul"
+                ></ul>
+              </div>
             </div>
           </div>
         </div>
@@ -51,5 +68,9 @@
 
     <script type="text/javascript" src="main.js"></script>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+    crossorigin="anonymous"
+  ></script>
 </html>
