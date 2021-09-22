@@ -182,7 +182,7 @@ function createNewTask(todo) {
   <div class="form-check">
   <label class="form-check-label">
 
-  <input id="${todo.id}"  onclick="toggleComplete" class="js-tick checkbox" type="checkbox"/>
+  <input id="${todo.id}"  onclick="toggleComplete()" class="js-tick checkbox" type="checkbox"/>
   ${todo.name}
   <p class="input-helper" id="incomplete-list">
   </p>
