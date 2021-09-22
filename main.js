@@ -82,7 +82,7 @@ function removeItem() {
 function toggleComplete() {
 
     //selects the to do 
-    let toggledToDo = event.currentTarget.parentElement;
+    let toggledToDo = event.currentTarget.parentElement.parentElement.parentElement;
 
 
 
