@@ -18,7 +18,7 @@ let todoArray = [
 window.addEventListener("load", () => {
    
   todoArray.map((task) => {
-    addEventListener("load", addTask(task));
+    addTask(task);
   });
 
 });
