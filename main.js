@@ -7,7 +7,7 @@ let todoArray = [
   },
   {
     id: 2,
-    checked: true,
+    checked: false,
     name: "go to school",
   },
   {
@@ -53,9 +53,18 @@ function removeItem() {
     event.currentTarget.parentElement.remove();
 };
 
+
+
+function toggleDone(key) {
+    console.log('key--->', key);
+    const index = todoArray.findIndex(item => item.id === Number(key));
+    console.log('index------ toggledone', index);
+    todoArray[index].checked = !todoArray[index].checked;
+    createNewTask(todoArray[index]);
+}
 //event listener for toggling checkbox (completed to-do)
 
-function toggleComplete() {
+function toggleComplete(key) {
 
     //selects the to do 
     let toggledToDo = event.currentTarget.parentElement;
@@ -82,7 +91,7 @@ let html =
         '<label class="form-check-label">' +
         '<input onclick="toggleComplete()" class="checkbox" type="checkbox">' +
         task.name +
-        '<p class="input-helper" id="demo">' +
+        '<p class="input-helper" id="incomplete-list">' +
         "</p>" +
         "</label>" +
         "</div>" +
@@ -94,28 +103,78 @@ let html =
     .join("") +
   "</ul>";
 console.log(html);
-document.querySelector("#demo").innerHTML = html;
+document.querySelector("#incomplete-list").innerHTML = html;
 
+
+
+const list = document.querySelector('#incomplete-list');
+list.addEventListener('click', event => {
+    console.log('clicked incomplete');
+    console.log(event.target);
+    if(event.target.classList.contains('js-tick')) {
+        console.log('-------- tick', event.target);
+                const itemKey = event.target.id;
+        console.log('itemLey--->', itemKey);
+        toggleDone(itemKey)
+    }
+})
+
+const list2 = document.querySelector('#complete-list');
+list2.addEventListener('click', event => {
+    console.log('clicked complete');
+    console.log(event.target);
+    if(event.target.classList.contains('js-tick')) {
+        console.log('-------- tick', event.target.parentElement);
+
+        const itemKey = event.target.id;
+        console.log('itemLey--->', itemKey);
+        toggleDone(itemKey)
+    }
+})
 
 function createNewTask(todo) {
-  const incompleteList = document.querySelector(".list-wrapper");
+
+    const completedList = document.querySelector('#complete-list');
+  const incompleteList = document.querySelector("#incomplete-list");
+    const item = document.querySelector(`[data-key='${todo.id}']`);
+
+    const isChecked = todo.checked ? 'done' : '';
   let listItem = document.createElement("ul");
-  listItem.innerHTML = `<ul class="d-flex flex-column-reverse todo-list" id="incomplete-ul">
+  
+    listItem.setAttribute('class', `list-group-item ${isChecked}`);
+    listItem.setAttribute('data-key', todo.id);
+  listItem.innerHTML = `
   <li class="list-wrapper">
   <div class="form-check">
   <label class="form-check-label">
-  <input onclick="toggleComplete()" class="checkbox" type="checkbox"/>
+
+  <input id="${todo.id}"  class="js-tick checkbox" type="checkbox"/>
   ${todo.name}
-  <p class="input-helper" id="demo">
+  <p class="input-helper" id="incomplete-list">
   </p>
   </label>
   </div>
   <i onclick="removeItem()" class="remove mdi mdi-close-circle-outline">
   </i>
   </li>
-</ul>`;
+`;
 
-  incompleteList.appendChild(listItem);
+
+if (item) {
+    // list.replaceChild(node, item)
+    if(todo.checked) {
+        console.log('todo is checked true');
+        completedList.append(listItem);
+        item.remove();
+    }
+    if(!todo.checked) {
+        console.log('not checked');
+        incompleteList.append(listItem);
+        item.remove();
+    }
+} else {
+    incompleteList.append(listItem)
+}
 }
 
 let promptError = (inputToDoString) => {
