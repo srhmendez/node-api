@@ -4,16 +4,40 @@ let todoArray = [
     id: 1,
     checked: false,
     name: "go to work",
+    toggleBoolean: function() {
+        console.log('inside boolean function-->', this.checked)
+        if (this.checked == false){
+            this.checked = true;
+        } else if (this.checked == true){
+            this.checked = false;
+        }
+    }
   },
   {
     id: 2,
     checked: true,
     name: "go to school",
+    toggleBoolean: function() {
+        console.log('inside boolean function-->', this.checked)
+        if (this.checked == false){
+            this.checked = true;
+        } else if (this.checked == true){
+            this.checked = false;
+        }
+    }
   },
   {
     id: 3,
     checked: false,
     name: "go to dentist",
+    toggleBoolean: function() {
+        console.log('inside boolean function-->', this.checked)
+        if (this.checked == false){
+            this.checked = true;
+        } else if (this.checked == true){
+            this.checked = false;
+        }
+    }
   },
 ];
 
@@ -60,15 +84,16 @@ function toggleComplete() {
     //selects the to do 
     let toggledToDo = event.currentTarget.parentElement;
 
-    //possibly thinking of searching the object via key value's matching the inner text?? I don't know if there is a better way to do this
-    // let toDoValue = toggledToDo.innerText;
-    // console.log('todo value -->', toDoValue)
 
 
     //moving code to completed section
     let completedSection = document.getElementById('complete-ul');
     completedSection.appendChild(toggledToDo);
+
+
 };
+
+
 
 
 //html for the original todo tasks
