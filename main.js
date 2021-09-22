@@ -51,8 +51,24 @@ form.addEventListener("click", (event) => {
 
 function removeItem() {
     event.currentTarget.parentElement.remove();
-}
+};
 
+//event listener for toggling checkbox (completed to-do)
+
+function toggleComplete() {
+
+    //selects the to do 
+    let toggledToDo = event.currentTarget.parentElement;
+
+    //possibly thinking of searching the object via key value's matching the inner text?? I don't know if there is a better way to do this
+    // let toDoValue = toggledToDo.innerText;
+    // console.log('todo value -->', toDoValue)
+
+
+    //moving code to completed section
+    let completedSection = document.getElementById('complete-ul');
+    completedSection.appendChild(toggledToDo);
+};
 
 
 //html for the original todo tasks
@@ -64,7 +80,7 @@ let html =
         "<li>" +
         '<div class="form-check">' +
         '<label class="form-check-label">' +
-        '<input class="checkbox" type="checkbox">' +
+        '<input onclick="toggleComplete()" class="checkbox" type="checkbox">' +
         task.name +
         '<p class="input-helper" id="demo">' +
         "</p>" +
@@ -88,7 +104,7 @@ function createNewTask(todo) {
   <li class="list-wrapper">
   <div class="form-check">
   <label class="form-check-label">
-  <input class="checkbox" type="checkbox"/>
+  <input onclick="toggleComplete()" class="checkbox" type="checkbox"/>
   ${todo.name}
   <p class="input-helper" id="demo">
   </p>
