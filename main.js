@@ -18,11 +18,9 @@ let todoArray = [
 window.addEventListener("load", () => {
    
   todoArray.map((task) => {
-    todoArray['id'] = Date.now()
-    let name = todoArray.name; 
-    let id = todoArray.id;
-    return addEventListener("load", addTask(task));
+    addEventListener("load", addTask(task));
   });
+
 });
 
 //adds a new task object to the array
