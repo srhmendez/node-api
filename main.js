@@ -1,48 +1,52 @@
 // Array of Todo Items
 let todoArray = [
   {
-    id: 1,
+    // id: 1,
     name: "go to work",
   },
   {
-    id: 2,
+    // id: 2,
     name: "go to school",
   },
   {
-    id: 3,
+    // id: 3,
     name: "go to dentist",
   },
 ];
 
 //adds array items on page load
 window.addEventListener("load", () => {
+   
   todoArray.map((task) => {
-    let name = task.name;
-    return addEventListener("load", addTask(name, task));
+    todoArray['id'] = Date.now()
+    let name = todoArray.name; 
+    let id = todoArray.id;
+    return addEventListener("load", addTask(task));
   });
 });
 
 //adds a new task object to the array
-function addTask(name, task) {
-  console.log("add task");
+function addTask(task) {
+  console.log("add task---");
+  let randomNum = Math.floor(((Math.random()) * 20));
 
-  let id = task.id;
   const todo = {
-    id: id ? id : Date.now(),
+    id : randomNum,
     checked: false,
-    name,
+    name: task.name || task,
   };
+  console.log(todo.id, todo.name)
   todoArray.push(todo);
   createNewTask(todo);
 }
 
 //turns input into text to be used to create a todo task
-function submitInput(event) {
+function submitInput(event) { 
   event.preventDefault();
   const input = document.querySelector(".todo-list-input");
   const text = input.value.trim();
   if (text !== "") {
-    addTask(text, {});
+    addTask(text);
     input.value = "";
     input.focus();
   } else if (text == false) {
@@ -73,6 +77,7 @@ function removeItem() {
 }
 
 //function to toggle between complete and incomplete tasks
+
 function toggleDone(key) {
   const index = todoArray.findIndex((item) => item.id === Number(key));
   todoArray[index].checked = !todoArray[index].checked;
