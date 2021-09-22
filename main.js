@@ -75,14 +75,14 @@ let listWrapper = document.getElementsByClassName('list-wrapper')
 
 let createNewTask = (taskString) => {
 
-    let listItem=document.createElement("li");
+    let listItem = document.createElement("li");
 
-    var label=document.createElement("label");
-    label.innerText=taskString;
+    var label = document.createElement("label");
+    label.innerText = taskString;
 
-    let checkBox=document.createElement("input");
+    let checkBox = document.createElement("input");
 
-    checkBox.type="checkbox";
+    checkBox.type = "checkbox";
 
     listItem.appendChild(checkBox)    
     listItem.appendChild(label)
