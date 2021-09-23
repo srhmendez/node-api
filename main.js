@@ -99,10 +99,14 @@ document
   submitInput(event);
 });
 
-//event listener for remove-items
+// Event listener from delete icon
+const removeFromArray = (key) =>{
+    event.currentTarget.parentElement.remove(key)
+}
 
+//removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
 function removeTodo(key) {
-  event.currentTarget.parentElement.parentElement.parentElement.remove();
+  event.currentTarget.parentElement.parentElement.parentElement.remove(key);
   
 }
 
@@ -142,7 +146,7 @@ function createNewTask(todo) {
   </p>
   </label>
   </div>
-  <i onclick="removeItem()" class="remove mdi mdi-close-circle-outline">
+  <i onclick="removeFromArray(${todo.id})" class="remove mdi mdi-close-circle-outline">
   </i>
 `;
 
