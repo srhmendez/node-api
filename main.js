@@ -101,7 +101,7 @@ document
 
 // Event listener from delete icon
 const removeFromArray = (key) =>{
-    event.currentTarget.parentElement.remove(key)
+    event.currentTarget.parentElement.parentElement.remove(key)
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
@@ -145,8 +145,13 @@ function createNewTask(todo) {
   </p>
   </label>
   </div>
+  <div class="editicons">
+  <i onclick=" " class=" remove mdi mdi-close-circle-outline fas fa-edit customeditbutton">
+  </i>
   <i onclick="removeFromArray(${todo.id})" class="remove mdi mdi-close-circle-outline">
   </i>
+  </div>
+ 
 `;
 
 // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
