@@ -122,8 +122,7 @@ function toggleComplete(key) {
     removeTodo(key)
   }
 
-    //create a render lists function that searched for the to do item that contains the key referenced above.
-    console.log('index-->', index)
+    //finds the removed task from the todo Array from the key 
     findRemovedTask(key)
 
 }
@@ -171,8 +170,8 @@ let promptError = (inputToDoString) => {
 const findRemovedTask = (key) =>{
 
     todoArray.forEach(element => {
+        //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
         if (element.id == key) {
-            console.log(element)
             createNewTask(element)
         } 
     })
