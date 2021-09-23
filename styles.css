@@ -494,4 +494,19 @@ div.completed-section{
 /* .remove {padding-left: none;} */
 
 .editicons {display: flex; justify-content: flex-end;}
-li {justify-content: space-between;}
+.list-wrapper ul li {justify-content: space-between;}
+
+
+/* ul li input[type=text] {
+  display:none;
+}
+
+.list-wrapper ul li.editMode input[type=text] {
+  display:block;
+}
+
+.list-wrapper ul li.editMode label {
+  display:none;
+} */
+
+
