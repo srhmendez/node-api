@@ -179,3 +179,8 @@ const findRemovedTask = (key) =>{
 
 
 
+// Remove all completed tasks
+function delBoxes(){
+  var ul = document.getElementById("complete-ul");
+  ul.innerHTML = '';
+}
