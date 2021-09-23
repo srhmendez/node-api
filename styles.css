@@ -1,6 +1,9 @@
 body {
   background-color: #f9f9fa;
 }
+.delete-btn {
+  padding:10%;
+}
 .card-body {
   max-width: 600px;
   margin: auto;
@@ -463,7 +466,10 @@ input[type="checkbox"] {
   display: flex !important
 }
 
-
+div.completed-section{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+}
 .completed-section button {
   float: right;
   margin-bottom: 15px;
