@@ -110,6 +110,9 @@ function removeTodo(key) {
   
 }
 
+
+
+
 //function to toggle between complete and incomplete tasks
 
 function toggleComplete(key) {
@@ -136,6 +139,7 @@ function createNewTask(todo) {
   
   let listItem = document.createElement("li");
   listItem.setAttribute("data-key", todo.id);
+
   listItem.innerHTML = `
   <div class="form-check">
   <label class="form-check-label">
@@ -146,7 +150,7 @@ function createNewTask(todo) {
   </label>
   </div>
   <div class="editicons">
-  <i onclick=" " class=" remove mdi mdi-close-circle-outline fas fa-edit customeditbutton">
+  <i onclick="editTodo(${todo.id})" class=" remove mdi mdi-close-circle-outline fas fa-edit customeditbutton">
   </i>
   <i onclick="removeFromArray(${todo.id})" class="remove mdi mdi-close-circle-outline">
   </i>
@@ -189,3 +193,11 @@ function deleteCompletedTasks(){
   let CompletedTasksUl = document.getElementById("complete-ul");
   CompletedTasksUl.innerHTML = '';
 }
+
+//Edit tasks
+function editTodo() {
+  console.log('This button will edit')
+
+}
+
+
