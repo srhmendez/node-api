@@ -433,7 +433,7 @@ input[type="checkbox"] {
   display: inline-block;
   padding-right: 3px;
   vertical-align: middle;
-  font-size: .756em;
+  font-size: .856em;
   color: #405189
 }
 
@@ -484,3 +484,14 @@ div.completed-section{
   background-color: rgb(158, 18, 18);
   color: white;
 }
+
+.customeditbutton {
+  margin-right: 2%;
+  margin-top: 2%;
+  font-style: normal;
+}
+
+/* .remove {padding-left: none;} */
+
+.editicons {display: flex; justify-content: flex-end;}
+li {justify-content: space-between;}
