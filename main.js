@@ -59,9 +59,10 @@ const formatNewJSON = (inputString) =>{
     complete: false,
   
     };
-
+    console.log('todo before pushed to array -->', todo)
     //pushes existing to dos to Array with checked values
     todoArray.push(todo);
+    console.log('array after pushed task -->', todoArray)
 
     //creating a new task to put into the HTML DOM
     createNewTask(todo);
@@ -126,6 +127,7 @@ function removeTodo(key) {
 
 function toggleComplete(key) {
   const index = todoArray.findIndex((item) => item.id === Number(key));
+  console.log('checking if complete is marked', todoArray[index].complete)
   if (todoArray[index].complete == false) {
     todoArray[index].complete = true;
   } else if (todoArray[index].complete == true) {
@@ -136,6 +138,7 @@ function toggleComplete(key) {
 
     //finds the removed task from the todo Array from the key 
     findRemovedTask(key)
+    updateArray()
 
 }
 
@@ -236,6 +239,8 @@ const updateArray = () =>{
         } else if (item.status == 'deleted'){
             let indexOfTodo = todoArray.indexOf(item);
             todoArray.splice(indexOfTodo, indexOfTodo + 1)
+        } if (todoArray.length == 1){
+            todoArray.splice(0,todoArray.length)
         }
     });
     console.log(todoArray)
