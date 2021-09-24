@@ -59,6 +59,7 @@ const formatNewJSON = (inputString) =>{
     complete: false,
   
     };
+    updateArray()
     //pushes existing to dos to Array with checked values
     todoArray.push(todo);
     console.log('array after new todo is pushed to array -->', todoArray)
@@ -229,15 +230,14 @@ const updateArray = () =>{
         //if item is completed, it removed item from the todoArray array 
         if (item.complete){
             let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo, indexOfTodo + 1)
+            todoArray.splice(indexOfTodo)
+
         
         //if item has been deleted with the delete icon, it checks if the item's status is deleted, if it returns true, the item is removed from the todoArray
         } else if (item.status == 'deleted'){
             let indexOfTodo = todoArray.indexOf(item);
             todoArray.splice(indexOfTodo, indexOfTodo + 1)
-        } if (todoArray.length == 1){
-            todoArray.splice(0,todoArray.length)
-        }
+        } 
     });
 }
 
