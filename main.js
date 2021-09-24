@@ -59,14 +59,13 @@ const formatNewJSON = (inputString) =>{
     complete: false,
   
     };
-
     //pushes existing to dos to Array with checked values
     todoArray.push(todo);
+    console.log('array after new todo is pushed to array -->', todoArray)
 
     //creating a new task to put into the HTML DOM
     createNewTask(todo);
 
-    console.log('current array -->', todoArray)
 }
 
 
@@ -136,6 +135,7 @@ function toggleComplete(key) {
 
     //finds the removed task from the todo Array from the key 
     findRemovedTask(key)
+    updateArray()
 
 }
 
@@ -170,7 +170,6 @@ function createNewTask(todo) {
 // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
 if (todo.complete == true) {
     completeList.append(item);
-    console.log('todo array after item is checked off -->', todoArray)
 }else if (todo.complete == false){
     //adds newly created task to incomplete ToDo List Card
     incompleteList.append(listItem);
@@ -236,9 +235,10 @@ const updateArray = () =>{
         } else if (item.status == 'deleted'){
             let indexOfTodo = todoArray.indexOf(item);
             todoArray.splice(indexOfTodo, indexOfTodo + 1)
+        } if (todoArray.length == 1){
+            todoArray.splice(0,todoArray.length)
         }
     });
-    console.log(todoArray)
 }
 
 
