@@ -65,6 +65,8 @@ const formatNewJSON = (inputString) =>{
 
     //creating a new task to put into the HTML DOM
     createNewTask(todo);
+
+    console.log('current array -->', todoArray)
 }
 
 
@@ -190,14 +192,27 @@ const findRemovedTask = (key) =>{
 
 // Remove all completed tasks
 function deleteCompletedTasks(){
-  let CompletedTasksUl = document.getElementById("complete-ul");
-  CompletedTasksUl.innerHTML = '';
+  let completedTasksUl = document.getElementById("complete-ul");
+  completedTasksUl.innerHTML = '';
+
+  updateArray()
 }
 
 //Edit tasks
 function editTodo() {
   console.log('This button will edit')
 
+}
+
+//updating array to match what is rendered in the DOM
+const updateArray = () =>{
+    todoArray.map(item => {
+        if (item.complete){
+            let indexOfTodo = todoArray.indexOf(item);
+            todoArray.splice(indexOfTodo, indexOfTodo + 1)
+        }
+    });
+    console.log(todoArray)
 }
 
 
