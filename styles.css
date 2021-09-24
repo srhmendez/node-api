@@ -1,3 +1,17 @@
+@media only screen and (max-width:700px) {
+  
+.mobile-sizing {
+  padding:2%;
+}
+div.card {
+  margin:0;
+}
+.mb-sm-btn{
+  font-size:1px;
+  padding:0px;
+}
+}
+
 body {
   background-color: #f9f9fa;
 }
@@ -126,7 +140,7 @@ p {display: inline}
 }
 
 .btn {
-  font-size: 0.875rem;
+  font-size: .9em;
   line-height: 1;
   font-weight: 400;
   padding: .7rem 1.5rem;
@@ -200,7 +214,11 @@ p {display: inline}
 .list-wrapper ul li .form-check {
   max-width: 90%;
   margin-top: .25rem;
-  margin-bottom: .25rem
+  margin-bottom: .25rem;
+}
+
+.form-check-label{
+  overflow-wrap: break-word;
 }
 
 .list-wrapper ul li .form-check label:hover {
@@ -491,22 +509,11 @@ div.completed-section{
   font-style: normal;
 }
 
-/* .remove {padding-left: none;} */
-
 .editicons {display: flex; justify-content: flex-end;}
 .list-wrapper ul li {justify-content: space-between;}
 
 
-/* ul li input[type=text] {
-  display:none;
-}
 
-.list-wrapper ul li.editMode input[type=text] {
-  display:block;
-}
 
-.list-wrapper ul li.editMode label {
-  display:none;
-} */
 
 
