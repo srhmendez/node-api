@@ -49,7 +49,7 @@ function formatExistingJSON(task) {
 
 //Formats newly input ToDo
 const formatNewJSON = (inputString) =>{ 
-    console.log('task--->', inputString);
+    console.log('newly added task as a string before JSON format--->', inputString);
 
 
     const todo = {
@@ -59,7 +59,8 @@ const formatNewJSON = (inputString) =>{
     complete: false,
   
     };
-    updateArray()
+
+
     //pushes existing to dos to Array with checked values
     todoArray.push(todo);
     console.log('array after new todo is pushed to array -->', todoArray)
@@ -198,7 +199,7 @@ const findRemovedTask = (key) =>{
             createNewTask(element)
         } 
 
-        console.log('toggled element -->',element)
+        console.log('checking complete value after toggle -->',element)
     })
 };
 
@@ -206,27 +207,41 @@ const findRemovedTask = (key) =>{
 
 // Remove all completed tasks
 function deleteCompletedTasks(){
+
+    //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
     let completedTasksUl = document.getElementById("complete-ul");
     completedTasksUl.innerHTML = '';
+
+    //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
     updateArray()
 }
 
-//Edit tasks
+//Edit tasks function that fires once the edit icon is clicked
 function editTodo() {
+
+    let oldElement = event.currentTarget.parentElement.parentElement;
+    console.log(oldElement)
     
     let randomInputID = String(Math.floor((Math.random() * 258)));
     event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID}) class=\'btn btn-secondary btn-small\'>Update</button>`;
     
 };
 
-// this fires once the update button in the edit todo feature is clicked
+// this fires once the update button that appears in the edit todo feature is clicked
 const updateToDo = (randomInputID) => {
 
+    //gets value of the edited to do string
     let updatedTodoString = document.getElementById(`${randomInputID}`).value;
 
+    //takes the value of the input string and formats it as a JSON object
     formatNewJSON(updatedTodoString);
-    removeEditInput()
+    removeEditInputField(randomInputID)
 
+}
+
+//remove the input field from the DOM
+const removeEditInputField = (inputID) => {
+    document.getElementById(inputID).parentElement.remove()
 }
 
 
