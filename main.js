@@ -132,11 +132,12 @@ function toggleComplete(key) {
     todoArray[index].complete = false;
     createNewTask(key)
     removeTodo(key)
+    updateArray()
+
   }
 
     //finds the removed task from the todo Array from the key 
     findRemovedTask(key)
-    updateArray()
 
 }
 
