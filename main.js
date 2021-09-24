@@ -3,19 +3,16 @@ let todoArray = [
   {
     id: 1,
     name: "go to work",
-    status: '',
     complete: false
   },
   {
     id: 2,
     name: "go to school",
-    status: '',
     complete: false
   },
   {
     id: 3,
     name: "go to the dentist",
-    status: '',
     complete: false
   },
 ];
@@ -53,7 +50,6 @@ const formatNewJSON = (inputString) =>{
 
 
     const todo = {
-    // id: (todoArray.length + 1),
 
     // use math.random & current array length to generate a new id number
     id: (todoArray.length + Math.floor(Math.random() * 258)),
@@ -108,17 +104,21 @@ document
 
 // Event listener from delete icon
 const removeFromArray = (key) =>{
+    console.log('remove from array---');
     event.currentTarget.parentElement.parentElement.remove(key)
     todoArray.filter(item => {
-        if (item.id == key) {
-            item.status = 'deleted'
+        if (item.id === key) {
+            let indexOfTodo = todoArray.indexOf(item);
+            console.log('index of todo---->', indexOfTodo);
+            todoArray.splice(indexOfTodo, 1);
         }
     })
-    updateArray(key)
+    console.log('todoArray--- .>', todoArray);
+    // updateArray()
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
-function removeTodo(key) {
+function removeTodoFromList(key) {
   event.currentTarget.parentElement.parentElement.parentElement.remove(key);
   
 }
@@ -130,17 +130,14 @@ function removeTodo(key) {
 
 function toggleComplete(key) {
 
-  const index = todoArray.findIndex((item) => item.id == Number(key));
+  const index = todoArray.find((item) => item.id == Number(key));
 
-  console.log('toggled ', todoArray[index].complete)
-  if (todoArray[index].complete == false) {
-    todoArray[index].complete = true;
-    
-  } else if (todoArray[index].complete == true) {
-    todoArray[index].complete = false;
-    createNewTask(key)
-    removeTodo(key)
-
+if (index.complete == false) {
+    index.complete = true;
+  } else if (index.complete == true) {
+    index.complete = false;
+    createNewTask(key);
+    removeTodoFromList(key);
   }
 
     //finds the removed task from the todo Array from the key 
@@ -210,14 +207,21 @@ const findRemovedTask = (key) =>{
 
 
 // Remove all completed tasks
-function deleteCompletedTasks(){
+function deleteAllCompletedTasks(){
+    console.log('delete all completed---');
 
     //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
     let completedTasksUl = document.getElementById("complete-ul");
     completedTasksUl.innerHTML = '';
+    todoArray = todoArray.filter((item) => {
+        if (item.complete === false) {
+            return item
+        }
+      });
 
     //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
-    updateArray()
+    // updateArray()
+    console.log('updated array---->', todoArray);
 }
 
 //Edit tasks function that fires once the edit icon is clicked
@@ -258,6 +262,7 @@ const removeEditInputField = (inputID) => {
 
 
 //updating array to match what is rendered in the DOM
+//I removed this func from being called inthe other functions because it was casuing problems but I will refactor it --Erin
 const updateArray = () =>{
 
     todoArray.map(item => {
@@ -265,14 +270,15 @@ const updateArray = () =>{
         //if item is completed, it removed item from the todoArray array 
         if (item.complete == true){
             let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo,1);
-            ('array after complete items are removed',todoArray)
+            todoArray.splice(indexOfTodo, item);
+            // ('array after complete items are removed',todoArray)
         
         //if item has been deleted with the delete icon, it checks if the item's status is deleted, if it returns true, the item is removed from the todoArray
-        } else if (item.status == 'deleted'){
-            let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo, 1)
         } 
+        // else if (item.status == 'deleted'){
+        //     let indexOfTodo = todoArray.indexOf(item);
+        //     todoArray.splice(indexOfTodo)
+        // } 
     });
 }
 
