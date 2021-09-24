@@ -94,6 +94,7 @@ document
     }
   });
 
+
 //event listener for adding task by clicking add button
 document
 .querySelector("#add-btn")
@@ -179,9 +180,9 @@ if (todo.complete == true) {
 
 //Error Checking for empty string
 let promptError = (inputToDoString) => {
-  if (inputToDoString === "") {
-    window.alert("A To-Do item cannot be blank. Please try again.");
-  }
+    if (inputToDoString === "") {
+        window.alert("A To-Do item cannot be blank. Please try again.");
+    }
 };
 
 const findRemovedTask = (key) =>{
@@ -198,17 +199,29 @@ const findRemovedTask = (key) =>{
 
 // Remove all completed tasks
 function deleteCompletedTasks(){
-  let completedTasksUl = document.getElementById("complete-ul");
-  completedTasksUl.innerHTML = '';
-
-  updateArray()
+    let completedTasksUl = document.getElementById("complete-ul");
+    completedTasksUl.innerHTML = '';
+    updateArray()
 }
 
 //Edit tasks
 function editTodo() {
-  console.log('This button will edit')
+    
+    let randomInputID = String(Math.floor((Math.random() * 258)));
+    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID}) class=\'btn btn-secondary btn-small\'>Update</button>`;
+    
+};
+
+// this fires once the update button in the edit todo feature is clicked
+const updateToDo = (randomInputID) => {
+
+    let updatedTodoString = document.getElementById(`${randomInputID}`).value;
+
+    formatNewJSON(updatedTodoString);
+    removeEditInput()
 
 }
+
 
 //updating array to match what is rendered in the DOM
 const updateArray = () =>{
