@@ -59,15 +59,13 @@ const formatNewJSON = (inputString) =>{
     complete: false,
   
     };
-    console.log('todo before pushed to array -->', todo)
     //pushes existing to dos to Array with checked values
     todoArray.push(todo);
-    console.log('array after pushed task -->', todoArray)
+    console.log('array after new todo is pushed to array -->', todoArray)
 
     //creating a new task to put into the HTML DOM
     createNewTask(todo);
 
-    console.log('current array -->', todoArray)
 }
 
 
@@ -127,7 +125,6 @@ function removeTodo(key) {
 
 function toggleComplete(key) {
   const index = todoArray.findIndex((item) => item.id === Number(key));
-  console.log('checking if complete is marked', todoArray[index].complete)
   if (todoArray[index].complete == false) {
     todoArray[index].complete = true;
   } else if (todoArray[index].complete == true) {
@@ -173,7 +170,6 @@ function createNewTask(todo) {
 // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
 if (todo.complete == true) {
     completeList.append(item);
-    console.log('todo array after item is checked off -->', todoArray)
 }else if (todo.complete == false){
     //adds newly created task to incomplete ToDo List Card
     incompleteList.append(listItem);
@@ -243,7 +239,6 @@ const updateArray = () =>{
             todoArray.splice(0,todoArray.length)
         }
     });
-    console.log(todoArray)
 }
 
 
