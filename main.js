@@ -263,7 +263,7 @@ const updateArray = () =>{
     todoArray.map(item => {
 
         //if item is completed, it removed item from the todoArray array 
-        if (item.complete){
+        if (item.complete == true){
             let indexOfTodo = todoArray.indexOf(item);
             todoArray.splice(indexOfTodo,1);
             ('array after complete items are removed',todoArray)
