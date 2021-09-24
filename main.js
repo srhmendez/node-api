@@ -53,7 +53,10 @@ const formatNewJSON = (inputString) =>{
 
 
     const todo = {
-    id: (todoArray.length + 1),
+    // id: (todoArray.length + 1),
+
+    // use math.random & current array length to generate a new id number
+    id: (todoArray.length + Math.floor(Math.random() * 258)),
     name: inputString,
     status: '',
     complete: false,
