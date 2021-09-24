@@ -104,6 +104,12 @@ document
 // Event listener from delete icon
 const removeFromArray = (key) =>{
     event.currentTarget.parentElement.parentElement.remove(key)
+    todoArray.filter(item => {
+        if (item.id == key) {
+            item.status = 'deleted'
+        }
+    })
+    updateArray(key)
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
@@ -207,7 +213,14 @@ function editTodo() {
 //updating array to match what is rendered in the DOM
 const updateArray = () =>{
     todoArray.map(item => {
+
+        //if item is completed, it removed item from the todoArray array 
         if (item.complete){
+            let indexOfTodo = todoArray.indexOf(item);
+            todoArray.splice(indexOfTodo, indexOfTodo + 1)
+        
+        //if item has been deleted with the delete icon, it checks if the item's status is deleted, if it returns true, the item is removed from the todoArray
+        } else if (item.status == 'deleted'){
             let indexOfTodo = todoArray.indexOf(item);
             todoArray.splice(indexOfTodo, indexOfTodo + 1)
         }
