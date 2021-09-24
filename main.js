@@ -138,6 +138,7 @@ function toggleComplete(key) {
 
     //finds the removed task from the todo Array from the key 
     findRemovedTask(key)
+    console.log('todo array after toggle--->', todoArray)
 
 }
 
@@ -226,18 +227,19 @@ const updateToDo = (randomInputID) => {
 
 //updating array to match what is rendered in the DOM
 const updateArray = () =>{
+
     todoArray.map(item => {
 
         //if item is completed, it removed item from the todoArray array 
         if (item.complete){
             let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo)
-
+            todoArray.splice(indexOfTodo,1);
+            ('array after complete items are removed',todoArray)
         
         //if item has been deleted with the delete icon, it checks if the item's status is deleted, if it returns true, the item is removed from the todoArray
         } else if (item.status == 'deleted'){
             let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo, indexOfTodo + 1)
+            todoArray.splice(indexOfTodo, 1)
         } 
     });
 }
