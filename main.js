@@ -125,14 +125,17 @@ function removeTodo(key) {
 //function to toggle between complete and incomplete tasks
 
 function toggleComplete(key) {
-  const index = todoArray.findIndex((item) => item.id === Number(key));
+
+  const index = todoArray.findIndex((item) => item.id == Number(key));
+
+  console.log('toggled ', todoArray[index].complete)
   if (todoArray[index].complete == false) {
     todoArray[index].complete = true;
+    
   } else if (todoArray[index].complete == true) {
     todoArray[index].complete = false;
     createNewTask(key)
     removeTodo(key)
-    updateArray()
 
   }
 
@@ -194,6 +197,8 @@ const findRemovedTask = (key) =>{
         if (element.id == key) {
             createNewTask(element)
         } 
+
+        console.log('toggled element -->',element)
     })
 };
 
