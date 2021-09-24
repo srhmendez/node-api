@@ -155,6 +155,7 @@ function createNewTask(todo) {
   
   let listItem = document.createElement("li");
   listItem.setAttribute("data-key", todo.id);
+  
 
   listItem.innerHTML = `
   <div class="form-check">
@@ -220,22 +221,30 @@ function deleteCompletedTasks(){
 function editTodo() {
 
     let oldElement = event.currentTarget.parentElement.parentElement;
-    console.log(oldElement)
+    oldElement.classList.add('mobile-sizing')
+    let dataKey = console.log(oldElement.getAttribute('data-key'))
     
     let randomInputID = String(Math.floor((Math.random() * 258)));
-    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID}) class=\'btn btn-secondary btn-small\'>Update</button>`;
+    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID, dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
     
 };
 
 // this fires once the update button that appears in the edit todo feature is clicked
-const updateToDo = (randomInputID) => {
+const updateToDo = (randomInputID, dataKey) => {
 
     //gets value of the edited to do string
     let updatedTodoString = document.getElementById(`${randomInputID}`).value;
 
     //takes the value of the input string and formats it as a JSON object
-    formatNewJSON(updatedTodoString);
+    if (updatedTodoString !== ''){
+        formatNewJSON(updatedTodoString);
+    } else if (updatedTodoString == ''){
+        let oldToDo = document.getElementById(randomInputID);
+        oldToDo.getAttribute(dataKey)
+        formatNewJSON()
+    }
     removeEditInputField(randomInputID)
+    
 
 }
 
