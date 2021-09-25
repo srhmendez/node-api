@@ -114,7 +114,6 @@ const removeFromArray = (key) =>{
         }
     })
     console.log('todoArray--- .>', todoArray);
-    // updateArray()
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
@@ -149,6 +148,7 @@ if (index.complete == false) {
 
 //Creating Task to add to the HTML DOM
 function createNewTask(todo) {
+
   const incompleteList = document.querySelector("#incomplete-ul");
   let completeList = document.querySelector("#complete-ul");
   const item = document.querySelector(`[data-key='${todo.id}']`);
@@ -220,7 +220,6 @@ function deleteAllCompletedTasks(){
       });
 
     //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
-    // updateArray()
     console.log('updated array---->', todoArray);
 }
 
@@ -228,30 +227,44 @@ function deleteAllCompletedTasks(){
 function editTodo() {
 
     let oldElement = event.currentTarget.parentElement.parentElement;
-    oldElement.classList.add('mobile-sizing')
-    let dataKey = console.log(oldElement.getAttribute('data-key'))
+    oldElement.classList.add('mobile-sizing');
+    let dataKey = oldElement.getAttribute('data-key');
+
+    console.log('before creating update input')
     
     let randomInputID = String(Math.floor((Math.random() * 258)));
-    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID, dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
+
+    //creating input field to edit todo and attaching an onclick event listener to the update button
+    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID},${dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
+
+    console.log(oldElement)
     
 };
 
 // this fires once the update button that appears in the edit todo feature is clicked
 const updateToDo = (randomInputID, dataKey) => {
+    console.log('in update todo function')
 
+    //function to search for the old item by id.
+    const oldTodo = (item => item.id === dataKey);
+    //the findIndex finds the index of the item matching the criteria in the oldTodo function
+    const indexOfOldTodo = todoArray.findIndex(oldTodo);
+
+    
     //gets value of the edited to do string
     let updatedTodoString = document.getElementById(`${randomInputID}`).value;
 
     //takes the value of the input string and formats it as a JSON object
     if (updatedTodoString !== ''){
         formatNewJSON(updatedTodoString);
+        todoArray.splice(indexOfOldTodo,1)
     } else if (updatedTodoString == ''){
-        let oldToDo = document.getElementById(randomInputID);
-        oldToDo.getAttribute(dataKey)
-        formatNewJSON()
+        let originalTodo = todoArray[indexOfOldTodo]
+        createNewTask(originalTodo)
     }
+    //removes the edit todo input field after the update button has been clicked
     removeEditInputField(randomInputID)
-    
+    console.log('updated array after edited todo is edited -->', todoArray)
 
 }
 
@@ -261,25 +274,5 @@ const removeEditInputField = (inputID) => {
 }
 
 
-//updating array to match what is rendered in the DOM
-//I removed this func from being called inthe other functions because it was casuing problems but I will refactor it --Erin
-const updateArray = () =>{
-
-    todoArray.map(item => {
-
-        //if item is completed, it removed item from the todoArray array 
-        if (item.complete == true){
-            let indexOfTodo = todoArray.indexOf(item);
-            todoArray.splice(indexOfTodo, item);
-            // ('array after complete items are removed',todoArray)
-        
-        //if item has been deleted with the delete icon, it checks if the item's status is deleted, if it returns true, the item is removed from the todoArray
-        } 
-        // else if (item.status == 'deleted'){
-        //     let indexOfTodo = todoArray.indexOf(item);
-        //     todoArray.splice(indexOfTodo)
-        // } 
-    });
-}
 
 
