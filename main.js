@@ -54,7 +54,6 @@ const formatNewJSON = (inputString) =>{
     // use math.random & current array length to generate a new id number
     id: (todoArray.length + Math.floor(Math.random() * 258)),
     name: inputString,
-    status: '',
     complete: false,
   
     };
@@ -80,8 +79,8 @@ function submitInput(event) {
     formatNewJSON(text);
     input.value = "";
     input.focus();
-  } else if (text == false) {
-    promptError(text);
+  } else if (!text) {
+    promptError();
   }
 }
 
@@ -150,10 +149,10 @@ if (index.complete == false) {
 function createNewTask(todo) {
 
   const incompleteList = document.querySelector("#incomplete-ul");
-  let completeList = document.querySelector("#complete-ul");
+  const completeList = document.querySelector("#complete-ul");
   const item = document.querySelector(`[data-key='${todo.id}']`);
   
-  let listItem = document.createElement("li");
+  const listItem = document.createElement("li");
   listItem.setAttribute("data-key", todo.id);
   
 
@@ -176,9 +175,9 @@ function createNewTask(todo) {
 `;
 
 // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
-if (todo.complete == true) {
+if (todo.complete) {
     completeList.append(item);
-}else if (todo.complete == false){
+}else if (todo.complete === false){
     //adds newly created task to incomplete ToDo List Card
     incompleteList.append(listItem);
 }
@@ -186,10 +185,9 @@ if (todo.complete == true) {
 
 
 //Error Checking for empty string
-let promptError = (inputToDoString) => {
-    if (inputToDoString === "") {
+let promptError = () => {
         window.alert("A To-Do item cannot be blank. Please try again.");
-    }
+    
 };
 
 const findRemovedTask = (key) =>{
@@ -224,25 +222,20 @@ function deleteAllCompletedTasks(){
 }
 
 //Edit tasks function that fires once the edit icon is clicked
-function editTodo() {
-
-    let oldElement = event.currentTarget.parentElement.parentElement;
+function editTodo(id) {
+    const item = todoArray.find((item) => item.id == Number(id));
+    const name = JSON.stringify(item.name);
+    const oldElement = event.currentTarget.parentElement.parentElement;
     oldElement.classList.add('mobile-sizing');
-    let dataKey = oldElement.getAttribute('data-key');
-
-    console.log('before creating update input')
-    
-    let randomInputID = String(Math.floor((Math.random() * 258)));
+    const dataKey = oldElement.getAttribute('data-key');
+    const inputField = event.currentTarget.parentElement.parentElement
 
     //creating input field to edit todo and attaching an onclick event listener to the update button
-    event.currentTarget.parentElement.parentElement.innerHTML= `<input id=${randomInputID}></input><button onclick= updateToDo(${randomInputID},${dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
-
-    console.log(oldElement)
-    
+    inputField.innerHTML= `<input value=${name} id=${id}></input><button onclick= updateToDo(${id},${dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;    
 };
 
 // this fires once the update button that appears in the edit todo feature is clicked
-const updateToDo = (randomInputID, dataKey) => {
+const updateToDo = (id, dataKey) => {
     console.log('in update todo function')
 
     //function to search for the old item by id.
@@ -250,20 +243,21 @@ const updateToDo = (randomInputID, dataKey) => {
     //the findIndex finds the index of the item matching the criteria in the oldTodo function
     const indexOfOldTodo = todoArray.findIndex(oldTodo);
 
-    
     //gets value of the edited to do string
-    let updatedTodoString = document.getElementById(`${randomInputID}`).value;
+    let updatedTodoString = document.getElementById(`${id}`).value;
 
     //takes the value of the input string and formats it as a JSON object
-    if (updatedTodoString !== ''){
+    if (updatedTodoString){
         formatNewJSON(updatedTodoString);
         todoArray.splice(indexOfOldTodo,1)
-    } else if (updatedTodoString == ''){
-        let originalTodo = todoArray[indexOfOldTodo]
-        createNewTask(originalTodo)
+        //removes the edit todo input field after the update button has been clicked
+        removeEditInputField(id)
+
+    } else {
+        //error if input is empty
+        promptError();
+
     }
-    //removes the edit todo input field after the update button has been clicked
-    removeEditInputField(randomInputID)
     console.log('updated array after edited todo is edited -->', todoArray)
 
 }
@@ -272,7 +266,5 @@ const updateToDo = (randomInputID, dataKey) => {
 const removeEditInputField = (inputID) => {
     document.getElementById(inputID).parentElement.remove()
 }
-
-
 
 
