@@ -62,7 +62,10 @@ h6.categories-sortby{
 }
 .modal-displayed-categories{
   list-style: none;
-  border-bottom: 1px grey solid;
+  border: .2px grey solid;
+  margin:0;
+  border-right:none;
+  border-left:none;
   padding:2% .5%;
 }
 
