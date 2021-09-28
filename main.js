@@ -319,7 +319,14 @@ const renderCategories = () => {
         let categoryListElement = document.createElement("li");
         categoryListElement.classList.add('modal-displayed-categories');
         let text = document.createTextNode(item)
-        categoryListElement.appendChild(text);
+        let buttonDiv = document.createElement('div');
+        let paragraphElement = document.createElement('p')
+        paragraphElement.appendChild(text); 
+        categoryListElement.appendChild(paragraphElement)
+
+        categoryListElement.appendChild(buttonDiv);
+        //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
+
         modalBody.appendChild(categoryListElement)
 
     });
