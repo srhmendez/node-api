@@ -268,3 +268,8 @@ const removeEditInputField = (inputID) => {
 }
 
 
+//Modal logic 
+let categoriesModal = document.getElementById('categories-modal');
+
+console.log(categoriesModal.value)
+
