@@ -60,6 +60,12 @@ h6.categories-sortby{
   display:flex;
   align-items: center;
 }
+.modal-displayed-categories{
+  list-style: none;
+  border-bottom: 1px grey solid;
+  padding:2% .5%;
+}
+
 
 .card {
   box-shadow: none;

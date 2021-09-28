@@ -3,18 +3,27 @@ let todoArray = [
   {
     id: 1,
     name: "go to work",
-    complete: false
+    complete: false,
+    category: "Work",
   },
   {
     id: 2,
     name: "go to school",
-    complete: false
+    complete: false,
+    category: "School"
   },
   {
     id: 3,
     name: "go to the dentist",
-    complete: false
+    complete: false,
+    category: "Health"
   },
+  {
+    id: 4,
+    name: "go to the gym",
+    complete: false,
+    category: "Health",
+  }
 ];
 
 //adds array items from array above on page load to the addTask
@@ -268,8 +277,46 @@ const removeEditInputField = (inputID) => {
 }
 
 
-//Modal logic 
-let categoriesModal = document.getElementById('categories-modal');
 
-console.log(categoriesModal.value)
+//Storing Categories in Categories Array from the todoArray
+let categories = [];
+
+//This function pushes each category from the todoArray into the cat Array then creates a Set to remove duplicates from the array. It then reassigs the original array with the Set. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+const updateCategories = () => {
+    todoArray.forEach(item => categories.push(item.category))
+    let uniqueCategories = [...new Set(categories)];
+    categories = uniqueCategories;
+    console.log(categories)
+}
+
+
+updateCategories();
+
+
+
+
+
+
+
+const renderCategories = () => {
+    //Modal 
+    let modalBody = document.getElementById('modal-body');
+
+    categories.forEach(item => {
+
+        //creating list item & attaching it to the modal
+        let categoryHTML = document.createElement("li");
+        categoryHTML.classList.add('modal-displayed-categories');
+        let text = document.createTextNode(item)
+        categoryHTML.appendChild(text);
+        modalBody.appendChild(categoryHTML)
+    }
+    
+)}
+
+//Edit Categories Button
+let editCatBtn = document.getElementById('edit-categories-btn');
+editCatBtn.addEventListener('click',renderCategories());
+
+
 
