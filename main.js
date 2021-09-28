@@ -228,6 +228,10 @@ function deleteAllCompletedTasks(){
 
     //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
     console.log('updated array---->', todoArray);
+
+    //Updates Categories based on updated todoArray.categories
+    renderCategories();
+
 }
 
 //Edit tasks function that fires once the edit icon is clicked
@@ -281,42 +285,67 @@ const removeEditInputField = (inputID) => {
 //Storing Categories in Categories Array from the todoArray
 let categories = [];
 
-//This function pushes each category from the todoArray into the cat Array then creates a Set to remove duplicates from the array. It then reassigs the original array with the Set. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+
+
+//Returns an updated Set. This function pushes each category from the todoArray into the cat Array then creates a Set to remove duplicates from the array. It then reassigs the original array with the Set. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 const updateCategories = () => {
-    todoArray.forEach(item => categories.push(item.category))
-    let uniqueCategories = [...new Set(categories)];
-    categories = uniqueCategories;
-    console.log(categories)
+    let uniqueCategories = []
+    uniqueCategories = Array.from(uniqueCategories);
+    todoArray.forEach(item => {
+        uniqueCategories.push(item.category); 
+    })
+    uniqueCategories = [...new Set(uniqueCategories)]
+    return uniqueCategories
 }
 
 
-updateCategories();
-
-
-
-
-
-
-
 const renderCategories = () => {
+    
+    let categories = updateCategories();
+    console.log('categories after array is updated-->', categories)
+
     //Modal 
     let modalBody = document.getElementById('modal-body');
 
+    //Dropdown Unordered List
+    let dropDownUL = document.getElementById('dropdown-menu-ul');
+
+    //Clearing DOM of previous rendered Lists
+    modalBody.innerHTML = ``;
+    //Modal Categories Rendering
     categories.forEach(item => {
 
         //creating list item & attaching it to the modal
-        let categoryHTML = document.createElement("li");
-        categoryHTML.classList.add('modal-displayed-categories');
+        let categoryListElement = document.createElement("li");
+        categoryListElement.classList.add('modal-displayed-categories');
         let text = document.createTextNode(item)
-        categoryHTML.appendChild(text);
-        modalBody.appendChild(categoryHTML)
-    }
-    
-)}
+        categoryListElement.appendChild(text);
+        modalBody.appendChild(categoryListElement)
+
+    });
+
+    //Clearing DOM of previous rendered Lists
+    dropDownUL.innerHTML = `<li id='all-categories' class='dropdown-item'> All Categories <li>`;
+
+    //Dropdown Categories Rendering
+    categories.forEach(item => {
+
+        //Updating Dropdown Menu UL
+        let dropdownListElement = document.createElement("li");
+        dropdownListElement.classList.add('dropdown-displayed-categories', 'dropdown-item');
+        let text = document.createTextNode(item)
+        dropdownListElement.appendChild(text);
+        dropDownUL.appendChild(dropdownListElement);
+    });
+}
 
 //Edit Categories Button
 let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener('click',renderCategories());
+editCatBtn.addEventListener(onclick,renderCategories());
+
+//Category Dropdown Button 
+let catDropdown = document.getElementById('defaultDropdown');
+catDropdown.addEventListener( onclick, renderCategories());
 
 
 
