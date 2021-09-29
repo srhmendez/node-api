@@ -49,7 +49,7 @@ function formatExistingJSON(task) {
   };
 
   //creating a new task to put into the HTML DOM
-  createNewTask(todo);
+  renderTask(todo);
 }
 
 
@@ -73,7 +73,7 @@ const formatNewJSON = (inputString) =>{
     console.log('array after new todo is pushed to array -->', todoArray)
 
     //creating a new task to put into the HTML DOM
-    createNewTask(todo);
+    renderTask(todo);
 
 }
 
@@ -143,7 +143,7 @@ if (index.complete == false) {
     index.complete = true;
   } else if (index.complete == true) {
     index.complete = false;
-    createNewTask(key);
+    renderTask(key);
     removeTodoFromList(key);
   }
 
@@ -155,7 +155,7 @@ if (index.complete == false) {
 
 
 //Creating Task to add to the HTML DOM
-function createNewTask(todo) {
+function renderTask(todo) {
 
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
@@ -202,9 +202,9 @@ let promptError = () => {
 const findRemovedTask = (key) =>{
 
     todoArray.forEach(element => {
-        //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
+        //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with renderTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
         if (element.id == key) {
-            createNewTask(element)
+            renderTask(element)
         } 
 
         console.log('checking complete value after toggle -->',element)
@@ -281,78 +281,80 @@ const removeEditInputField = (inputID) => {
 }
 
 
-
-//Storing Categories in Categories Array from the todoArray
-let categories = [];
-
-
-
-//Returns an updated Set. This function pushes each category from the todoArray into the cat Array then creates a Set to remove duplicates from the array. It then reassigs the original array with the Set. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+//makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 const updateCategories = () => {
     let uniqueCategories = []
-    uniqueCategories = Array.from(uniqueCategories);
     todoArray.forEach(item => {
         uniqueCategories.push(item.category); 
     })
     uniqueCategories = [...new Set(uniqueCategories)]
-    return uniqueCategories
+    let updatedArray = Array.from(uniqueCategories)
+    return updatedArray;
 }
-
 
 const renderCategories = () => {
     
     let categories = updateCategories();
+    
     console.log('categories after array is updated-->', categories)
 
     //Modal 
     let modalBody = document.getElementById('modal-body');
 
     //Dropdown Unordered List
-    let dropDownUL = document.getElementById('dropdown-menu-ul');
+    let dropDown = document.getElementById('defaultDropdown');
 
     //Clearing DOM of previous rendered Lists
-    modalBody.innerHTML = ``;
+    modalBody.innerHTML = '';
+
+    let allCatString = 'All Categories'
+    //Clearing DOM of previous rendered Lists
+    dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
+
+
     //Modal Categories Rendering
-    categories.forEach(item => {
+   categories.forEach(item => {
 
         //creating list item & attaching it to the modal
         let categoryListElement = document.createElement("li");
-        categoryListElement.classList.add('modal-displayed-categories');
-        let text = document.createTextNode(item)
+        categoryListElement.classList.add('modal-displayed-categories')
+        let text = document.createTextNode(item);
         let buttonDiv = document.createElement('div');
-        let paragraphElement = document.createElement('p')
-        paragraphElement.appendChild(text); 
-        categoryListElement.appendChild(paragraphElement)
-
+        let paragraphElement = document.createElement('p');
+        paragraphElement.textContent = text.textContent;
+        categoryListElement.appendChild(paragraphElement);
         categoryListElement.appendChild(buttonDiv);
+        modalBody.appendChild(categoryListElement)
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
 
-        modalBody.appendChild(categoryListElement)
-
-    });
-
-    //Clearing DOM of previous rendered Lists
-    dropDownUL.innerHTML = `<li id='all-categories' class='dropdown-item'> All Categories <li>`;
-
-    //Dropdown Categories Rendering
-    categories.forEach(item => {
-
         //Updating Dropdown Menu UL
-        let dropdownListElement = document.createElement("li");
-        dropdownListElement.classList.add('dropdown-displayed-categories', 'dropdown-item');
-        let text = document.createTextNode(item)
+        let dropdownListElement = document.createElement("option");
+        dropdownListElement.setAttribute('value', text.textContent )
         dropdownListElement.appendChild(text);
-        dropDownUL.appendChild(dropdownListElement);
+        dropDown.appendChild(dropdownListElement);
+
     });
+
 }
+function updateSelectValue(event) {
+    console.log(event.target.value);
+}
+
+//Dropdown Options Event Listener
+let dropdownOptions = document.getElementById('defaultDropdown');
+dropdownOptions.addEventListener('change', updateSelectValue)
+
 
 //Edit Categories Button
 let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener(onclick,renderCategories());
+editCatBtn.addEventListener('click', renderCategories());
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
-catDropdown.addEventListener( onclick, renderCategories());
+catDropdown.addEventListener('click', renderCategories());
+catDropdown.addEventListener('click', filterByCategory);
 
-
-
+//Filter 
+function filterByCategory(event){
+    console.log(event.target.value)
+}
