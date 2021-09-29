@@ -584,9 +584,25 @@ div.completed-section{
 
 
 
-
-
 #add-btn {
-  height: auto;
+  height: 100%;
   width: auto;
+  margin: auto;
+  min-height: 60px;
+}
+
+
+.input-group-prepend {
+  border: none;
+  display: grid;
+  grid-template-columns: auto auto;
+  width: 100%;
+  height: auto;
+  padding: 0;
+}
+
+.add-items {
+  display: grid;
+  grid-template-columns:1fr 1fr;
+  height: auto;
 }
