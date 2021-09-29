@@ -176,14 +176,6 @@ const formatNewJSON = (inputString, category) => {
 
 }
 
-  //pushes existing to dos to Array with checked values
-  todoArray.push(todo);
-  console.log("array after new todo is pushed to array -->", todoArray);
-
-  //creating a new task to put into the HTML DOM
-  createNewTask(todo);
-};
-
 //turns input into text to be used to create a todo task
 function submitInput(event) {
   console.log('event---->', event);
@@ -254,8 +246,6 @@ function renderTask(todo) {
   listItem.setAttribute("data-key", todo.id);
 
   listItem.innerHTML = `
-  // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
-  if (todo.complete) {
      <div class="form-check">
     <label class="form-check-label">
     <input id="${todo.id}" onClick="toggleComplete(${todo.id})" class="js-tick checkbox" type="checkbox"/>
