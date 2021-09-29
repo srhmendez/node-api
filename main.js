@@ -122,7 +122,6 @@ function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
 
         listItem.appendChild(listA)
         dropdownUL.appendChild(listItem)
-
         listA.addEventListener('click', () => {
           dropdownButton.innerHTML = `${category}`    
         })
