@@ -272,10 +272,9 @@ function renderTask(todo) {
 }
 
 //Error Checking for empty string
-let promptError = () => {
-        window.alert("A To-Do item cannot be blank. Please try again.");
-    
-};
+function promptError() {
+  window.alert("A To-Do item cannot be blank and a category must be selected. Please try again.");
+}
 
 const findRemovedTask = (key) =>{
 
