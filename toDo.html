@@ -26,19 +26,19 @@
           <div class="card-body">
             <h4 class="card-title">To Do List</h4>
             <div class="add-items d-flex">
-              <input
-                type="text"
-                class="todo-list-input form-control"
-                placeholder="What do you need to do today?"
-                id="new-task-input"
-              />
-              <button
-                id="add-btn"
-                type="submit"
-                class="add btn btn-primary font-weight-bold todo-list-add-btn"
-              >
-                Add
-              </button>
+            </div>
+
+            <div id="categories">
+              <h6 class="categories">Sort By:</h6>
+              <button class="btn btn-outline-secondary dropdown-toggle category-dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">Select</button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Separated link</a></li>
+              </ul>
+              <button type="button" class="btn btn-secondary categories-btn" data-toggle="modal" data-target="#exampleModal">Edit Categories</button>
             </div>
 
             <div class="category-group">
@@ -87,6 +87,7 @@
             </div>
           </div>
         </div>
+
 
 
 
