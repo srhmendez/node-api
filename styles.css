@@ -50,6 +50,16 @@ p {display: inline}
   }
 }
 
+h6.categories-sortby{
+  margin-right:20px;
+}
+.category-dropdown{
+  margin-right:20px;
+}
+.category-group{
+  display:flex;
+  align-items: center;
+}
 
 .card {
   box-shadow: none;
