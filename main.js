@@ -80,15 +80,8 @@ function renderTopInputSectionInDOM() {
   const categories = getAllCategories();
 
   // Display category options in dropdown
-  categories.forEach((category) => {
-      const listItem = document.createElement('li');
-      const listA = document.createElement('a');
-      listA.setAttribute('class', 'dropdown-item')
-      
-      listA.innerHTML = `${category}`;
-      listItem.appendChild(listA)
-      dropdownUL.appendChild(listItem)
-  })
+  addCategoriesToDropdown(categories, dropdownUL)
+
   dropdownDiv.appendChild(dropdownButton);
   dropdownDiv.appendChild(dropdownUL);
   
@@ -111,26 +104,16 @@ function getAllCategories() {
 }
 
 // Add category options to dropdown
-function addCategoriesToDropdown(categories, dropDownMenu) {
-  let listItem = document.createElement('li');
-
-  categories.forEach((category) => {
-      console.log('category-', category);
-    listItem = document.createElement("li");
-    const a = document.createElement("a");
-    a.setAttribute("class", "dropdown-item");
-    a.setAttribute("href", "#");
-    a.innerHTML = `${category}`;
-    console.log('list item ---', listItem);
-
-    listItem.appendChild(a);
-
-  });
-  dropDownMenu.appendChild(listItem)
-
-  console.log('dropDown menu', dropDownMenu);
-
-  return dropDownMenu
+function addCategoriesToDropdown(categories, dropdownUL) {
+    categories.forEach((category) => {
+        const listItem = document.createElement('li');
+        const listA = document.createElement('a');
+        listA.setAttribute('class', 'dropdown-item')
+        
+        listA.innerHTML = `${category}`;
+        listItem.appendChild(listA)
+        dropdownUL.appendChild(listItem)
+    })
 }
 
 //adds a new task object to the array
