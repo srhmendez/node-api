@@ -175,7 +175,7 @@ function renderTask(todo) {
   </label>
   </div>
   <div class="editicons">
-  <i onclick="editTodo(${todo.id})" class=" remove mdi mdi-close-circle-outline fas fa-edit customeditbutton">
+  <i onclick="editTodo(${todo.id})" class="remove mdi mdi-close-circle-outline fas fa-edit customeditbutton">
   </i>
   <i onclick="removeFromArray(${todo.id})" class="remove mdi mdi-close-circle-outline">
   </i>
@@ -294,6 +294,7 @@ const updateCategories = () => {
 
 const renderCategories = () => {
     
+    // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
     let categories = updateCategories();
     
     console.log('categories after array is updated-->', categories)
@@ -308,24 +309,33 @@ const renderCategories = () => {
     modalBody.innerHTML = '';
 
     let allCatString = 'All Categories'
-    //Clearing DOM of previous rendered Lists
+    //Clearing DOM of previous rendered Lists but leaving All categories as a base case
     dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
 
 
-    //Modal Categories Rendering
+    //Modal & Dropdown Categories Rendering
    categories.forEach(item => {
 
-        //creating list item & attaching it to the modal
+        //creating list item, edit & delete icons & attaching them to the modal
         let categoryListElement = document.createElement("li");
         categoryListElement.classList.add('modal-displayed-categories')
         let text = document.createTextNode(item);
         let buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('edit-icons-div')
         let paragraphElement = document.createElement('p');
+        paragraphElement.classList.add('category-list-text-modal')
         paragraphElement.textContent = text.textContent;
         categoryListElement.appendChild(paragraphElement);
         categoryListElement.appendChild(buttonDiv);
         modalBody.appendChild(categoryListElement)
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
+        let editIcon = document.createElement('i');
+        editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        buttonDiv.appendChild(editIcon)
+
+        let removeIcon = document.createElement('i');
+        removeIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'modal-remove-icon');
+        buttonDiv.appendChild(removeIcon);
 
         //Updating Dropdown Menu UL
         let dropdownListElement = document.createElement("option");
@@ -337,7 +347,7 @@ const renderCategories = () => {
 
 }
 function updateSelectValue(event) {
-    console.log(event.target.value);
+    console.log('Selected Dropdown Item -->',event.target.value);
 }
 
 //Dropdown Options Event Listener
@@ -345,16 +355,10 @@ let dropdownOptions = document.getElementById('defaultDropdown');
 dropdownOptions.addEventListener('change', updateSelectValue)
 
 
-//Edit Categories Button
+//Edit Categories (Opens Modal) Button
 let editCatBtn = document.getElementById('edit-categories-btn');
 editCatBtn.addEventListener('click', renderCategories());
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
 catDropdown.addEventListener('click', renderCategories());
-catDropdown.addEventListener('click', filterByCategory);
-
-//Filter 
-function filterByCategory(event){
-    console.log(event.target.value)
-}

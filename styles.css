@@ -27,6 +27,12 @@ div.card {
   font-size:1px;
   padding:0px;
 }
+.modal-edit-icon{
+  font-size:30px;
+}
+.modal-remove-icon{
+  font-size: 30px;
+}
 }
 
 body {
@@ -99,6 +105,17 @@ select#defaultDropdown{
   list-style: none;
   margin:0;
   padding:2% .5%;
+  display:flex;
+  justify-content: space-between;
+}
+.edit-icons-div{
+  display:flex;
+}
+.modal-edit-icon{
+  font-size:24px;
+}
+.modal-remove-icon{
+  font-size: 24px;
 }
 
 
