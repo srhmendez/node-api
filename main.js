@@ -111,6 +111,7 @@ function getAllCategories() {
   todoArray.forEach((todo) => {
     categoriesArray.push(todo.category);
   });
+  console.log('In getAllCategories Array Function --->',categoriesArray)
   return categoriesArray.filter((item, pos) => {
     return categoriesArray.indexOf(item) === pos;
   });
@@ -118,7 +119,7 @@ function getAllCategories() {
 
 // Add category options to dropdown
 function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
-
+    console.log('In addCategoriesToDropdown-->',categories)
     categories.forEach((category) => {
         const listItem = document.createElement('li');
         const listA = document.createElement('a');
@@ -211,6 +212,7 @@ function removeFromArray(key) {
     }
   });
   console.log("todoArray--- .>", todoArray);
+  renderCategories();
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
@@ -283,7 +285,6 @@ const findRemovedTask = (key) =>{
         if (element.id == key) {
             renderTask(element)
         } 
-
         console.log('checking complete value after toggle -->',element)
     })
 };
