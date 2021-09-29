@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SKEMA: Todo App</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -30,20 +30,15 @@
 
             <div class="category-group">
               <h6 class="categories-sortby">Sort By:</h6>
-              <div class="btn-group">
-                <button class="btn btn-outline-primary dropdown-toggle category-dropdown" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
+              <div class="dropdown-btn-group">
+                <select class="custom-select" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
                   Select...
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="category-selection">
-                  <li><a class="dropdown-item" href="#">All Categories</a></li>
-                  <li><a class="dropdown-item" href="#">Health</a></li>
-                  <li><a class="dropdown-item" href="#">Work</a></li>
-                  <li><a class="dropdown-item" href="#">Car</a></li>
-                  <li><a class="dropdown-item" href="#">Shopping</a></li>
-                </ul>
+                </select>
+
+            
               </div>
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#categories-modal">
+              <button type="button" id="edit-categories-btn" class="btn-sm btn-outline-primary" data-toggle="modal" data-target="#exampleModalLong">
                 Edit Categories
               </button>
             </div>
@@ -80,18 +75,23 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="categories-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Categories</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-      <div class="modal-body">
-        ...
+      <div class="modal-body" >
+        <ul id="modal-body">
+
+
+        </ul>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
@@ -105,11 +105,9 @@
     </main>
 
     <script type="text/javascript" src="main.js"></script>
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-    crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
   </body>
 
   
