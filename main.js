@@ -3,27 +3,33 @@ let todoArray = [
   {
     id: 1,
     name: "go to work",
-    category: "Work",
     complete: false,
+    category: "Work",
+
   },
   {
     id: 2,
     name: "go to school",
-    category: "School",
     complete: false,
+    category: "School"
   },
   {
     id: 3,
     name: "go to the dentist",
-    category: "Personal",
     complete: false,
+    category: "Health"
   },
+  {
+    id: 4,
+    name: "go to the gym",
+    complete: false,
+    category: "Health",
+  }
 ];
 
 //adds input area and array items from array above on page load to the addTask
 window.addEventListener("load", () => {
   renderTopInputSectionInDOM();
-
   todoArray.map((task) => {
     formatExistingJSON(task);
   });
@@ -141,7 +147,7 @@ function formatExistingJSON(task) {
   };
 
   //creating a new task to put into the HTML DOM
-  createNewTask(todo);
+  renderTask(todo);
 }
 
 //Formats newly input ToDo
@@ -157,7 +163,18 @@ const formatNewJSON = (inputString, category) => {
     name: inputString,
     category,
     complete: false,
-  };
+  
+    };
+
+
+    //pushes existing to dos to Array with checked values
+    todoArray.push(todo);
+    console.log('array after new todo is pushed to array -->', todoArray)
+
+    //creating a new task to put into the HTML DOM
+    renderTask(todo);
+
+}
 
   //pushes existing to dos to Array with checked values
   todoArray.push(todo);
@@ -217,7 +234,7 @@ function toggleComplete(key) {
     index.complete = true;
   } else if (index.complete == true) {
     index.complete = false;
-    createNewTask(key);
+    renderTask(key);
     removeTodoFromList(key);
   }
 
@@ -227,8 +244,7 @@ function toggleComplete(key) {
 }
 
 //Creating Task to add to the HTML DOM
-function createNewTask(todo) {
-  console.log("---createNewTask----");
+function renderTask(todo) {
 
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
@@ -238,7 +254,9 @@ function createNewTask(todo) {
   listItem.setAttribute("data-key", todo.id);
 
   listItem.innerHTML = `
-    <div class="form-check">
+  // This checks if the newly created To Do is complete or not, if complete, it will append the item to the complete list and it will be toggled green. If it is false, and is not complete, it will add the item to the incomplete to do list.
+  if (todo.complete) {
+     <div class="form-check">
     <label class="form-check-label">
     <input id="${todo.id}" onClick="toggleComplete(${todo.id})" class="js-tick checkbox" type="checkbox"/>
     ${todo.name}
@@ -264,36 +282,42 @@ function createNewTask(todo) {
 }
 
 //Error Checking for empty string
-function promptError() {
-  window.alert("A To-Do item cannot be blank and a category must be selected. Please try again.");
-}
+let promptError = () => {
+        window.alert("A To-Do item cannot be blank. Please try again.");
+    
+};
 
-function findRemovedTask(key) {
-  todoArray.forEach((element) => {
-    //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
-    if (element.id == key) {
-      createNewTask(element);
-    }
+const findRemovedTask = (key) =>{
 
-    console.log("checking complete value after toggle -->", element);
-  });
-}
+    todoArray.forEach(element => {
+        //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with renderTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
+        if (element.id == key) {
+            renderTask(element)
+        } 
+
+        console.log('checking complete value after toggle -->',element)
+    })
+};
+
 
 // Remove all completed tasks
-function deleteAllCompletedTasks() {
-  console.log("delete all completed---");
+function deleteAllCompletedTasks(){
+    console.log('delete all completed---');
 
-  //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
-  let completedTasksUl = document.getElementById("complete-ul");
-  completedTasksUl.innerHTML = "";
-  todoArray = todoArray.filter((item) => {
-    if (item.complete === false) {
-      return item;
-    }
-  });
+    //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
+    let completedTasksUl = document.getElementById("complete-ul");
+    completedTasksUl.innerHTML = '';
+    todoArray = todoArray.filter((item) => {
+        if (item.complete === false) {
+            return item
+        }
+      });
 
-  //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
-  console.log("updated array---->", todoArray);
+    //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
+    console.log('updated array---->', todoArray);
+
+    //Updates Categories based on updated todoArray.categories
+    renderCategories();
 }
 
 //Edit tasks function that fires once the edit icon is clicked
@@ -340,7 +364,85 @@ function removeEditInputField(inputID) {
 }
 
 
-//Modal logic 
-let categoriesModal = document.getElementById('categories-modal');
+//makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+const updateCategories = () => {
+    let uniqueCategories = []
+    todoArray.forEach(item => {
+        uniqueCategories.push(item.category); 
+    })
+    uniqueCategories = [...new Set(uniqueCategories)]
+    let updatedArray = Array.from(uniqueCategories)
+    return updatedArray;
+}
 
-console.log(categoriesModal.value)
+const renderCategories = () => {
+    
+    // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
+    let categories = updateCategories();
+    
+    console.log('categories after array is updated-->', categories)
+
+    //Modal 
+    let modalBody = document.getElementById('modal-body');
+
+    //Dropdown Unordered List
+    let dropDown = document.getElementById('defaultDropdown');
+
+    //Clearing DOM of previous rendered Lists
+    modalBody.innerHTML = '';
+
+    let allCatString = 'All Categories'
+    //Clearing DOM of previous rendered Lists but leaving All categories as a base case
+    dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
+
+
+    //Modal & Dropdown Categories Rendering
+   categories.forEach(item => {
+
+        //creating list item, edit & delete icons & attaching them to the modal
+        let categoryListElement = document.createElement("li");
+        categoryListElement.classList.add('modal-displayed-categories')
+        let text = document.createTextNode(item);
+        let buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('edit-icons-div')
+        let paragraphElement = document.createElement('p');
+        paragraphElement.classList.add('category-list-text-modal')
+        paragraphElement.textContent = text.textContent;
+        categoryListElement.appendChild(paragraphElement);
+        categoryListElement.appendChild(buttonDiv);
+        modalBody.appendChild(categoryListElement)
+        //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
+        let editIcon = document.createElement('i');
+        editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        buttonDiv.appendChild(editIcon)
+
+        let removeIcon = document.createElement('i');
+        removeIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'modal-remove-icon');
+        buttonDiv.appendChild(removeIcon);
+
+        //Updating Dropdown Menu UL
+        let dropdownListElement = document.createElement("option");
+        dropdownListElement.setAttribute('value', text.textContent )
+        dropdownListElement.appendChild(text);
+        dropDown.appendChild(dropdownListElement);
+
+    });
+
+}
+function updateSelectValue(event) {
+    console.log('Selected Dropdown Item -->',event.target.value);
+}
+
+//Dropdown Options Event Listener
+let dropdownOptions = document.getElementById('defaultDropdown');
+dropdownOptions.addEventListener('change', updateSelectValue)
+
+
+//Edit Categories (Opens Modal) Button
+let editCatBtn = document.getElementById('edit-categories-btn');
+editCatBtn.addEventListener('click', renderCategories());
+
+//Category Dropdown Button 
+let catDropdown = document.getElementById('defaultDropdown');
+catDropdown.addEventListener('click', renderCategories());
+

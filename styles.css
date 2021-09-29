@@ -3,12 +3,35 @@
 .mobile-sizing {
   padding:2%;
 }
+h6.categories-sortby{
+  font-size:12px;
+  width:55px;
+  padding-top:1.5%;
+}
+div.category-group{
+  margin-bottom:20px;
+  align-items: center;
+  justify-content: flex-end;
+}
+button#edit-categories-btn{
+  font-size:10px;
+  padding:1.2% 2%;
+}
+select#defaultDropdown{
+  width:20px;
+}
 div.card {
   margin:0;
 }
 .mb-sm-btn{
   font-size:1px;
   padding:0px;
+}
+.modal-edit-icon{
+  font-size:30px;
+}
+.modal-remove-icon{
+  font-size: 30px;
 }
 }
 
@@ -49,17 +72,52 @@ p {display: inline}
       padding: 0;
   }
 }
-
+ul#modal-body{
+  padding:0;
+  margin:0;
+}
 h6.categories-sortby{
   margin-right:20px;
 }
 .category-dropdown{
   margin-right:20px;
 }
-.category-group{
-  display:flex;
-  align-items: center;
+#edit-categories-btn{
+  margin-left:10px;
+  padding:1px 10px;
 }
+.dropdown-button-group{
+  align-items: baseline;
+}
+select#defaultDropdown{
+  width:180px;
+}
+.category-group{
+  width:100%;
+  display:flex;
+  align-items: baseline;
+}
+.custom-select{
+  padding: 2px 5px;
+  width:50%;
+}
+.modal-displayed-categories{
+  list-style: none;
+  margin:0;
+  padding:2% .5%;
+  display:flex;
+  justify-content: space-between;
+}
+.edit-icons-div{
+  display:flex;
+}
+.modal-edit-icon{
+  font-size:24px;
+}
+.modal-remove-icon{
+  font-size: 24px;
+}
+
 
 .card {
   box-shadow: none;
