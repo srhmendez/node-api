@@ -32,6 +32,8 @@ window.addEventListener("load", () => {
 // Create new task div function
 function renderTopInputSectionInDOM() {
   const topInputSectionDiv = document.querySelector(".add-items");
+  const inputGroup = document.createElement('div');
+  inputGroup.setAttribute('class', 'input-group-prepend form-control')
 
   // Create new task input
   const textInput = document.createElement("input");
@@ -58,11 +60,7 @@ function renderTopInputSectionInDOM() {
   addNewTaskButton.setAttribute("id", "add-btn");
   addNewTaskButton.innerHTML = "Add";
 
-  // event listener for adding task by clicking add button
-  addNewTaskButton.addEventListener("click", (event) => {
-    console.log("add button was clicked!!!");
-    submitInput(event);
-  });
+
 
   // Category Dropdown Button Creation
   const dropdownDiv = document.createElement('div');
@@ -73,6 +71,7 @@ function renderTopInputSectionInDOM() {
   dropdownButton.setAttribute('aria-expanded', 'false');
   dropdownButton.innerHTML = 'Select Category';
 
+
  
   // Dropdown UL creation
   const dropdownUL = document.createElement('ul');
@@ -80,15 +79,23 @@ function renderTopInputSectionInDOM() {
   const categories = getAllCategories();
 
   // Display category options in dropdown
-  addCategoriesToDropdown(categories, dropdownUL)
+  addCategoriesToDropdown(categories, dropdownUL, dropdownButton);
+
+
+    // event listener for adding task by clicking add button
+    addNewTaskButton.addEventListener("click", (event) => {
+      submitInput(event);
+    });
 
   dropdownDiv.appendChild(dropdownButton);
   dropdownDiv.appendChild(dropdownUL);
   
 
   // Appending items to create new task div
-  topInputSectionDiv.appendChild(textInput);
-  topInputSectionDiv.appendChild(dropdownDiv)
+
+  inputGroup.appendChild(textInput);
+  inputGroup.appendChild(dropdownDiv)
+  topInputSectionDiv.appendChild(inputGroup);
   topInputSectionDiv.appendChild(addNewTaskButton);
 }
 
@@ -104,16 +111,24 @@ function getAllCategories() {
 }
 
 // Add category options to dropdown
-function addCategoriesToDropdown(categories, dropdownUL) {
+function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
+
     categories.forEach((category) => {
         const listItem = document.createElement('li');
         const listA = document.createElement('a');
-        listA.setAttribute('class', 'dropdown-item')
-        
+        listA.setAttribute('class', 'dropdown-item dropdown-categories')
+        listA.setAttribute('href', '#');
         listA.innerHTML = `${category}`;
+
         listItem.appendChild(listA)
         dropdownUL.appendChild(listItem)
+
+        listA.addEventListener('click', () => {
+          dropdownButton.innerHTML = `${category}`    
+        })
     })
+
+
 }
 
 //adds a new task object to the array
@@ -122,7 +137,7 @@ function formatExistingJSON(task) {
   const todo = {
     id: task.id,
     name: task.name,
-    status: "",
+    category: task.category,
     complete: false,
   };
 
@@ -131,7 +146,7 @@ function formatExistingJSON(task) {
 }
 
 //Formats newly input ToDo
-const formatNewJSON = (inputString) => {
+const formatNewJSON = (inputString, category) => {
   console.log(
     "newly added task as a string before JSON format--->",
     inputString
@@ -141,6 +156,7 @@ const formatNewJSON = (inputString) => {
     // use math.random & current array length to generate a new id number
     id: todoArray.length + Math.floor(Math.random() * 258),
     name: inputString,
+    category,
     complete: false,
   };
 
@@ -154,17 +170,25 @@ const formatNewJSON = (inputString) => {
 
 //turns input into text to be used to create a todo task
 function submitInput(event) {
+  console.log('event---->', event);
   event.preventDefault();
   const input = document.querySelector(".todo-list-input");
   const text = input.value.trim();
+  const findCategory = document.querySelector(".category-dropdown")
+  const category = findCategory.innerHTML;
+  let validCategory = category !== 'Select Category';
+  console.log('is valid category?', validCategory);
+  console.log('category text in submitInput----->', category);
 
-  if (text !== "") {
-    formatNewJSON(text);
+  if (text !== "" && validCategory) {
+    formatNewJSON(text, category);
     input.value = "";
     input.focus();
-  } else if (!text) {
+  } else {
     promptError();
   }
+
+
 }
 
 // Event listener from delete icon
@@ -242,7 +266,7 @@ function createNewTask(todo) {
 
 //Error Checking for empty string
 function promptError() {
-  window.alert("A To-Do item cannot be blank. Please try again.");
+  window.alert("A To-Do item cannot be blank and a category must be selected. Please try again.");
 }
 
 function findRemovedTask(key) {
