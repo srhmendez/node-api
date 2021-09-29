@@ -204,7 +204,8 @@ select#defaultDropdown{
 }
 
 .add-items .btn {
-  margin-left: .5rem
+  margin-left: .5rem;
+  height: 100%;
 }
 
 .btn {
@@ -585,3 +586,7 @@ div.completed-section{
 
 
 
+#add-btn {
+  height: auto;
+  width: auto;
+}
