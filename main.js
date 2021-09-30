@@ -361,6 +361,7 @@ const updateCategories = () => {
     })
     uniqueCategories = [...new Set(uniqueCategories)]
     let updatedArray = Array.from(uniqueCategories)
+  
     return updatedArray;
 }
 
@@ -373,12 +374,18 @@ const renderCategories = () => {
 
     //Modal 
     let modalBody = document.getElementById('modal-body');
+    
+
+    if (categories.length == 1 && categories[0] == 'Uncategorized'){
+      categories = [];
+    }
 
     //Dropdown Unordered List
     let dropDown = document.getElementById('defaultDropdown');
 
     //Clearing DOM of previous rendered Lists
     modalBody.innerHTML = '';
+
 
     let allCatString = 'All Categories'
     //Clearing DOM of previous rendered Lists but leaving All categories as a base case
@@ -400,6 +407,7 @@ const renderCategories = () => {
         categoryListElement.appendChild(paragraphElement);
         categoryListElement.appendChild(buttonDiv);
         modalBody.appendChild(categoryListElement)
+
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
@@ -419,6 +427,27 @@ const renderCategories = () => {
 
     });
 
+    if (categories.length === 0) {
+      modalBody.innerHTML = '';
+      let h5 = document.createElement('h5');
+      h5.innerText = 'All Categories have been set to Uncategorized'
+      let h6 = document.createElement('h6');
+      h6.setAttribute('class', 'empty-modal-text')
+      h6.innerText = 'Please add categories to improve our sorting feature.'
+      h5.setAttribute('class', 'empty-modal-text');
+      let emptyModalDiv = document.createElement('div');
+      emptyModalDiv.setAttribute('class', 'empty-modal')
+      emptyModalDiv.appendChild(h5);
+      emptyModalDiv.appendChild(h6)
+      let newCatBtn = document.createElement('button');
+      newCatBtn.innerText = "+ Add Category";
+      newCatBtn.setAttribute('class', 'btn-sm btn-primary');
+      emptyModalDiv.appendChild(newCatBtn);
+      modalBody.appendChild(emptyModalDiv);
+
+
+      newCatBtn.addEventListener('click', addCategories)
+    }
 }
 
 function filterByCategory(event) {
@@ -445,15 +474,38 @@ const removeCategory = (event) => {
   
   todoArray.forEach(item => {
     if (item.category === removedCatName) item.category = 'Uncategorized';
-
   });
 
   let index = categories.indexOf(removedCatName);
   categories.splice(index, 1);
+
   let categoryDiv = document.getElementById('modal-body');
   categoryDiv.innerHTML = '';
   renderCategories();
-  console.log(todoArray.forEach(item => console.log(item)))
+}
+
+//Event Listener function for adding New Categories.
+const addCategories = (event) => {
+  console.log(event.target.parentElement)
+  
+  let addCategoryHTML = event.target.parentElement;
+  let ModalDiv = addCategoryHTML;
+
+  let divElement = document.createElement('div');
+  let inputElement = document.createElement('input');
+  inputElement.setAttribute('type', 'text');
+  divElement.appendChild(inputElement);
+
+  let submitCategoryBtn = document.createElement('button');
+  submitCategoryBtn.innerText = 'Create Category';
+  submitCategoryBtn.setAttribute('class', 'input-field-btn btn btn-sm btn-outline-primary')
+  divElement.appendChild(submitCategoryBtn);
+  divElement.setAttribute('class', 'even-with-btn')
+  addCategoryHTML.innerHTML = '';
+  addCategoryHTML.appendChild(divElement);
+  console.log(ModalDiv)
+  
+  
 }
 
 //Dropdown Options Event Listener
