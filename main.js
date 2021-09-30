@@ -82,11 +82,10 @@ function renderTopInputSectionInDOM() {
   // Dropdown UL creation
   const dropdownUL = document.createElement('ul');
   dropdownUL.setAttribute('class', 'dropdown-menu dropdown-menu-end');
-  const categories = getAllCategories();
+  const categories = updateCategories();
 
   // Display category options in dropdown
   addCategoriesToDropdown(categories, dropdownUL, dropdownButton);
-
 
     // event listener for adding task by clicking add button
     addNewTaskButton.addEventListener("click", (event) => {
@@ -106,16 +105,16 @@ function renderTopInputSectionInDOM() {
 }
 
 // Get each array category
-function getAllCategories() {
-  let categoriesArray = [];
-  todoArray.forEach((todo) => {
-    categoriesArray.push(todo.category);
-  });
-  console.log('In getAllCategories Array Function --->',categoriesArray)
-  return categoriesArray.filter((item, pos) => {
-    return categoriesArray.indexOf(item) === pos;
-  });
-}
+// function getAllCategories() {
+//   let categoriesArray = [];
+//   todoArray.forEach((todo) => {
+//     categoriesArray.push(todo.category);
+//   });
+//   console.log('In getAllCategories Array Function --->',categoriesArray)
+//   return categoriesArray.filter((item, pos) => {
+//     return categoriesArray.indexOf(item) === pos;
+//   });
+// }
 
 // Add category options to dropdown
 function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
@@ -240,6 +239,7 @@ function toggleComplete(key) {
 //Creating Task to add to the HTML DOM
 function renderTask(todo) {
 
+  console.log('in render task this is what the parameter is-->', todo)
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
   const item = document.querySelector(`[data-key='${todo.id}']`);
@@ -419,13 +419,27 @@ const renderCategories = () => {
     });
 
 }
-function updateSelectValue(event) {
+
+function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
-}
+    let filterCategory = event.target.value;
+    let prefilteredTodos = document.getElementById('incomplete-ul');
+
+    if (filterCategory === 'All'){
+      prefilteredTodos.innerHTML = '';
+      todoArray.map((task) => {
+        formatExistingJSON(task);
+      });
+    } else {
+    let filteredCategories = todoArray.filter(item => (item.category === filterCategory))
+    prefilteredTodos.innerHTML = '';
+    filteredCategories.forEach(item => {renderTask(item)});
+    }
+  }
 
 //Dropdown Options Event Listener
 let dropdownOptions = document.getElementById('defaultDropdown');
-dropdownOptions.addEventListener('change', updateSelectValue)
+dropdownOptions.addEventListener('change', filterByCategory)
 
 
 //Edit Categories (Opens Modal) Button
