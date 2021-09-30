@@ -2,25 +2,25 @@
 let todoArray = [
   {
     id: 1,
-    name: "go to work",
+    name: "Go to work",
     complete: false,
     category: "Work",
   },
   {
     id: 2,
-    name: "go to school",
+    name: "Go to school",
     complete: false,
     category: "School",
   },
   {
     id: 3,
-    name: "go to the dentist",
+    name: "Go to the dentist",
     complete: false,
     category: "Health",
   },
   {
       id: 4,
-      name: "go to the gym",
+      name: "Go to the gym",
       complete: false,
       category: "Health",
     },
@@ -29,7 +29,6 @@ let todoArray = [
 //adds input area and array items from array above on page load to the addTask
 window.addEventListener("load", () => {
   renderTopInputSectionInDOM();
-
   todoArray.map((task) => {
     formatExistingJSON(task);
   });
@@ -300,7 +299,10 @@ function deleteAllCompletedTasks() {
 
   //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
   console.log("updated array---->", todoArray);
+
+  renderCategories();
 }
+
 
 //Edit tasks function that fires once the edit icon is clicked
 function editTodo(id) {
