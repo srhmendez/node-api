@@ -239,7 +239,6 @@ function toggleComplete(key) {
 //Creating Task to add to the HTML DOM
 function renderTask(todo) {
 
-  console.log('in render task this is what the parameter is-->', todo)
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
   const item = document.querySelector(`[data-key='${todo.id}']`);
@@ -408,6 +407,8 @@ const renderCategories = () => {
 
         let removeIcon = document.createElement('i');
         removeIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'modal-remove-icon');
+        removeIcon.setAttribute('value', text)
+        removeIcon.addEventListener('click', removeCategory)
         buttonDiv.appendChild(removeIcon);
 
         //Updating Dropdown Menu UL
@@ -436,6 +437,24 @@ function filterByCategory(event) {
     filteredCategories.forEach(item => {renderTask(item)});
     }
   }
+
+//Event listener for removing a Category on the delete icon in the Category Modal
+const removeCategory = (event) => {
+  let removedCatName = event.target.parentElement.parentElement.textContent;
+  let categories = updateCategories();
+  
+  todoArray.forEach(item => {
+    if (item.category === removedCatName) item.category = 'Uncategorized';
+
+  });
+
+  let index = categories.indexOf(removedCatName);
+  categories.splice(index, 1);
+  let categoryDiv = document.getElementById('modal-body');
+  categoryDiv.innerHTML = '';
+  renderCategories();
+  console.log(todoArray.forEach(item => console.log(item)))
+}
 
 //Dropdown Options Event Listener
 let dropdownOptions = document.getElementById('defaultDropdown');
