@@ -1002,15 +1002,21 @@ div.completed-section{
   height: auto;
 }
 
-.empty-modal .even-with-btn, .empty-modal li {
-  display: inline;
-  margin-right: 5%;
-}
-
 .modal-new-categories-div {
   display: flex;
   justify-content: space-evenly;
 }
-
 .modal-new-categories-div, .empty-modal {
-list-style-type: none;}
+  list-style-type: none;}
+
+.empty-modal .even-with-btn {
+  margin-right: 5%;
+}
+
+.empty-modal .even-with-btn, .empty-modal i {
+  display: inline;
+}
+.modal-new-categories-div i:hover, .empty-modal i:hover {
+  cursor: pointer
+}
+
