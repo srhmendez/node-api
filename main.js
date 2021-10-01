@@ -2,29 +2,28 @@
 let todoArray = [
   {
     id: 1,
-    name: "go to work",
+    name: "Go to work",
     complete: false,
     category: "Work",
-
   },
   {
     id: 2,
-    name: "go to school",
+    name: "Go to school",
     complete: false,
-    category: "School"
+    category: "School",
   },
   {
     id: 3,
-    name: "go to the dentist",
+    name: "Go to the dentist",
     complete: false,
     category: "Health Care"
   },
   {
-    id: 4,
-    name: "go to the gym",
-    complete: false,
-    category: "Health",
-  }
+      id: 4,
+      name: "Go to the gym",
+      complete: false,
+      category: "Health",
+    },
 ];
 
 //adds input area and array items from array above on page load to the addTask
@@ -45,7 +44,7 @@ function renderTopInputSectionInDOM() {
   const textInput = document.createElement("input");
   textInput.setAttribute("type", "text");
   textInput.setAttribute("class", "todo-list-input form-control");
-  textInput.setAttribute("placeholder", "Add New Task");
+  textInput.setAttribute("placeholder", "New Task");
   textInput.setAttribute("id", "new-task-input");
 
   // event listener for hitting 'Enter' instead of clicking button
@@ -105,6 +104,15 @@ function renderTopInputSectionInDOM() {
 }
 
 // Get each array category
+function getAllCategories() {
+  let categoriesArray = [];
+  todoArray.forEach((todo) => {
+    categoriesArray.push(todo.category);
+  });
+  return categoriesArray.filter((item, pos) => {
+    return categoriesArray.indexOf(item) === pos;
+  });
+}
 // function getAllCategories() {
 //   let categoriesArray = [];
 //   todoArray.forEach((todo) => {
@@ -118,7 +126,7 @@ function renderTopInputSectionInDOM() {
 
 // Add category options to dropdown
 function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
-    console.log('In addCategoriesToDropdown-->',categories)
+
     categories.forEach((category) => {
         const listItem = document.createElement('li');
         const listA = document.createElement('a');
@@ -163,18 +171,15 @@ const formatNewJSON = (inputString, category) => {
     name: inputString,
     category,
     complete: false,
-  
-    };
+  };
 
+  //pushes existing to dos to Array with checked values
+  todoArray.push(todo);
+  console.log("array after new todo is pushed to array -->", todoArray);
 
-    //pushes existing to dos to Array with checked values
-    todoArray.push(todo);
-    console.log('array after new todo is pushed to array -->', todoArray)
-
-    //creating a new task to put into the HTML DOM
-    renderTask(todo);
-
-}
+  //creating a new task to put into the HTML DOM
+  renderTask(todo);
+};
 
 //turns input into text to be used to create a todo task
 function submitInput(event) {
@@ -211,7 +216,6 @@ function removeFromArray(key) {
     }
   });
   console.log("todoArray--- .>", todoArray);
-  renderCategories();
 }
 
 //removing tasks from either completed or incompleted list ( NOT THE SAME AS THE DELETE ICON FUNCTION)
@@ -238,6 +242,7 @@ function toggleComplete(key) {
 
 //Creating Task to add to the HTML DOM
 function renderTask(todo) {
+  console.log("---renderTask----");
 
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
@@ -247,7 +252,7 @@ function renderTask(todo) {
   listItem.setAttribute("data-key", todo.id);
 
   listItem.innerHTML = `
-     <div class="form-check">
+    <div class="form-check">
     <label class="form-check-label">
     <input id="${todo.id}" onClick="toggleComplete(${todo.id})" class="js-tick checkbox" type="checkbox"/>
     ${todo.name}
@@ -281,37 +286,36 @@ function promptError(removeUncategorized) {
   }
 }
 
-const findRemovedTask = (key) =>{
+function findRemovedTask(key) {
+  todoArray.forEach((element) => {
+    //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
+    if (element.id == key) {
+      renderTask(element);
+    }
 
-    todoArray.forEach(element => {
-        //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with renderTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
-        if (element.id == key) {
-            renderTask(element)
-        } 
-        console.log('checking complete value after toggle -->',element)
-    })
-};
-
+    console.log("checking complete value after toggle -->", element);
+  });
+}
 
 // Remove all completed tasks
-function deleteAllCompletedTasks(){
-    console.log('delete all completed---');
+function deleteAllCompletedTasks() {
+  console.log("delete all completed---");
 
-    //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
-    let completedTasksUl = document.getElementById("complete-ul");
-    completedTasksUl.innerHTML = '';
-    todoArray = todoArray.filter((item) => {
-        if (item.complete === false) {
-            return item
-        }
-      });
+  //targets the completedTasks Unordered List in the DOM & sets the HTML to nothing
+  let completedTasksUl = document.getElementById("complete-ul");
+  completedTasksUl.innerHTML = "";
+  todoArray = todoArray.filter((item) => {
+    if (item.complete === false) {
+      return item;
+    }
+  });
 
-    //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
-    console.log('updated array---->', todoArray);
+  //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
+  console.log("updated array---->", todoArray);
 
-    //Updates Categories based on updated todoArray.categories
-    renderCategories();
+  renderCategories();
 }
+
 
 //Edit tasks function that fires once the edit icon is clicked
 function editTodo(id) {
@@ -430,7 +434,7 @@ const renderCategories = () => {
         dropdownListElement.appendChild(text);
         dropDown.appendChild(dropdownListElement);
 
-    });
+  });
 
     //This code displays a message if all categories have been deleted (Uncategorized is automatically deleted if no other categories remain. I did this because it made no sense to have all items be uncategorized in the sort by drop down. If I left uncategorized in the drop down the toggle would show all elements for the (all categories option) and it would also show all elements for the (uncategorized option). And for the user it would appear that the sort by filter didn't do anything when toggling between those two options
 
@@ -541,4 +545,3 @@ editCatBtn.addEventListener('click', renderCategories());
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
 catDropdown.addEventListener('click', renderCategories());
-
