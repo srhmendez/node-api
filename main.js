@@ -155,7 +155,7 @@ function formatExistingJSON(task) {
   };
 
   //creating a new task to put into the HTML DOM
-  createNewTask(todo);
+  renderTask(todo);
 }
 
 //Formats newly input ToDo
@@ -178,7 +178,7 @@ const formatNewJSON = (inputString, category) => {
   console.log("array after new todo is pushed to array -->", todoArray);
 
   //creating a new task to put into the HTML DOM
-  createNewTask(todo);
+  renderTask(todo);
 };
 
 //turns input into text to be used to create a todo task
@@ -231,7 +231,7 @@ function toggleComplete(key) {
     index.complete = true;
   } else if (index.complete == true) {
     index.complete = false;
-    createNewTask(key);
+    renderTask(key);
     removeTodoFromList(key);
   }
 
@@ -241,8 +241,8 @@ function toggleComplete(key) {
 }
 
 //Creating Task to add to the HTML DOM
-function createNewTask(todo) {
-  console.log("---createNewTask----");
+function renderTask(todo) {
+  console.log("---renderTask----");
 
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
@@ -286,7 +286,7 @@ function findRemovedTask(key) {
   todoArray.forEach((element) => {
     //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
     if (element.id == key) {
-      createNewTask(element);
+      renderTask(element);
     }
 
     console.log("checking complete value after toggle -->", element);
