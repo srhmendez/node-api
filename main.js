@@ -27,7 +27,7 @@ let todoArray = [
 ];
 
 //makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-const updateCategories = function () {
+function updateCategories () {
     let uniqueCategories = []
     todoArray.forEach(item => {
         let trimmedCat = item.category.trim()
@@ -35,7 +35,6 @@ const updateCategories = function () {
     })
     uniqueCategories = [...new Set(uniqueCategories)]
     let updatedArray = Array.from(uniqueCategories)
-  
     return updatedArray;
 }
 
@@ -84,6 +83,7 @@ function renderTopInputSectionInDOM() {
   const dropdownDiv = document.createElement('div');
   const dropdownButton = document.createElement('button');
   dropdownButton.setAttribute('class', 'btn btn-outline-secondary dropdown-toggle category-dropdown');
+  dropdownButton.setAttribute('id', 'set-category-dropdown-btn')
   dropdownButton.setAttribute('type', 'button');
   dropdownButton.setAttribute('data-bs-toggle', 'dropdown');
   dropdownButton.setAttribute('aria-expanded', 'false');
@@ -94,11 +94,13 @@ function renderTopInputSectionInDOM() {
   // Dropdown UL creation
   const dropdownUL = document.createElement('ul');
   dropdownUL.setAttribute('class', 'dropdown-menu dropdown-menu-end');
+  dropdownUL.setAttribute('id', 'dropdown-category-unordered-list')
 
-  // Display category options in dropdown
-  addCategoriesToDropdown(dropdownUL, dropdownButton);
+  console.log(dropdownUL)
 
-    // event listener for adding task by clicking add button
+
+
+// event listener for adding task by clicking add button
     addNewTaskButton.addEventListener("click", (event) => {
       submitInput(event);
     });
@@ -113,34 +115,41 @@ function renderTopInputSectionInDOM() {
   inputGroup.appendChild(dropdownDiv)
   topInputSectionDiv.appendChild(inputGroup);
   topInputSectionDiv.appendChild(addNewTaskButton);
+
+  renderCategorySelection()
 }
 
+// rendering the Categories to the DOM
+const renderCategorySelection = () =>{
 
-// Add category options to dropdown
-function addCategoriesToDropdown(dropdownUL, dropdownButton) {
+let dropdownUL = document.getElementById('dropdown-category-unordered-list');
+let dropdownButton = document.getElementById('set-category-dropdown-btn');
 
-    let updatedCategories = updateCategories();
-    console.log('in addcategoriestodropdown (updated Categories -->', updateCategories)
-    updatedCategories.forEach((category) => {
-        const listItem = document.createElement('li');
-        const listA = document.createElement('a');
-        listA.setAttribute('class', 'dropdown-item dropdown-categories')
-        listA.setAttribute('href', '#');
-        listA.innerHTML = `${category}`;
+dropdownUL.innerHTML = ``;
+console.log(dropdownUL)
 
-        listItem.appendChild(listA)
-        dropdownUL.appendChild(listItem)
-        listA.addEventListener('click', () => {
-          dropdownButton.innerHTML = `${category}`    
-        })
-    })
+let currentCategories = updateCategories();
 
+currentCategories.forEach((category) => {
+    const listItem = document.createElement('li');
+    const listA = document.createElement('a');
+    listA.setAttribute('class', 'dropdown-item dropdown-categories')
+    listA.setAttribute('href', '#');
+    listA.innerHTML = `${category}`;
 
+    listItem.appendChild(listA);
+    dropdownUL.appendChild(listItem);
+
+    listA.addEventListener('click', () => {
+    dropdownButton.innerHTML = `${category}`  
+
+    });
+})
 }
+
 
 //adds a new task object to the array
 function formatExistingJSON(task) {
-  console.log("task--->", task);
   const todo = {
     id: task.id,
     name: task.name,
@@ -189,6 +198,7 @@ function submitInput(event) {
 
   if (text !== "" && validCategory) {
     formatNewJSON(text, category);
+    renderCategorySelection()
     input.value = "";
     input.focus();
   } else {
@@ -289,7 +299,6 @@ function findRemovedTask(id) {
       renderTask(element);
     }
 
-    console.log("checking complete value after toggle -->", element.complete);
   });
 }
 
@@ -306,10 +315,8 @@ function deleteAllCompletedTasks() {
     }
   });
 
-  //Then goes to update the array now that the DOM incomplete & complete lists have been edited.
-  console.log("updated array---->", todoArray);
-
   renderCategories();
+  renderCategorySelection();
 }
 
 
@@ -362,9 +369,9 @@ function removeEditInputField(inputID) {
 const renderCategories = () => {
     
     // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
+
     let categories = updateCategories();
     
-    console.log('categories after array is updated-->', categories)
 
     //Modal 
     let modalBody = document.getElementById('modal-body');
@@ -420,7 +427,6 @@ const renderCategories = () => {
         dropDown.appendChild(dropdownListElement);
 
   });
-
     //This code displays a message if all categories have been deleted (Uncategorized is automatically deleted if no other categories remain. I did this because it made no sense to have all items be uncategorized in the sort by drop down. If I left uncategorized in the drop down the toggle would show all elements for the (all categories option) and it would also show all elements for the (uncategorized option). And for the user it would appear that the sort by filter didn't do anything when toggling between those two options
 
     //This code creates a message in the modal that encourages the user to add more categories if there are none left to display.
