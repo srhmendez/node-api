@@ -26,6 +26,19 @@ let todoArray = [
     },
 ];
 
+//makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+const updateCategories = function () {
+    let uniqueCategories = []
+    todoArray.forEach(item => {
+        let trimmedCat = item.category.trim()
+        uniqueCategories.push(trimmedCat); 
+    })
+    uniqueCategories = [...new Set(uniqueCategories)]
+    let updatedArray = Array.from(uniqueCategories)
+  
+    return updatedArray;
+}
+
 //adds input area and array items from array above on page load to the addTask
 window.addEventListener("load", () => {
   renderTopInputSectionInDOM();
@@ -81,10 +94,9 @@ function renderTopInputSectionInDOM() {
   // Dropdown UL creation
   const dropdownUL = document.createElement('ul');
   dropdownUL.setAttribute('class', 'dropdown-menu dropdown-menu-end');
-  const categories = updateCategories();
 
   // Display category options in dropdown
-  addCategoriesToDropdown(categories, dropdownUL, dropdownButton);
+  addCategoriesToDropdown(dropdownUL, dropdownButton);
 
     // event listener for adding task by clicking add button
     addNewTaskButton.addEventListener("click", (event) => {
@@ -103,31 +115,13 @@ function renderTopInputSectionInDOM() {
   topInputSectionDiv.appendChild(addNewTaskButton);
 }
 
-// Get each array category
-function getAllCategories() {
-  let categoriesArray = [];
-  todoArray.forEach((todo) => {
-    categoriesArray.push(todo.category);
-  });
-  return categoriesArray.filter((item, pos) => {
-    return categoriesArray.indexOf(item) === pos;
-  });
-}
-// function getAllCategories() {
-//   let categoriesArray = [];
-//   todoArray.forEach((todo) => {
-//     categoriesArray.push(todo.category);
-//   });
-//   console.log('In getAllCategories Array Function --->',categoriesArray)
-//   return categoriesArray.filter((item, pos) => {
-//     return categoriesArray.indexOf(item) === pos;
-//   });
-// }
 
 // Add category options to dropdown
-function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
+function addCategoriesToDropdown(dropdownUL, dropdownButton) {
 
-    categories.forEach((category) => {
+    let updatedCategories = updateCategories();
+    console.log('in addcategoriestodropdown (updated Categories -->', updateCategories)
+    updatedCategories.forEach((category) => {
         const listItem = document.createElement('li');
         const listA = document.createElement('a');
         listA.setAttribute('class', 'dropdown-item dropdown-categories')
@@ -169,7 +163,7 @@ const formatNewJSON = (inputString, category) => {
     // use math.random & current array length to generate a new id number
     id: todoArray.length + Math.floor(Math.random() * 258),
     name: inputString,
-    category,
+    category: category,
     complete: false,
   };
 
@@ -275,6 +269,8 @@ function renderTask(todo) {
     //adds newly created task to incomplete ToDo List Card
     incompleteList.append(listItem);
   }
+  renderCategories()
+  
 }
 
 //Error Checking for empty string
@@ -286,14 +282,14 @@ function promptError(removeUncategorized) {
   }
 }
 
-function findRemovedTask(key) {
+function findRemovedTask(id) {
   todoArray.forEach((element) => {
-    //once the element with the matching key is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
-    if (element.id == key) {
+    //once the element with the matching id is found in the array, the element is sent to be rendered in the DOM with createNewTask Function where the complete value in the object will be evaluated. If the task is complete it will be rendered in the completed DOM card. if the task is incomplete it will be rendered in the incomplete DOM card
+    if (element.id == id) {
       renderTask(element);
     }
 
-    console.log("checking complete value after toggle -->", element);
+    console.log("checking complete value after toggle -->", element.complete);
   });
 }
 
@@ -361,18 +357,7 @@ function removeEditInputField(inputID) {
 }
 
 
-//makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-const updateCategories = () => {
-    let uniqueCategories = []
-    todoArray.forEach(item => {
-        let trimmedCat = item.category.trim()
-        uniqueCategories.push(trimmedCat); 
-    })
-    uniqueCategories = [...new Set(uniqueCategories)]
-    let updatedArray = Array.from(uniqueCategories)
-  
-    return updatedArray;
-}
+
 
 const renderCategories = () => {
     
