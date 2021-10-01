@@ -81,11 +81,10 @@ function renderTopInputSectionInDOM() {
   // Dropdown UL creation
   const dropdownUL = document.createElement('ul');
   dropdownUL.setAttribute('class', 'dropdown-menu dropdown-menu-end');
-  const categories = getAllCategories();
+  const categories = updateCategories();
 
   // Display category options in dropdown
   addCategoriesToDropdown(categories, dropdownUL, dropdownButton);
-
 
     // event listener for adding task by clicking add button
     addNewTaskButton.addEventListener("click", (event) => {
@@ -114,6 +113,16 @@ function getAllCategories() {
     return categoriesArray.indexOf(item) === pos;
   });
 }
+// function getAllCategories() {
+//   let categoriesArray = [];
+//   todoArray.forEach((todo) => {
+//     categoriesArray.push(todo.category);
+//   });
+//   console.log('In getAllCategories Array Function --->',categoriesArray)
+//   return categoriesArray.filter((item, pos) => {
+//     return categoriesArray.indexOf(item) === pos;
+//   });
+// }
 
 // Add category options to dropdown
 function addCategoriesToDropdown(categories, dropdownUL, dropdownButton) {
@@ -350,76 +359,162 @@ function removeEditInputField(inputID) {
 
 //makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 const updateCategories = () => {
-  let uniqueCategories = []
-  todoArray.forEach(item => {
-      uniqueCategories.push(item.category); 
-  })
-  uniqueCategories = [...new Set(uniqueCategories)]
-  let updatedArray = Array.from(uniqueCategories)
-  return updatedArray;
+    let uniqueCategories = []
+    todoArray.forEach(item => {
+        uniqueCategories.push(item.category); 
+    })
+    uniqueCategories = [...new Set(uniqueCategories)]
+    let updatedArray = Array.from(uniqueCategories)
+  
+    return updatedArray;
 }
 
 const renderCategories = () => {
-  
-  // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
-  let categories = updateCategories();
-  
-  console.log('categories after array is updated-->', categories)
+    
+    // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
+    let categories = updateCategories();
+    
+    console.log('categories after array is updated-->', categories)
 
-  //Modal 
-  let modalBody = document.getElementById('modal-body');
+    //Modal 
+    let modalBody = document.getElementById('modal-body');
+    
 
-  //Dropdown Unordered List
-  let dropDown = document.getElementById('defaultDropdown');
+    if (categories.length == 1 && categories[0] == 'Uncategorized'){
+      categories = [];
+    }
 
-  //Clearing DOM of previous rendered Lists
-  modalBody.innerHTML = '';
+    //Dropdown Unordered List
+    let dropDown = document.getElementById('defaultDropdown');
 
-  let allCatString = 'All Categories'
-  //Clearing DOM of previous rendered Lists but leaving All categories as a base case
-  dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
+    //Clearing DOM of previous rendered Lists
+    modalBody.innerHTML = '';
 
 
-  //Modal & Dropdown Categories Rendering
- categories.forEach(item => {
+    let allCatString = 'All Categories'
+    //Clearing DOM of previous rendered Lists but leaving All categories as a base case
+    dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
 
-      //creating list item, edit & delete icons & attaching them to the modal
-      let categoryListElement = document.createElement("li");
-      categoryListElement.classList.add('modal-displayed-categories')
-      let text = document.createTextNode(item);
-      let buttonDiv = document.createElement('div');
-      buttonDiv.classList.add('edit-icons-div')
-      let paragraphElement = document.createElement('p');
-      paragraphElement.classList.add('category-list-text-modal')
-      paragraphElement.textContent = text.textContent;
-      categoryListElement.appendChild(paragraphElement);
-      categoryListElement.appendChild(buttonDiv);
-      modalBody.appendChild(categoryListElement)
-      //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
-      let editIcon = document.createElement('i');
-      editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
-      buttonDiv.appendChild(editIcon)
 
-      let removeIcon = document.createElement('i');
-      removeIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'modal-remove-icon');
-      buttonDiv.appendChild(removeIcon);
+    //Modal & Dropdown Categories Rendering
+   categories.forEach(item => {
 
-      //Updating Dropdown Menu UL
-      let dropdownListElement = document.createElement("option");
-      dropdownListElement.setAttribute('value', text.textContent )
-      dropdownListElement.appendChild(text);
-      dropDown.appendChild(dropdownListElement);
+        //creating list item, edit & delete icons & attaching them to the modal
+        let categoryListElement = document.createElement("li");
+        categoryListElement.classList.add('modal-displayed-categories')
+        let text = document.createTextNode(item);
+        let buttonDiv = document.createElement('div');
+        buttonDiv.classList.add('edit-icons-div')
+        let paragraphElement = document.createElement('p');
+        paragraphElement.classList.add('category-list-text-modal')
+        paragraphElement.textContent = text.textContent;
+        categoryListElement.appendChild(paragraphElement);
+        categoryListElement.appendChild(buttonDiv);
+        modalBody.appendChild(categoryListElement)
+
+        //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
+        let editIcon = document.createElement('i');
+        editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        buttonDiv.appendChild(editIcon)
+
+        let removeIcon = document.createElement('i');
+        removeIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'modal-remove-icon');
+        removeIcon.setAttribute('value', text)
+        removeIcon.addEventListener('click', removeCategory)
+        buttonDiv.appendChild(removeIcon);
+
+        //Updating Dropdown Menu UL
+        let dropdownListElement = document.createElement("option");
+        dropdownListElement.setAttribute('value', text.textContent )
+        dropdownListElement.appendChild(text);
+        dropDown.appendChild(dropdownListElement);
 
   });
 
+    if (categories.length === 0) {
+      modalBody.innerHTML = '';
+      let h5 = document.createElement('h5');
+      h5.innerText = 'All Categories have been set to Uncategorized'
+      let h6 = document.createElement('h6');
+      h6.setAttribute('class', 'empty-modal-text')
+      h6.innerText = 'Please add categories to improve our sorting feature.'
+      h5.setAttribute('class', 'empty-modal-text');
+      let emptyModalDiv = document.createElement('div');
+      emptyModalDiv.setAttribute('class', 'empty-modal')
+      emptyModalDiv.appendChild(h5);
+      emptyModalDiv.appendChild(h6)
+      let newCatBtn = document.createElement('button');
+      newCatBtn.innerText = "+ Add Category";
+      newCatBtn.setAttribute('class', 'btn-sm btn-primary');
+      emptyModalDiv.appendChild(newCatBtn);
+      modalBody.appendChild(emptyModalDiv);
+
+
+      newCatBtn.addEventListener('click', addCategories)
+    }
 }
-function updateSelectValue(event) {
-  console.log('Selected Dropdown Item -->',event.target.value);
+
+function filterByCategory(event) {
+    console.log('Selected Dropdown Item -->',event.target.value);
+    let filterCategory = event.target.value;
+    let prefilteredTodos = document.getElementById('incomplete-ul');
+
+    if (filterCategory === 'All'){
+      prefilteredTodos.innerHTML = '';
+      todoArray.map((task) => {
+        formatExistingJSON(task);
+      });
+    } else {
+    let filteredCategories = todoArray.filter(item => (item.category === filterCategory))
+    prefilteredTodos.innerHTML = '';
+    filteredCategories.forEach(item => {renderTask(item)});
+    }
+  }
+
+//Event listener for removing a Category on the delete icon in the Category Modal
+const removeCategory = (event) => {
+  let removedCatName = event.target.parentElement.parentElement.textContent;
+  let categories = updateCategories();
+  
+  todoArray.forEach(item => {
+    if (item.category === removedCatName) item.category = 'Uncategorized';
+  });
+
+  let index = categories.indexOf(removedCatName);
+  categories.splice(index, 1);
+
+  let categoryDiv = document.getElementById('modal-body');
+  categoryDiv.innerHTML = '';
+  renderCategories();
+}
+
+//Event Listener function for adding New Categories.
+const addCategories = (event) => {
+  console.log(event.target.parentElement)
+  
+  let addCategoryHTML = event.target.parentElement;
+  let ModalDiv = addCategoryHTML;
+
+  let divElement = document.createElement('div');
+  let inputElement = document.createElement('input');
+  inputElement.setAttribute('type', 'text');
+  divElement.appendChild(inputElement);
+
+  let submitCategoryBtn = document.createElement('button');
+  submitCategoryBtn.innerText = 'Create Category';
+  submitCategoryBtn.setAttribute('class', 'input-field-btn btn btn-sm btn-outline-primary')
+  divElement.appendChild(submitCategoryBtn);
+  divElement.setAttribute('class', 'even-with-btn')
+  addCategoryHTML.innerHTML = '';
+  addCategoryHTML.appendChild(divElement);
+  console.log(ModalDiv)
+  
+  
 }
 
 //Dropdown Options Event Listener
 let dropdownOptions = document.getElementById('defaultDropdown');
-dropdownOptions.addEventListener('change', updateSelectValue)
+dropdownOptions.addEventListener('change', filterByCategory)
 
 
 //Edit Categories (Opens Modal) Button
