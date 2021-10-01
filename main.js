@@ -17,7 +17,7 @@ let todoArray = [
     id: 3,
     name: "go to the dentist",
     complete: false,
-    category: "Health"
+    category: "Health Care"
   },
   {
     id: 4,
@@ -273,8 +273,12 @@ function renderTask(todo) {
 }
 
 //Error Checking for empty string
-function promptError() {
-  window.alert("A To-Do item cannot be blank and a category must be selected. Please try again.");
+function promptError(removeUncategorized) {
+  if (removeUncategorized == 'Uncategorized'){
+    window.alert("You cannot erase this category. You can either update the category name with the edit icon or individually edit todos with a new Category.")
+  } else {
+    window.alert("A To-Do item cannot be blank and a category must be selected. Please try again.");
+  }
 }
 
 const findRemovedTask = (key) =>{
@@ -357,7 +361,8 @@ function removeEditInputField(inputID) {
 const updateCategories = () => {
     let uniqueCategories = []
     todoArray.forEach(item => {
-        uniqueCategories.push(item.category); 
+        let trimmedCat = item.category.trim()
+        uniqueCategories.push(trimmedCat); 
     })
     uniqueCategories = [...new Set(uniqueCategories)]
     let updatedArray = Array.from(uniqueCategories)
@@ -427,6 +432,9 @@ const renderCategories = () => {
 
     });
 
+    //This code displays a message if all categories have been deleted (Uncategorized is automatically deleted if no other categories remain. I did this because it made no sense to have all items be uncategorized in the sort by drop down. If I left uncategorized in the drop down the toggle would show all elements for the (all categories option) and it would also show all elements for the (uncategorized option). And for the user it would appear that the sort by filter didn't do anything when toggling between those two options
+
+    //This code creates a message in the modal that encourages the user to add more categories if there are none left to display.
     if (categories.length === 0) {
       modalBody.innerHTML = '';
       let h5 = document.createElement('h5');
@@ -439,17 +447,21 @@ const renderCategories = () => {
       emptyModalDiv.setAttribute('class', 'empty-modal')
       emptyModalDiv.appendChild(h5);
       emptyModalDiv.appendChild(h6)
+
+      //Add New Category Button
       let newCatBtn = document.createElement('button');
       newCatBtn.innerText = "+ Add Category";
       newCatBtn.setAttribute('class', 'btn-sm btn-primary');
+      newCatBtn.addEventListener('click', addCategories)
+
+      //Appending Elements to the Modal
       emptyModalDiv.appendChild(newCatBtn);
       modalBody.appendChild(emptyModalDiv);
-
-
-      newCatBtn.addEventListener('click', addCategories)
+      
     }
 }
 
+//Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
 function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
     let filterCategory = event.target.value;
@@ -470,19 +482,23 @@ function filterByCategory(event) {
 //Event listener for removing a Category on the delete icon in the Category Modal
 const removeCategory = (event) => {
   let removedCatName = event.target.parentElement.parentElement.textContent;
-  let categories = updateCategories();
   
   todoArray.forEach(item => {
     if (item.category === removedCatName) item.category = 'Uncategorized';
-  });
+  })
+  
 
-  let index = categories.indexOf(removedCatName);
-  categories.splice(index, 1);
-
-  let categoryDiv = document.getElementById('modal-body');
-  categoryDiv.innerHTML = '';
-  renderCategories();
-}
+  if (removedCatName === 'Uncategorized') {
+    promptError(removedCatName);
+  } else {
+    let categories = updateCategories();
+    let index = categories.indexOf(removedCatName);
+    categories.splice(index, 1);
+    let categoryDiv = document.getElementById('modal-body');
+    categoryDiv.innerHTML = '';
+    renderCategories();
+  }
+};
 
 //Event Listener function for adding New Categories.
 const addCategories = (event) => {
@@ -493,6 +509,7 @@ const addCategories = (event) => {
 
   let divElement = document.createElement('div');
   let inputElement = document.createElement('input');
+  inputElement.setAttribute('id', 'new-cat-input')
   inputElement.setAttribute('type', 'text');
   divElement.appendChild(inputElement);
 
@@ -503,8 +520,12 @@ const addCategories = (event) => {
   divElement.setAttribute('class', 'even-with-btn')
   addCategoryHTML.innerHTML = '';
   addCategoryHTML.appendChild(divElement);
-  console.log(ModalDiv)
   
+  inputElement.addEventListener('change', function(event) {getValue()})
+  
+  const getValue = (event) => {
+    console.log(event.target.parentElement.childNode)
+  }
   
 }
 
