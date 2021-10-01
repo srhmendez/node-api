@@ -393,6 +393,19 @@ const renderCategories = () => {
     dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
 
 
+    // Maggie- Make "+ New Category" button a constant in Modal
+    let newCatBtnDiv = document.createElement('div');
+    newCatBtnDiv.setAttribute("class", "modal-new-categories-div")
+
+    let newCatOptionBtn = document.createElement("button");
+    newCatOptionBtn.innerText = "+ New Category";
+    newCatOptionBtn.setAttribute("class", "btn-sm btn-primary");
+    newCatOptionBtn.addEventListener("click", addCategories);
+    modalBody.appendChild(newCatBtnDiv);
+    newCatBtnDiv.appendChild(newCatOptionBtn);
+
+
+
     //Modal & Dropdown Categories Rendering
    categories.forEach(item => {
 
@@ -453,14 +466,6 @@ const renderCategories = () => {
       emptyModalDiv.appendChild(newCatBtn);
       modalBody.appendChild(emptyModalDiv);
       
-    }
-    // Maggie- Attempt to make "+ New Category" button a constant?
-    else {
-      let newCatOptionBtn = document.createElement('button');
-      newCatOptionBtn.innerText = "+ New Category";
-      newCatOptionBtn.setAttribute('class', 'btn-sm btn-primary');
-      newCatOptionBtn.addEventListener('click', addCategories)
-      modalBody.append(newCatOptionBtn);
     }
 }
 
@@ -529,6 +534,16 @@ const addCategories = (event) => {
   const getValue = (event) => {
     console.log(event.target.parentElement.childNode)
   }
+
+    // Maggie create remove/cancel icon for create new category button input
+    let removeIcon = document.createElement("i");
+    removeIcon.setAttribute(
+      "class",
+      ".remove mdi mdi-close-circle-outline modal-remove-icon"
+    );
+  
+    removeIcon.addEventListener("click", removeCategory);
+    ModalDiv.appendChild(removeIcon);
   
 }
 

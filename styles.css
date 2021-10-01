@@ -1001,3 +1001,16 @@ div.completed-section{
   grid-template-columns:1fr 1fr;
   height: auto;
 }
+
+.empty-modal .even-with-btn, .empty-modal li {
+  display: inline;
+  margin-right: 5%;
+}
+
+.modal-new-categories-div {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.modal-new-categories-div, .empty-modal {
+list-style-type: none;}
