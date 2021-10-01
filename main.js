@@ -454,6 +454,14 @@ const renderCategories = () => {
       modalBody.appendChild(emptyModalDiv);
       
     }
+    // Maggie- Attempt to make "+ New Category" button a constant?
+    else {
+      let newCatOptionBtn = document.createElement('button');
+      newCatOptionBtn.innerText = "+ New Category";
+      newCatOptionBtn.setAttribute('class', 'btn-sm btn-primary');
+      newCatOptionBtn.addEventListener('click', addCategories)
+      modalBody.append(newCatOptionBtn);
+    }
 }
 
 //Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
