@@ -577,7 +577,7 @@ function editCategory(event) {
   catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
   todoArray.forEach(item => {
     if (item.category === oldCat) {
-      item.category = 'nothing'
+      item.category = 'nothing' //You can see in console that it changes the category to 'nothing', but I can't figure out how to target the new value instead
     }
     else return
   })
