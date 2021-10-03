@@ -368,6 +368,8 @@ function removeEditInputField(inputID) {
 
 const renderCategories = () => {
     
+
+
     // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
 
     let categories = updateCategories();
@@ -425,6 +427,8 @@ const renderCategories = () => {
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        editIcon.setAttribute('value', text)
+        editIcon.addEventListener('click', editCategory)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -559,3 +563,40 @@ editCatBtn.addEventListener('click', renderCategories());
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
 catDropdown.addEventListener('click', renderCategories());
+
+
+
+//Kristin code for editing category within the modal
+
+
+function editCategory(event) {
+  const oldCat = event.target.parentElement.parentElement.textContent;
+  const catInputField = event.currentTarget.parentElement.parentElement;
+
+  //creating input field to edit todo and attaching an onclick event listener to the update button
+  catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
+  todoArray.forEach(item => {
+    if (item.category === oldCat) {
+      item.category = 'nothing'
+    }
+    else return
+  })
+  console.log(todoArray)
+
+
+}
+
+function updateCategory(event){
+  console.log("everything fails")
+  
+
+
+  removeCategoryEditField()
+}
+
+// remove the category input field from the DOM
+function removeCategoryEditField() {
+ console.log('somethingworking')
+}
+
+
