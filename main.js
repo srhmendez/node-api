@@ -534,16 +534,6 @@ const addCategories = (event) => {
   const getValue = (event) => {
     console.log(event.target.parentElement.childNode)
   }
-
-    // Maggie create remove/cancel icon for create new category button input
-    let removeIcon = document.createElement("i");
-    removeIcon.setAttribute(
-      "class",
-      ".remove mdi mdi-close-circle-outline modal-remove-icon"
-    );
-  
-    removeIcon.addEventListener("click", removeCategory);
-    ModalDiv.appendChild(removeIcon);
   
 }
 
