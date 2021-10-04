@@ -156,8 +156,8 @@ function formatExistingJSON(task) {
   const todo = {
     id: task.id,
     name: task.name,
-    category: task.category,
     complete: false,
+    category: task.category,
   };
 
   //creating a new task to put into the HTML DOM
@@ -175,8 +175,8 @@ const formatNewJSON = (inputString, category) => {
     // use math.random & current array length to generate a new id number
     id: todoArray.length + Math.floor(Math.random() * 258),
     name: inputString,
-    category: category,
     complete: false,
+    category: category,
   };
 
   //pushes existing to dos to Array with checked values
@@ -421,7 +421,7 @@ const renderCategories = () => {
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
         editIcon.setAttribute('value', text)
-        editIcon.addEventListener('click', editCategory)
+        editIcon.addEventListener('click', editCategoryName)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -591,9 +591,9 @@ function pullCategoriesFromObject() {
 }
 
 
-function editCategoryName() {
-  console.log(edit)
-}
+// function editCategoryName(edit) {
+//   console.log(edit)
+// }
 
 
 //Kristin code for editing category within the modal
