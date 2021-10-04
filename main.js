@@ -67,6 +67,7 @@ function renderTopInputSectionInDOM() {
   textInput.setAttribute("class", "todo-list-input form-control");
   textInput.setAttribute("placeholder", "New Task");
   textInput.setAttribute("id", "new-task-input");
+  
 
   // event listener for hitting 'Enter' instead of clicking button
   textInput.addEventListener("keyup", function (event) {
@@ -121,6 +122,9 @@ function renderTopInputSectionInDOM() {
   inputGroup.appendChild(dropdownDiv)
   topInputSectionDiv.appendChild(inputGroup);
   topInputSectionDiv.appendChild(addNewTaskButton);
+
+  textInput.focus();
+  textInput.select();
 
   renderCategorySelection()
 }
@@ -332,7 +336,16 @@ function editTodo(id) {
   const inputField = event.currentTarget.parentElement.parentElement;
 
   //creating input field to edit todo and attaching an onclick event listener to the update button
-  inputField.innerHTML = `<input value=${name} id=${id}></input><button onclick= updateToDo(${id},${dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
+  inputField.innerHTML = `<input placeholder=${name} id=${id}></input><button onclick= updateToDo(${id},${dataKey}) class=\'mb-sm-btn btn btn-secondary btn-sm\ '>Update</button>`;
+
+  inputField.firstChild.focus();
+  inputField.firstChild.select();
+
+  inputField.firstChild.addEventListener("keyup", function (event) {
+    if (event.code === "Enter") {
+      updateToDo(id, dataKey);
+    }
+  });
 }
 
 // this fires once the update button that appears in the edit todo feature is clicked
@@ -421,9 +434,10 @@ const renderCategories = () => {
 
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
         let editIcon = document.createElement('i');
-        editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon');
         editIcon.setAttribute('value', text)
-        // editIcon.addEventListener('click', editCategoryName)
+        editIcon.addEventListener('click', editCategoryName);
+
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -559,7 +573,7 @@ editCatBtn.addEventListener('click', renderCategories);
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
-catDropdown.addEventListener('click', renderCategories());
+catDropdown.addEventListener('click', renderCategories);
 
 
 const updateCategoryObject = (removedCatName) => {
@@ -601,24 +615,40 @@ function pullCategoriesFromObject() {
 function editCategoryName(event) {
   const oldCat = event.target.parentElement.parentElement.textContent;
   const catInputField = event.currentTarget.parentElement.parentElement;
-  console.log(catInputField)
+  
+
+  catInputField.addEventListener("keyup", function (event) {
+    if (event.code === "Enter") {
+      updateCategory(event);
+    }
+  });
+  catInputField.addEventListener('change', function() {
+    console.log()
+  })
 
   //creating input field to edit todo and attaching an onclick event listener to the update button
-  catInputField.innerHTML = `<input value=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
+  catInputField.innerHTML = `<input value='' placeholder=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
 
-  document.getElementById('update-edited-cat-btn').addEventListener('click', updateCategory(event, oldCat));
+  catInputField.firstChild.focus();
+  catInputField.firstChild.select();
+
+  document.getElementById('update-edited-cat-btn').addEventListener('click', updateCategory);
   
 }
 
-function updateCategory(event, oldCat){
-  console.log(event);
-  console.log(oldCat);
+function updateCategory(event){
+  let oldCategory = event.currentTarget.parentElement.firstChild.value;
+  let inputFieldValue = event.currentTarget
+
+  categoriesArray.push('updated');
+  
+  index = categoriesArray.findIndex(item => oldCategory === item);
+  categoriesArray.splice(index, 1)
+  renderCategories();
+  console.log(categoriesArray)
+  renderCategorySelection();
 
 }
 
-// remove the category input field from the DOM
-function removeCategoryEditField() {
- //console.log('somethingworking')
-}
 
 
