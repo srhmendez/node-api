@@ -374,7 +374,7 @@ const renderCategories = () => {
     let modalBody = document.getElementById('modal-body');
     
 
-    if (categoriesArray.length == 1 && categories[0] == 'Uncategorized'){
+    if (categoriesArray.length == 1 && categoriesArray[0] == 'Uncategorized'){
       categoriesArray = [];
     }
 
@@ -400,7 +400,6 @@ const renderCategories = () => {
     newCatOptionBtn.addEventListener("click", addCategories);
     modalBody.appendChild(newCatBtnDiv);
     newCatBtnDiv.appendChild(newCatOptionBtn);
-
 
     //Modal & Dropdown Categories Rendering
     categoriesArray.forEach(item => {
@@ -430,10 +429,8 @@ const renderCategories = () => {
         buttonDiv.appendChild(removeIcon);
 
         //Updating Dropdown Menu UL
-        let dropdownListElement = document.createElement("option");
-        dropdownListElement.setAttribute('value', text.textContent )
-        dropdownListElement.appendChild(text);
-        dropDown.appendChild(dropdownListElement);        
+        let dropdownListElement = new Option(text.textContent, text.textContent, false, false);
+        dropDown.appendChild(dropdownListElement);    
 
   });
     //This code displays a message if all categories have been deleted (Uncategorized is automatically deleted if no other categories remain. I did this because it made no sense to have all items be uncategorized in the sort by drop down. If I left uncategorized in the drop down the toggle would show all elements for the (all categories option) and it would also show all elements for the (uncategorized option). And for the user it would appear that the sort by filter didn't do anything when toggling between those two options
@@ -463,11 +460,13 @@ const renderCategories = () => {
       modalBody.appendChild(emptyModalDiv);
       
     }
+
 }
 
 //Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
 function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
+    event.target.setAttribute('selected', );
     let filterCategory = event.target.value;
     let prefilteredTodos = document.getElementById('incomplete-ul');
 
@@ -491,7 +490,7 @@ const removeCategory = (event) => {
     if (item.category === removedCatName) item.category = 'Uncategorized';
   })
   
-
+  
   if (removedCatName === 'Uncategorized') {
     promptError(removedCatName);
   } else {
@@ -501,6 +500,9 @@ const removeCategory = (event) => {
     categoryDiv.innerHTML = '';
     renderCategories();
   }
+
+  updateCategoryObject(removedCatName);
+
 };
 
 //Event Listener function for adding New Categories.
@@ -553,7 +555,7 @@ let catDropdown = document.getElementById('defaultDropdown');
 catDropdown.addEventListener('click', renderCategories());
 
 
-const updateCategoryObject = () => {
+const updateCategoryObject = (removedCatName) => {
     
   //looping over each category in the category array and creating an object to store persistent data
     let i=0;
@@ -562,7 +564,16 @@ const updateCategoryObject = () => {
       i++;
     });
 
+    //checking if removed category parameter is there, if so, it replaces category list with uncategorized.
+    if (removedCatName == true){
+      for (categoryNames in categoriesOBJ) {
+        console.log(categoryNames);
+      }
+    }
+
     console.log('Cat array after added todo -->',categoriesArray)
+    console.log('Cat Obj after updating -->', categoriesOBJ)
+    console.log('To Do Array after Cat is deleted -->', todoArray)
   }
 
 function pullCategoriesFromObject() {
