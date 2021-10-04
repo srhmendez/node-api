@@ -548,7 +548,7 @@ dropdownOptions.addEventListener('change', filterByCategory)
 
 //Edit Categories (Opens Modal) Button
 let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener('click', renderCategories());
+editCatBtn.addEventListener('click', editCategoryName);
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
@@ -583,4 +583,8 @@ function pullCategoriesFromObject() {
         pulledCategories.push(categoriesOBJ[i]);
       }
       return pulledCategories;
+}
+
+function editCategoryName() {
+  console.log(edit)
 }
