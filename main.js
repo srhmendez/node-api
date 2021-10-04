@@ -555,7 +555,7 @@ dropdownOptions.addEventListener('change', filterByCategory)
 
 //Edit Categories (Opens Modal) Button
 let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener('click', editCategoryName);
+editCatBtn.addEventListener('click', renderCategories);
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
@@ -601,6 +601,7 @@ function pullCategoriesFromObject() {
 function editCategoryName(event) {
   const oldCat = event.target.parentElement.parentElement.textContent;
   const catInputField = event.currentTarget.parentElement.parentElement;
+  console.log(catInputField)
 
   //creating input field to edit todo and attaching an onclick event listener to the update button
   catInputField.innerHTML = `<input value=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
