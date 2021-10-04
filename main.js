@@ -420,6 +420,8 @@ const renderCategories = () => {
         //This is where the icon elements for edit and delete will need to be created and appended to the buttonDiv
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
+        editIcon.setAttribute('value', text)
+        editIcon.addEventListener('click', editCategory)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -588,40 +590,43 @@ function pullCategoriesFromObject() {
       return pulledCategories;
 }
 
+
 function editCategoryName() {
   console.log(edit)
 }
 
-// //Kristin code for editing category within the modal
+
+//Kristin code for editing category within the modal
 
 
-// function editCategoryName(event) {
-//   const oldCat = event.target.parentElement.parentElement.textContent;
-//   const catInputField = event.currentTarget.parentElement.parentElement;
+function editCategoryName(event) {
+  const oldCat = event.target.parentElement.parentElement.textContent;
+  const catInputField = event.currentTarget.parentElement.parentElement;
 
-//   //creating input field to edit todo and attaching an onclick event listener to the update button
-//   catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
-//   todoArray.forEach(item => {
-//     if (item.category === oldCat) {
-//       item.category = 'nothing' //You can see in console that it changes the category to 'nothing', but I can't figure out how to target the new value instead
-//     }
-//     else return
-//   })
-//   console.log(todoArray)
+  //creating input field to edit todo and attaching an onclick event listener to the update button
+  catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
+  todoArray.forEach(item => {
+    if (item.category === oldCat) {
+      item.category = 'nothing' //You can see in console that it changes the category to 'nothing', but I can't figure out how to target the new value instead
+    }
+    else return
+  })
+  console.log(todoArray)
 
 
-// }
+}
 
-// function updateCategory(event){
-//   console.log("everything fails")
+function updateCategory(event){
+  console.log("everything fails")
   
 
 
-//   removeCategoryEditField()
-// }
+  removeCategoryEditField()
+}
 
-// // remove the category input field from the DOM
-// function removeCategoryEditField() {
-//  console.log('somethingworking')
-// }
+// remove the category input field from the DOM
+function removeCategoryEditField() {
+ console.log('somethingworking')
+}
+
 
