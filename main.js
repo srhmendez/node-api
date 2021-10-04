@@ -387,7 +387,9 @@ const renderCategories = () => {
 
     let allCatString = 'All Categories'
     //Clearing DOM of previous rendered Lists but leaving All categories as a base case
-    dropDown.innerHTML = `<option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
+    dropDown.innerHTML = `
+    <option>Select... </option>
+    <option value=${allCatString}> <p> ${allCatString} </p> </option><hr>`;
 
 
     // Maggie- Make "+ New Category" button a constant in Modal
@@ -591,12 +593,9 @@ function pullCategoriesFromObject() {
 }
 
 
-// function editCategoryName(edit) {
-//   console.log(edit)
-// }
-
 
 //Kristin code for editing category within the modal
+
 
 
 function editCategoryName(event) {
@@ -604,29 +603,21 @@ function editCategoryName(event) {
   const catInputField = event.currentTarget.parentElement.parentElement;
 
   //creating input field to edit todo and attaching an onclick event listener to the update button
-  catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
-  todoArray.forEach(item => {
-    if (item.category === oldCat) {
-      item.category = 'nothing' //You can see in console that it changes the category to 'nothing', but I can't figure out how to target the new value instead
-    }
-    else return
-  })
-  console.log(todoArray)
+  catInputField.innerHTML = `<input value=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
 
-
+  document.getElementById('update-edited-cat-btn').addEventListener('click', updateCategory(event, oldCat));
+  
 }
 
-function updateCategory(event){
-  console.log("everything fails")
-  
+function updateCategory(event, oldCat){
+  console.log(event);
+  console.log(oldCat);
 
-
-  removeCategoryEditField()
 }
 
 // remove the category input field from the DOM
 function removeCategoryEditField() {
- console.log('somethingworking')
+ //console.log('somethingworking')
 }
 
 
