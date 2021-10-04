@@ -423,7 +423,7 @@ const renderCategories = () => {
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
         editIcon.setAttribute('value', text)
-        editIcon.addEventListener('click', editCategoryName)
+        // editIcon.addEventListener('click', editCategoryName)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
