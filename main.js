@@ -156,8 +156,8 @@ function formatExistingJSON(task) {
   const todo = {
     id: task.id,
     name: task.name,
-    category: task.category,
     complete: false,
+    category: task.category,
   };
 
   //creating a new task to put into the HTML DOM
@@ -175,8 +175,8 @@ const formatNewJSON = (inputString, category) => {
     // use math.random & current array length to generate a new id number
     id: todoArray.length + Math.floor(Math.random() * 258),
     name: inputString,
-    category: category,
     complete: false,
+    category: category,
   };
 
   //pushes existing to dos to Array with checked values
@@ -421,7 +421,7 @@ const renderCategories = () => {
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
         editIcon.setAttribute('value', text)
-        editIcon.addEventListener('click', editCategory)
+        editIcon.addEventListener('click', editCategoryName)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -468,7 +468,6 @@ const renderCategories = () => {
 //Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
 function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
-    event.target.setAttribute('selected', );
     let filterCategory = event.target.value;
     let prefilteredTodos = document.getElementById('incomplete-ul');
 
@@ -502,8 +501,12 @@ const removeCategory = (event) => {
     categoryDiv.innerHTML = '';
     renderCategories();
   }
-
+  categoriesArray.push('Uncategorized');
+  updateCategoriesArray();
   updateCategoryObject(removedCatName);
+  renderCategorySelection();
+  renderCategories();
+ 
 
 };
 
@@ -573,7 +576,7 @@ const updateCategoryObject = (removedCatName) => {
       }
     }
 
-    console.log('Cat array after added todo -->',categoriesArray)
+    console.log('Cat array after edit/remove todo -->',categoriesArray)
     console.log('Cat Obj after updating -->', categoriesOBJ)
     console.log('To Do Array after Cat is deleted -->', todoArray)
   }
@@ -586,6 +589,11 @@ function pullCategoriesFromObject() {
       }
       return pulledCategories;
 }
+
+
+// function editCategoryName(edit) {
+//   console.log(edit)
+// }
 
 
 //Kristin code for editing category within the modal
@@ -620,4 +628,5 @@ function updateCategory(event){
 function removeCategoryEditField() {
  console.log('somethingworking')
 }
+
 
