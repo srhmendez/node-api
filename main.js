@@ -423,7 +423,7 @@ const renderCategories = () => {
         let editIcon = document.createElement('i');
         editIcon.classList.add('remove', 'mdi', 'mdi-close-circle-outline', 'fas', 'fa-edit', 'customeditbutton', 'modal-edit-icon')
         editIcon.setAttribute('value', text)
-        editIcon.addEventListener('click', editCategoryName)
+        // editIcon.addEventListener('click', editCategoryName)
         buttonDiv.appendChild(editIcon)
 
         let removeIcon = document.createElement('i');
@@ -554,8 +554,8 @@ dropdownOptions.addEventListener('change', filterByCategory)
 
 
 //Edit Categories (Opens Modal) Button
-let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener('click', editCategoryName);
+// let editCatBtn = document.getElementById('edit-categories-btn');
+// editCatBtn.addEventListener('click', editCategoryName);
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
@@ -598,22 +598,22 @@ function pullCategoriesFromObject() {
 
 
 
-function editCategoryName(event) {
-  const oldCat = event.target.parentElement.parentElement.textContent;
-  const catInputField = event.currentTarget.parentElement.parentElement;
+// function editCategoryName(event) {
+//   const oldCat = event.target.parentElement.parentElement.textContent;
+//   const catInputField = event.currentTarget.parentElement.parentElement;
 
-  //creating input field to edit todo and attaching an onclick event listener to the update button
-  catInputField.innerHTML = `<input value=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
+//   //creating input field to edit todo and attaching an onclick event listener to the update button
+//   catInputField.innerHTML = `<input value=${oldCat}></input><button id="update-edited-cat-btn" class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
 
-  document.getElementById('update-edited-cat-btn').addEventListener('click', updateCategory(event, oldCat));
+//   document.getElementById('update-edited-cat-btn').addEventListener('click', updateCategory(event, oldCat));
   
-}
+// }
 
-function updateCategory(event, oldCat){
-  console.log(event);
-  console.log(oldCat);
+// function updateCategory(event, oldCat){
+//   console.log(event);
+//   console.log(oldCat);
 
-}
+// }
 
 // remove the category input field from the DOM
 function removeCategoryEditField() {
