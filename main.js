@@ -466,7 +466,6 @@ const renderCategories = () => {
 //Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
 function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
-    event.target.setAttribute('selected', );
     let filterCategory = event.target.value;
     let prefilteredTodos = document.getElementById('incomplete-ul');
 
@@ -500,8 +499,12 @@ const removeCategory = (event) => {
     categoryDiv.innerHTML = '';
     renderCategories();
   }
-
+  categoriesArray.push('Uncategorized');
+  updateCategoriesArray();
   updateCategoryObject(removedCatName);
+  renderCategorySelection();
+  renderCategories();
+ 
 
 };
 
@@ -571,7 +574,7 @@ const updateCategoryObject = (removedCatName) => {
       }
     }
 
-    console.log('Cat array after added todo -->',categoriesArray)
+    console.log('Cat array after edit/remove todo -->',categoriesArray)
     console.log('Cat Obj after updating -->', categoriesOBJ)
     console.log('To Do Array after Cat is deleted -->', todoArray)
   }
@@ -588,3 +591,37 @@ function pullCategoriesFromObject() {
 function editCategoryName() {
   console.log(edit)
 }
+
+// //Kristin code for editing category within the modal
+
+
+// function editCategoryName(event) {
+//   const oldCat = event.target.parentElement.parentElement.textContent;
+//   const catInputField = event.currentTarget.parentElement.parentElement;
+
+//   //creating input field to edit todo and attaching an onclick event listener to the update button
+//   catInputField.innerHTML = `<input value=${oldCat}></input><button onclick= updateCategory() class=\'mb-sm-btn btn btn-secondary btn-sm btn-cat\'>Update</button>`;
+//   todoArray.forEach(item => {
+//     if (item.category === oldCat) {
+//       item.category = 'nothing' //You can see in console that it changes the category to 'nothing', but I can't figure out how to target the new value instead
+//     }
+//     else return
+//   })
+//   console.log(todoArray)
+
+
+// }
+
+// function updateCategory(event){
+//   console.log("everything fails")
+  
+
+
+//   removeCategoryEditField()
+// }
+
+// // remove the category input field from the DOM
+// function removeCategoryEditField() {
+//  console.log('somethingworking')
+// }
+
