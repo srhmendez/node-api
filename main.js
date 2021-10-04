@@ -1,3 +1,6 @@
+//Creating an Object so that the Data Can Persist
+let categoriesOBJ = {}
+
 // Array of Todo Items
 let todoArray = [
   {
@@ -26,16 +29,22 @@ let todoArray = [
     },
 ];
 
-//makes a set from the category values in the todoArray. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
-function updateCategories () {
+let categoriesArray = []
+updateCategoriesArray();
+
+//makes a set from the category values in the todoArray. If there are no new values being added, it just pulls from the todoArray categories, otherwise it takes the newCategory parameter. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
+function updateCategoriesArray (newCategory) {
     let uniqueCategories = []
     todoArray.forEach(item => {
         let trimmedCat = item.category.trim()
         uniqueCategories.push(trimmedCat); 
     })
+    if (newCategory == true) {
+      newCategory.forEach(item => {
+        uniqueCategories.push(item)
+      })}
     uniqueCategories = [...new Set(uniqueCategories)]
-    let updatedArray = Array.from(uniqueCategories)
-    return updatedArray;
+    categoriesArray = Array.from(uniqueCategories)
 }
 
 //adds input area and array items from array above on page load to the addTask
@@ -96,9 +105,6 @@ function renderTopInputSectionInDOM() {
   dropdownUL.setAttribute('class', 'dropdown-menu dropdown-menu-end');
   dropdownUL.setAttribute('id', 'dropdown-category-unordered-list')
 
-  console.log(dropdownUL)
-
-
 
 // event listener for adding task by clicking add button
     addNewTaskButton.addEventListener("click", (event) => {
@@ -126,11 +132,8 @@ let dropdownUL = document.getElementById('dropdown-category-unordered-list');
 let dropdownButton = document.getElementById('set-category-dropdown-btn');
 
 dropdownUL.innerHTML = ``;
-console.log(dropdownUL)
 
-let currentCategories = updateCategories();
-
-currentCategories.forEach((category) => {
+categoriesArray.forEach((category) => {
     const listItem = document.createElement('li');
     const listA = document.createElement('a');
     listA.setAttribute('class', 'dropdown-item dropdown-categories')
@@ -246,7 +249,6 @@ function toggleComplete(key) {
 
 //Creating Task to add to the HTML DOM
 function renderTask(todo) {
-  console.log("---renderTask----");
 
   const incompleteList = document.querySelector("#incomplete-ul");
   const completeList = document.querySelector("#complete-ul");
@@ -365,22 +367,15 @@ function removeEditInputField(inputID) {
 
 
 
-
+//rendering the categories in the modal body as well as in the dropdown sortby menu
 const renderCategories = () => {
-    
-
-
-    // calls function updateCategories --> which loops over todoArray and pulls out the category key:value and pushes the categories to an array it then converts to a set to get rid of duplicate Items and then back to an array and returns an array of category names from the todoArray with no duplicates. It's then stored in the categories array so we can access it in this function.
-
-    let categories = updateCategories();
-    
 
     //Modal 
     let modalBody = document.getElementById('modal-body');
     
 
-    if (categories.length == 1 && categories[0] == 'Uncategorized'){
-      categories = [];
+    if (categoriesArray.length == 1 && categoriesArray[0] == 'Uncategorized'){
+      categoriesArray = [];
     }
 
     //Dropdown Unordered List
@@ -406,10 +401,8 @@ const renderCategories = () => {
     modalBody.appendChild(newCatBtnDiv);
     newCatBtnDiv.appendChild(newCatOptionBtn);
 
-
-
     //Modal & Dropdown Categories Rendering
-   categories.forEach(item => {
+    categoriesArray.forEach(item => {
 
         //creating list item, edit & delete icons & attaching them to the modal
         let categoryListElement = document.createElement("li");
@@ -438,16 +431,14 @@ const renderCategories = () => {
         buttonDiv.appendChild(removeIcon);
 
         //Updating Dropdown Menu UL
-        let dropdownListElement = document.createElement("option");
-        dropdownListElement.setAttribute('value', text.textContent )
-        dropdownListElement.appendChild(text);
-        dropDown.appendChild(dropdownListElement);
+        let dropdownListElement = new Option(text.textContent, text.textContent, false, false);
+        dropDown.appendChild(dropdownListElement);    
 
   });
     //This code displays a message if all categories have been deleted (Uncategorized is automatically deleted if no other categories remain. I did this because it made no sense to have all items be uncategorized in the sort by drop down. If I left uncategorized in the drop down the toggle would show all elements for the (all categories option) and it would also show all elements for the (uncategorized option). And for the user it would appear that the sort by filter didn't do anything when toggling between those two options
 
     //This code creates a message in the modal that encourages the user to add more categories if there are none left to display.
-    if (categories.length === 0) {
+    if (categoriesArray.length === 0) {
       modalBody.innerHTML = '';
       let h5 = document.createElement('h5');
       h5.innerText = 'All Categories have been set to Uncategorized'
@@ -471,11 +462,13 @@ const renderCategories = () => {
       modalBody.appendChild(emptyModalDiv);
       
     }
+
 }
 
 //Sort By Function that is triggered when the dropdown options are selected. It displays the to dos with the matched category
 function filterByCategory(event) {
     console.log('Selected Dropdown Item -->',event.target.value);
+    event.target.setAttribute('selected', );
     let filterCategory = event.target.value;
     let prefilteredTodos = document.getElementById('incomplete-ul');
 
@@ -499,17 +492,19 @@ const removeCategory = (event) => {
     if (item.category === removedCatName) item.category = 'Uncategorized';
   })
   
-
+  
   if (removedCatName === 'Uncategorized') {
     promptError(removedCatName);
   } else {
-    let categories = updateCategories();
-    let index = categories.indexOf(removedCatName);
-    categories.splice(index, 1);
+    let index = categoriesArray.indexOf(removedCatName);
+    categoriesArray.splice(index, 1);
     let categoryDiv = document.getElementById('modal-body');
     categoryDiv.innerHTML = '';
     renderCategories();
   }
+
+  updateCategoryObject(removedCatName);
+
 };
 
 //Event Listener function for adding New Categories.
@@ -517,7 +512,6 @@ const addCategories = (event) => {
   console.log(event.target.parentElement)
   
   let addCategoryHTML = event.target.parentElement;
-  let ModalDiv = addCategoryHTML;
 
   let divElement = document.createElement('div');
   let inputElement = document.createElement('input');
@@ -528,15 +522,23 @@ const addCategories = (event) => {
   let submitCategoryBtn = document.createElement('button');
   submitCategoryBtn.innerText = 'Create Category';
   submitCategoryBtn.setAttribute('class', 'input-field-btn btn btn-sm btn-outline-primary')
+  submitCategoryBtn.addEventListener('click', renderCategories)
   divElement.appendChild(submitCategoryBtn);
   divElement.setAttribute('class', 'even-with-btn')
   addCategoryHTML.innerHTML = '';
   addCategoryHTML.appendChild(divElement);
+
   
-  inputElement.addEventListener('change', function(event) {getValue()})
+  inputElement.addEventListener('change', function(event) {getValue(event)})
   
   const getValue = (event) => {
-    console.log(event.target.parentElement.childNode)
+
+    //grabbing the value from the input box
+    let newValue = event.target.value;
+    categoriesArray.push(newValue)
+    updateCategoryObject(categoriesArray);
+    renderCategorySelection();
+    
   }
   
 }
@@ -548,18 +550,48 @@ dropdownOptions.addEventListener('change', filterByCategory)
 
 //Edit Categories (Opens Modal) Button
 let editCatBtn = document.getElementById('edit-categories-btn');
-editCatBtn.addEventListener('click', renderCategories());
+editCatBtn.addEventListener('click', editCategoryName);
 
 //Category Dropdown Button 
 let catDropdown = document.getElementById('defaultDropdown');
 catDropdown.addEventListener('click', renderCategories());
 
 
+const updateCategoryObject = (removedCatName) => {
+    
+  //looping over each category in the category array and creating an object to store persistent data
+    let i=0;
+    categoriesArray.forEach(category => {
+      categoriesOBJ[`${i}`] = category;
+      i++;
+    });
+
+    //checking if removed category parameter is there, if so, it replaces category list with uncategorized.
+    if (removedCatName == true){
+      for (categoryNames in categoriesOBJ) {
+        console.log(categoryNames);
+      }
+    }
+
+    console.log('Cat array after added todo -->',categoriesArray)
+    console.log('Cat Obj after updating -->', categoriesOBJ)
+    console.log('To Do Array after Cat is deleted -->', todoArray)
+  }
+
+function pullCategoriesFromObject() {
+      //looping over object to push items to an array
+      let pulledCategories = []
+      for (i in categoriesOBJ) {
+        pulledCategories.push(categoriesOBJ[i]);
+      }
+      return pulledCategories;
+}
+
 
 //Kristin code for editing category within the modal
 
 
-function editCategory(event) {
+function editCategoryName(event) {
   const oldCat = event.target.parentElement.parentElement.textContent;
   const catInputField = event.currentTarget.parentElement.parentElement;
 
@@ -588,5 +620,4 @@ function updateCategory(event){
 function removeCategoryEditField() {
  console.log('somethingworking')
 }
-
 
