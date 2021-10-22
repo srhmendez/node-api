@@ -1,35 +1,25 @@
+const { get } = require("underscore");
+
 //Creating an Object so that the Data Can Persist
 let categoriesOBJ = {}
+let todoArray;
 
 
+//get todos from static DB 
+async getTodoArray() {
 
-// Array of Todo Items
-let todoArray = [
-  {
-    id: 1,
-    name: "Go to work",
-    complete: false,
-    category: "Work",
-  },
-  {
-    id: 2,
-    name: "Go to school",
-    complete: false,
-    category: "School",
-  },
-  {
-    id: 3,
-    name: "Go to the dentist",
-    complete: false,
-    category: "Health Care"
-  },
-  {
-      id: 4,
-      name: "Go to the gym",
-      complete: false,
-      category: "Health",
-    },
-];
+  try {
+    const response = await fetch('/todos/', {
+    method: 'GET',
+    credentials: 'same-origin'
+  });
+  const todos = await response.json();
+  return todos;
+  } catch (error) {
+    console.error(error)
+  }
+}
+
 
 let categoriesArray = []
 updateCategoriesArray();
@@ -37,10 +27,13 @@ updateCategoriesArray();
 //makes a set from the category values in the todoArray. If there are no new values being added, it just pulls from the todoArray categories, otherwise it takes the newCategory parameter. The Set object lets you store unique values of any type, whether primitive values or object references. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set
 function updateCategoriesArray (newCategory) {
     let uniqueCategories = []
-    todoArray.forEach(item => {
+
+    fetch('/todos/')
+    .then(res => res.json())
+    .then(data => data.forEach(item => {
         let trimmedCat = item.category.trim()
         uniqueCategories.push(trimmedCat); 
-    })
+    }))
     if (newCategory == true) {
       newCategory.forEach(item => {
         uniqueCategories.push(item)
@@ -49,21 +42,20 @@ function updateCategoriesArray (newCategory) {
     categoriesArray = Array.from(uniqueCategories)
 }
 
+
+
 //adds input area and array items from array above on page load to the addTask
-window.addEventListener("load", () => {
-  fetch('/todos/')
-	.then(res => res.json())
-	.then(data => {
-		console.log(data)
-	})
-  .catch(console.log('theres an error when fetching data on load'))
-
-
+(function (window) {
+  
   renderTopInputSectionInDOM();
-  todoArray.map((task) => {
-    formatExistingJSON(task);
-  });
-});
+  async getTodoArray() {
+    const todos = await getTodoArray();
+    console.log('in async function getToDoArray',todos);
+  }
+
+
+
+})(window);
 
 // Create new task div function
 function renderTopInputSectionInDOM() {
@@ -140,7 +132,7 @@ function renderTopInputSectionInDOM() {
 }
 
 // rendering the Categories to the DOM
-const renderCategorySelection = () =>{
+function renderCategorySelection() {
 
 let dropdownUL = document.getElementById('dropdown-category-unordered-list');
 let dropdownButton = document.getElementById('set-category-dropdown-btn');
