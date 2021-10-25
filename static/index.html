@@ -21,20 +21,11 @@
                 <h4 class="card-title">To Do List</h4>
                 <div class="add-items d-flex">
                 </div>
-    
-                <div class="category-group">
-                  <h6 class="categories-sortby">Sort By:</h6>
-                  <div class="dropdown-btn-group">
-                    <select class="custom-select" type="button" id="defaultDropdown" data-bs-toggle="dropdown" data-bs-auto-close="true" aria-expanded="false">
-                      Select...
-                    </select>
-                  </div>
- 
-                    <!-- Button trigger modal -->
-                    <button type="button" id="edit-categories-btn" class="btn-sm btn-outline-primary" data-toggle="modal"
-                        data-target="#exampleModalLong">
-                        Edit Categories
-                    </button>
+
+                    <!-- Input Field & Submit todo Btn -->
+                    <div id="todo-submit" class="input-group mb-3">
+                      <input type="text" class="form-control new-todo-input" placeholder="Enter A New Todo" aria-label="Recipient's username" aria-describedby="button-addon2">
+                      <button class="btn btn-outline-primary add-new-todo-btn" type="button" id="button-addon2">Create Todo</button>
                     </div>
 
                     <!-- Incomplete List -->
