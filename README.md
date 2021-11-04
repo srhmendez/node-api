@@ -6,14 +6,21 @@
 
 ### To Do Endpoints
 
+
 #### Get a List of All Todos
 ``` GET /todos/ ```
+
+
 
 #### Add a To Do 
 ``` POST /todos/ ```
 
+
+
 #### Edit/Update a To Do 
 ``` PUT /todos/ ```
+
+
 
 #### Delete a To Do
 ``` DELETE /todos/:id ```
@@ -22,6 +29,8 @@
 |      :id        | number |
 |-----------------|--------|
 | Example:        |    4   |
+
+
 
 #### Get all To Dos for a Category
 ``` GET /todos/:category ```
@@ -32,8 +41,12 @@
 | Example:        | Health |
 
 
+
+
 #### Get Categories
 ``` GET /todos/category/all ```
+
+
 
 #### Edit/Update Categories
 ``` PUT /todos/category/edit/:category ```
@@ -43,8 +56,11 @@
 |-----------------|--------|
 | Example:        | Health |
 
+
+
 #### Delete Categories
 ``` GET /todos/category/delete/:category ```
+
 **Path Parameters**
 |    :category    | string |
 |-----------------|--------|
