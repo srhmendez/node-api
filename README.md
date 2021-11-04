@@ -19,7 +19,7 @@
 ``` DELETE /todos/:id ```
 
 **Path Parameters**
-| ##### :id       | number |
+|      :id        | number |
 |-----------------|--------|
 | Example:        |    4   |
 
@@ -27,7 +27,7 @@
 ``` GET /todos/:category ```
 
 **Path Parameters**
-| ##### :category | string |
+|    :category    | string |
 |-----------------|--------|
 | Example:        | Health |
 
@@ -39,14 +39,14 @@
 ``` PUT /todos/category/edit/:category ```
 
 **Path Parameters**
-| ##### :category | string |
+|    :category    | string |
 |-----------------|--------|
 | Example:        | Health |
 
 ##### Delete Categories
 ``` GET /todos/category/delete/:category ```
 **Path Parameters**
-| ##### :category | string |
+|    :category    | string |
 |-----------------|--------|
 | Example:        | Health |
 
