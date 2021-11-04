@@ -4,18 +4,18 @@
 ### API for To Do App Documentation:
 ```node /Routes/todos.js```
 
-#### To Do Endpoints
+### To Do Endpoints
 
-##### Get a List of All Todos
+#### Get a List of All Todos
 ``` GET /todos/ ```
 
-##### Add a To Do 
+#### Add a To Do 
 ``` POST /todos/ ```
 
-##### Edit/Update a To Do 
+#### Edit/Update a To Do 
 ``` PUT /todos/ ```
 
-##### Delete a To Do
+#### Delete a To Do
 ``` DELETE /todos/:id ```
 
 **Path Parameters**
@@ -23,7 +23,7 @@
 |-----------------|--------|
 | Example:        |    4   |
 
-##### Get all To Dos for a Category
+#### Get all To Dos for a Category
 ``` GET /todos/:category ```
 
 **Path Parameters**
@@ -32,10 +32,10 @@
 | Example:        | Health |
 
 
-##### Get Categories
+#### Get Categories
 ``` GET /todos/category/all ```
 
-##### Edit/Update Categories
+#### Edit/Update Categories
 ``` PUT /todos/category/edit/:category ```
 
 **Path Parameters**
@@ -43,7 +43,7 @@
 |-----------------|--------|
 | Example:        | Health |
 
-##### Delete Categories
+#### Delete Categories
 ``` GET /todos/category/delete/:category ```
 **Path Parameters**
 |    :category    | string |
