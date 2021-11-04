@@ -1,16 +1,55 @@
 # To Do Application
 ## Created by Team SKEMA 
 
-#### User stories for this project:
+### API for To Do App Documentation:
+```node /Routes/todos.js```
 
-- Users see todos
-- Users can add todos
-- Users can complete todos
-- Users can delete todos
-- Users can edit todos
-- User can view how many todos are left todo and how many are complete
-- Users can clear and/or delete complete todos
-- App must be well designed and provide an exceptional user experience
-- App must be done in Vanilla JS (No JS libraries or frameworks)
-- CSS libraries and frameworks are OK
-- Data storage (IE a Backend/database) is not required. Store the todos in a variable.
+#### To Do Endpoints
+
+##### Get a List of All Todos
+``` GET /todos/ ```
+
+##### Add a To Do 
+``` POST /todos/ ```
+
+##### Edit/Update a To Do 
+``` PUT /todos/ ```
+
+##### Delete a To Do
+``` DELETE /todos/:id ```
+
+**Path Parameters**
+| ##### :id       | number |
+|-----------------|--------|
+| Example:        |    4   |
+
+##### Get all To Dos for a Category
+``` GET /todos/:category ```
+
+**Path Parameters**
+| ##### :category | string |
+|-----------------|--------|
+| Example:        | Health |
+
+
+##### Get Categories
+``` GET /todos/category/all ```
+
+##### Edit/Update Categories
+``` PUT /todos/category/edit/:category ```
+
+**Path Parameters**
+| ##### :category | string |
+|-----------------|--------|
+| Example:        | Health |
+
+##### Delete Categories
+``` GET /todos/category/delete/:category ```
+**Path Parameters**
+| ##### :category | string |
+|-----------------|--------|
+| Example:        | Health |
+
+
+
+

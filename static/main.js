@@ -1,4 +1,3 @@
-const { get } = require("underscore");
 
 //Creating an Object so that the Data Can Persist
 let categoriesOBJ = {}
@@ -6,7 +5,7 @@ let todoArray;
 
 
 //get todos from static DB 
-async getTodoArray() {
+async function getTodoArray() {
 
   try {
     const response = await fetch('/todos/', {
@@ -48,7 +47,7 @@ function updateCategoriesArray (newCategory) {
 (function (window) {
   
   renderTopInputSectionInDOM();
-  async getTodoArray() {
+  async function getTodoArray() {
     const todos = await getTodoArray();
     console.log('in async function getToDoArray',todos);
   }
