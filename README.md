@@ -1,28 +1,28 @@
 # To Do Application
-## Created by Team SKEMA 
+Created by Team SKEMA 
 
-### API for To Do App Documentation:
+## API for To Do App Documentation:
 ```node /Routes/todos.js```
 
-### To Do Endpoints
+## To Do Endpoints
 
 
-#### Get a List of All Todos
+### Get a List of All Todos
 ``` GET /todos/ ```
 
 
 
-#### Add a To Do 
+### Add a To Do 
 ``` POST /todos/ ```
 
 
 
-#### Edit/Update a To Do 
+### Edit/Update a To Do 
 ``` PUT /todos/ ```
 
 
 
-#### Delete a To Do
+### Delete a To Do
 ``` DELETE /todos/:id ```
 
 **Path Parameters**
@@ -32,7 +32,7 @@
 
 
 
-#### Get all To Dos for a Category
+### Get all To Dos for a Category
 ``` GET /todos/:category ```
 
 **Path Parameters**
@@ -43,12 +43,12 @@
 
 
 
-#### Get Categories
+### Get Categories
 ``` GET /todos/category/all ```
 
 
 
-#### Edit/Update Categories
+### Edit/Update Categories
 ``` PUT /todos/category/edit/:category ```
 
 **Path Parameters**
@@ -58,7 +58,7 @@
 
 
 
-#### Delete Categories
+### Delete Categories
 ``` GET /todos/category/delete/:category ```
 
 **Path Parameters**
