@@ -6,15 +6,26 @@
   const createTodoInput = document.querySelector(".new-todo-input");
   const newTodoButton = document.querySelector(".add-new-todo-btn");
 
+
+
   //Event listeners Submitting New Todo : new Todo button & the enter key for new Todo
   newTodoButton.addEventListener("click", () => submitNewTodo(createTodoInput));
   createTodoInput.addEventListener("keydown", (event) => { if (event.keyCode === 13) submitNewTodo(event.value) });
+ 
 
   //Gets all Todos from the server on load
-  fetch("/todos/")
-    .then((res) => res.json())
-    .then(todoArr => todoArr.forEach(element => renderTodo(element)))
+  function getTodos() {
+    fetch("/todos/")
+      .then((res) => res.json())
+      .then(todoArr => todoArr.forEach(element => renderTodo(element)))
+      .then(() => {
+        let deletebtnList = document.querySelectorAll('.customdeletebutton');
+        let editbtnList = document.querySelectorAll('.customeditbutton')
 
+        deletebtnList.forEach(icon => icon.addEventListener("click", deleteTodo, false))
+        editbtnList.forEach(icon => icon.addEventListener("click", editTodo, false))
+      })
+    } getTodos();
   //render Todos in DOM
   function renderTodo(todo){
 
@@ -34,8 +45,8 @@
       </label>
 
     <div class="editicons">
-      <i onclick="editTodo(${todo})" class="remove mdi mdi-close-circle-outline fas fa-edit customeditbutton"></i>
-      <i onclick="deleteTodo(${todo})" class="remove mdi mdi-close-circle-outline customdeletebutton"></i>
+      <i class="remove mdi mdi-close-circle-outline fas fa-edit customeditbutton"></i>
+      <i class="remove mdi mdi-close-circle-outline customdeletebutton"></i>
     </div>
     </div>
     `;
@@ -66,14 +77,61 @@
     .then((todoArr) => todoArr.forEach(element => renderTodo(element)))
     .catch( () => console.log("error adding to DB"))
   }
+  
+  
+  function editTodo(event) {
+    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    let oldTodo = event.currentTarget.parentNode.parentNode;
+    let inputField = document.createElement('input');
+    let button = document.createElement('button');
+    let name;
 
-  function editTodo(id) {
-    let todoID = id;
-    console.log(todoID)
+    button.innerText = 'Update Todo';
+    button.classList.add('update-btn');
+
+    oldTodo.innerHTML = '';
+    oldTodo.appendChild(inputField);
+    oldTodo.appendChild(button);
+    inputField.focus();
+    inputField.select();
+    
+
+    //event listeners for update:  input & button 
+    inputField.addEventListener("input", button.click());
+    inputField.addEventListener("keyup", (event) => {if (event.code === 'Enter') {button.click()}})
+    button.addEventListener("click", (event) => {
+
+      name = event.currentTarget.parentNode.firstChild.value;
+      console.log({name})
+
+      fetch(`/todos/`+ id, {
+        method: "PUT",
+        headers: {'Content-Type': 'Content-type: application/json; charset=UTF-8'},
+        body: JSON.stringify({ name }) ,
+        
+      })
+        .then((res) => res.text())
+        .then(() => getTodos())
+        .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+
+    })
+    
+
   }
-  function deleteTodo(id) {
-    let todoID = id;
-    console.log(todoID)
+
+  function deleteTodo(event) {
+    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    
+    fetch(`/todos/` + id, {
+      method: 'DELETE', 
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      body: JSON.stringify({ id }),
+    })
+    .then((res) => res.text())
+    .then(() => window.location.reload())
+    .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+
+    console.log('deleting')
   }
 
 
