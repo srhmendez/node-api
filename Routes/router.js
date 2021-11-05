@@ -36,33 +36,16 @@ let todos = [
 
 
 //get all todos
-router.get('/', (req, res) => {
-    res.send(todos);
-})
+router.get('/', controller.find)
 
 //add a todo
 router.post('/', controller.create)
+
 //delete a todo
 router.delete('/:id', controller.delete)
+
 //update a todo
-router.put('/', (req, res) => {
-
-    updatedTodo = req.body;
-    let idToSearchFor = updatedTodo.id
-    let accumulator = 0;
-
-    todos.forEach((todo) => {
-        let id = todo.id;
-        if (idToSearchFor === id){
-            let index = todos.indexOf(todos[accumulator]);
-            todos[index] = updatedTodo
-        }
-        accumulator++
-    })
-
-    res.send(todos)
-
-})
+router.put('/', controller.update)
 
 // setting global array
 let catArray = []

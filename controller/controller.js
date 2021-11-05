@@ -8,9 +8,7 @@ exports.create = (req, res) => {
 }
 
 exports.find = (req, res) => {
-    const { category } = req.params;
-    let matchedCats = todos.filter((todo)=> (todo.category === category));
-    res.send(matchedCats);
+    res.send(todos);
 }
 
 exports.delete = (req, res) => {
