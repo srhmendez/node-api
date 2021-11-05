@@ -26,9 +26,9 @@ Created by Team SKEMA
 ``` DELETE /todos/:id ```
 
 **Path Parameters**
-|      :id        | number |
+|      :id        |  type  |
 |-----------------|--------|
-| Example:        |    4   |
+|        4        | number |
 
 
 
@@ -36,9 +36,9 @@ Created by Team SKEMA
 ``` GET /todos/:category ```
 
 **Path Parameters**
-|    :category    | string |
+|    :category    |  type  |
 |-----------------|--------|
-| Example:        | Health |
+|     Health      | String |
 
 
 
@@ -52,9 +52,9 @@ Created by Team SKEMA
 ``` PUT /todos/category/edit/:category ```
 
 **Path Parameters**
-|    :category    | string |
+|    :category    |  type  |
 |-----------------|--------|
-| Example:        | Health |
+|     Health      | String |
 
 
 
@@ -62,9 +62,9 @@ Created by Team SKEMA
 ``` GET /todos/category/delete/:category ```
 
 **Path Parameters**
-|    :category    | string |
+|    :category    |  type  |
 |-----------------|--------|
-| Example:        | Health |
+|     Health      | String |
 
 
 
