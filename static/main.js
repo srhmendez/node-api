@@ -43,8 +43,6 @@
   //render Todos in DOM todo parameter is an object
   async function renderTodo(todo){
 
-    console.log(todo)
-
     const todoIsComplete = todo.complete
     const taskList = todoIsComplete ? completedTodoList : incompleteTodoList;
     const checked = todoIsComplete ? "checked" : "";
