@@ -1,10 +1,13 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
-const todosRoutes = require ('./Routes/todos.js');
+const todosRoutes = require ('./Routes/router.js');
+
 
 
 const app = express();
-const PORT = 5000;
+const connectDB = require('./connection.js')
+
+
 
 
 
@@ -18,10 +21,12 @@ app.use('/todos/', todosRoutes);
 
 app.use(express.static('static'));
 
+connectDB();
+
 app.get('/', (req, res, next) => {
     res.send('Hello World :)')
 })
 
-app.listen(PORT, () => console.log(`YAY server running on port: http://localhost:${PORT}`));         
+app.listen(console.log(`YAY server running`));         
 
 module.exports = app;
