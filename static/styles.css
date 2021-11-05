@@ -1,3 +1,14 @@
+.update-btn{
+  border-radius: 8px;
+  color:black;
+  background-color: #acc6ff;
+  border: none;
+  font-size: .9rem;
+  padding:.4rem;
+}
+div.form-check{
+  margin:.4rem;
+}
 @media only screen and (max-width: 700px) {
   .mobile-sizing {
     padding: 2%;
@@ -210,7 +221,6 @@ p {
   .add-items input[type='text'] {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    width: 100%;
     background: transparent;
   }
 
@@ -260,7 +270,6 @@ p {
   .add-items input[type='text'] {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    width: 100%;
     background: transparent;
   }
 
@@ -395,10 +404,6 @@ p {
 
   .form-check-label {
     margin-bottom: 0;
-  }
-
-  .list-wrapper input[type='checkbox'] {
-    margin-right: 15px;
   }
 
   .form-check .form-check-label input {
@@ -778,9 +783,7 @@ h6.empty-modal-text {
   margin-bottom: 0;
 }
 
-.list-wrapper input[type='checkbox'] {
-  margin-right: 15px;
-}
+
 
 .form-check .form-check-label input {
   position: absolute;

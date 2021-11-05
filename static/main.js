@@ -7,35 +7,42 @@
   const completedTodoList = document.querySelector("#complete-ul");
   const createTodoInput = document.querySelector(".new-todo-input");
   const newTodoButton = document.querySelector(".add-new-todo-btn");
-  const toDoToggles = document.querySelector('input')
 
-  
 
   //Event listeners Submitting New Todo : new Todo button & the enter key for new Todo
   newTodoButton.addEventListener("click", () => submitNewTodo(createTodoInput));
   createTodoInput.addEventListener("keydown", (event) => { if (event.keyCode === 13) submitNewTodo(createTodoInput) });
   
-
   //Gets all Todos from the server on load
   function getTodos() {
-    incompleteTodoList.innerHTML = '';
-    completedTodoList.innerHTML = '';
-     fetch("/todos/")
+
+    fetch("/todos/")
       .then((res) => res.json())
       .then(todoArr => {
-        todoArr.forEach( async element => {
-          const createElement = await renderTodo(element)
-          document.getElementById(`${element.id}`).addEventListener("click", toggleComplete, false)
+        incompleteTodoList.innerHTML = '';
+        todoArr.forEach( async element => { 
+          await renderTodo(element);
+          document.getElementById(`${element.id}`).addEventListener("click", toggleComplete, false);
         })
+        let deletebtnList = document.querySelectorAll('.customdeletebutton');
+        let editbtnList = document.querySelectorAll('.customeditbutton');
+        toDoToggles = document.querySelectorAll('.js-tick');
+
+        deletebtnList.forEach(icon => icon.addEventListener("click", deleteTodo, false));
+        editbtnList.forEach(icon => icon.addEventListener("click", editTodo, false));
+        toDoToggles.forEach(inputToggle => inputToggle.addEventListener("click", toggleComplete, false));
         
-      });
+    })
   }
   getTodos();
+
 
   //render Todos in DOM todo parameter is an object
   async function renderTodo(todo){
 
-    const todoIsComplete = todo.complete || false;
+    console.log(todo)
+
+    const todoIsComplete = todo.complete
     const taskList = todoIsComplete ? completedTodoList : incompleteTodoList;
     const checked = todoIsComplete ? "checked" : "";
 
@@ -49,8 +56,8 @@
       </label>
 
     <div class="editicons">
-      <i type="edit" class="remove mdi mdi-close-circle-outline fas fa-edit customeditbutton"></i>
-      <i type="delete" delete${todo.id}" class="remove mdi mdi-close-circle-outline customdeletebutton"></i>
+      <i class="remove mdi mdi-close-circle-outline fas fa-edit customeditbutton"></i>
+      <i class="remove mdi mdi-close-circle-outline customdeletebutton"></i>
     </div>
     </div>
     `;
@@ -60,6 +67,7 @@
     
 
   }
+  
 
 
   //Event function that runs on newTodoButton & Enter Key Submit
@@ -93,27 +101,96 @@
     }
 
   }
+  
+  
+  function editTodo(event) {
+    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    let oldTodo = event.currentTarget.parentNode.parentNode;
+    let inputField = document.createElement('input');
+    let button = document.createElement('button');
+    let name;
 
-  function editTodo() {
-    console.log('edit')
+    button.innerText = 'Update Todo';
+    button.classList.add('update-btn');
+
+    oldTodo.innerHTML = '';
+    oldTodo.appendChild(inputField);
+    oldTodo.appendChild(button);
+    inputField.focus();
+    inputField.select();
+    
+
+    //event listeners for update:  input & button 
+    inputField.addEventListener("input", button.click());
+    inputField.addEventListener("keyup", (event) => {if (event.code === 'Enter') {button.click()}})
+    button.addEventListener("click", (event) => {
+
+      name = event.currentTarget.parentNode.firstChild.value;
+      console.log({name})
+
+      fetch(`/todos/`+ id, {
+        method: "PUT",
+        headers: {'Content-Type': 'Content-type: application/json; charset=UTF-8'},
+        body: JSON.stringify({ name }) ,
+        
+      })
+        .then((res) => res.text())
+        .then(() => getTodos())
+        .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+
+    })
+    
+
   }
-  function deleteTodo() {
-    console.log('delete')
+
+  function deleteTodo(event) {
+    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    
+    fetch(`/todos/` + id, {
+      method: 'DELETE', 
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      body: JSON.stringify({ id }),
+    })
+    .then((res) => res.text())
+    .then(() => window.location.reload())
+    .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+
+    console.log('deleting')
   }
 
   function toggleComplete(event){
-    console.log()
+    
     let id = Number(event.target.id)
     let name = event.currentTarget.parentNode.innerText
     let complete = event.target.checked;
+    if (complete == true) {
+      event.target.checked = false;
+      removeElement(event.target)
+    } else if (complete == false){
+      event.target.checked = true;
+      removeElement(event.target)
+    }
 
-    fetch('/todos/', {
+    let category = "General";
+  
+
+    fetch('/todos/' + id, {
       method: 'PUT', 
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
-      body: JSON.stringify({ id, name, complete }),
+      body: JSON.stringify({ id, name, complete, category }),
     })
-    .then(res => res.json())
+    .then((res) => res.text())
     .then(getTodos())
+    
+    
+    
+  }
+
+  function removeElement(elementToRemove) {
+    let parent = elementToRemove.parentNode.parentNode.parentNode;
+    let child = elementToRemove.parentNode.parentNode;
+
+    parent.removeChild(child);
   }
 
 })(window);
