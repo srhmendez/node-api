@@ -19,7 +19,7 @@
     fetch("/todos/")
       .then((res) => res.json())
       .then(todoArr => {
-        incompleteTodoList.innerHTML = '';
+
         todoArr.forEach( async element => { 
           await renderTodo(element);
           document.getElementById(`${element.id}`).addEventListener("click", toggleComplete, false);
@@ -104,11 +104,16 @@
   
   
   function editTodo(event) {
-    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    let todoDOMElement = event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1];
+    let id = Number(todoDOMElement.id);
     let oldTodo = event.currentTarget.parentNode.parentNode;
     let inputField = document.createElement('input');
     let button = document.createElement('button');
     let name;
+    
+    let oldDOMElement = todoDOMElement.parentNode.firstChild.nextSibling;
+    let complete = oldDOMElement.checked;
+    let category = "General"
 
     button.innerText = 'Update Todo';
     button.classList.add('update-btn');
@@ -118,6 +123,7 @@
     oldTodo.appendChild(button);
     inputField.focus();
     inputField.select();
+
     
 
     //event listeners for update:  input & button 
@@ -126,22 +132,24 @@
     button.addEventListener("click", (event) => {
 
       name = event.currentTarget.parentNode.firstChild.value;
-      console.log({name})
 
-      fetch(`/todos/`+ id, {
-        method: "PUT",
-        headers: {'Content-Type': 'Content-type: application/json; charset=UTF-8'},
-        body: JSON.stringify({ name }) ,
-        
+      console.log({ id, name, complete, category})
+
+      fetch('/todos/', {
+        method: 'PUT', 
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: JSON.stringify({ id, name, complete, category }),
       })
-        .then((res) => res.text())
-        .then(() => getTodos())
-        .catch((error) => console.error(`whoopdeee doo there's an error`, error))
-
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        incompleteTodoList.innerHTML = "";
+        completedTodoList.innerHTML = '';
+        getTodos();
+      })
     
 
-  }
+  })}
 
   function deleteTodo(event) {
     let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
@@ -163,24 +171,23 @@
     let id = Number(event.target.id)
     let name = event.currentTarget.parentNode.innerText
     let complete = event.target.checked;
-    if (complete == true) {
-      event.target.checked = false;
-      removeElement(event.target)
-    } else if (complete == false){
-      event.target.checked = true;
-      removeElement(event.target)
-    }
-
-    let category = "General";
+    let category = "General"
+    
   
 
-    fetch('/todos/' + id, {
+    fetch('/todos/', {
       method: 'PUT', 
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: JSON.stringify({ id, name, complete, category }),
     })
-    .then((res) => res.text())
-    .then(getTodos())
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      incompleteTodoList.innerHTML = "";
+      completedTodoList.innerHTML = '';
+      getTodos();
+    })
+
     
     
     

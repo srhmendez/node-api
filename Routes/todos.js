@@ -1,5 +1,5 @@
 const express = require ('express');
-const { keys } = require('underscore');
+const { keys, indexOf, findIndex } = require('underscore');
 const router = express.Router();
 const _ = require('underscore');
 
@@ -58,22 +58,23 @@ router.delete('/:id', (req, res) => {
     res.send(`user with the id: ${id} was deleted from Database`)  
 })
 //update a todo
-router.put('/:id', (req, res) => {
-    let updatedTodo = req.body;
-    
-    const { id } = req.params;
+router.put('/', (req, res) => {
 
-    let indexOfOldTodo = todos.reduce((prev,curr,acc) => {
-        console.log(curr.id)
-        if (curr.id == id) {
-            console.log(acc, 'accumulator')
-            return acc
+    updatedTodo = req.body;
+    let idToSearchFor = updatedTodo.id
+    let accumulator = 0;
+
+    todos.forEach((todo) => {
+        let id = todo.id;
+        if (idToSearchFor === id){
+            let index = todos.indexOf(todos[accumulator]);
+            todos[index] = updatedTodo
         }
-        return acc
-    });
-    
-    todos[indexOfOldTodo -1] = updatedTodo
+        accumulator++
+    })
+
     res.send(todos)
+
 })
 
 // setting global array
