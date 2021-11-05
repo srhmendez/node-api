@@ -7,12 +7,14 @@
   const completedTodoList = document.querySelector("#complete-ul");
   const createTodoInput = document.querySelector(".new-todo-input");
   const newTodoButton = document.querySelector(".add-new-todo-btn");
-
+  const deleteAllButton = document.getElementById('delete-all-btn');
+  
 
   //Event listeners Submitting New Todo : new Todo button & the enter key for new Todo
   newTodoButton.addEventListener("click", () => submitNewTodo(createTodoInput));
   createTodoInput.addEventListener("keydown", (event) => { if (event.keyCode === 13) submitNewTodo(createTodoInput) });
-  
+  deleteAllButton.addEventListener("click", (event) => deleteAllCompletedTasks(event));
+
   //Gets all Todos from the server on load
   function getTodos() {
 
@@ -102,10 +104,11 @@
         incompleteTodoList.innerHTML = "";
         completedTodoList.innerHTML = '';
         getTodos();
+
       })
       .catch( () => console.log("error adding to DB"))
     }
-
+    createTodoInput.value = '';
   }
   
   
@@ -195,6 +198,38 @@
     })
   }
 
+  function deleteAllCompletedTasks(event) {
+    let completedTasksDOM = document.getElementById('complete-ul')
+    completedTasksDOM.innerHTML = '';
+
+    fetch('/todos/', {
+      method: 'GET', 
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data)
+      data.forEach((todo) => {
+        let id = todo.id;
+        if (todo.complete === true) {
+          fetch(`/todos/` + id, {
+            method: 'DELETE', 
+            headers: {'Content-Type': 'application/json; charset=UTF-8'},
+            body: JSON.stringify({ id }),
+          })
+          .then((res) => res.text())
+          .then(() => window.location.reload())
+          .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+      
+          console.log('deleting')
+        }
+        console.log('data after delete', data)
+      })
+    })
+
+  }
+
 
 
 })(window);
+
