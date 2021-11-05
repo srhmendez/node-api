@@ -1,4 +1,5 @@
 const express = require ('express');
+const { keys } = require('underscore');
 const router = express.Router();
 const _ = require('underscore');
 
@@ -57,14 +58,21 @@ router.delete('/:id', (req, res) => {
     res.send(`user with the id: ${id} was deleted from Database`)  
 })
 //update a todo
-router.put('/', (req, res) => {
-    let editedTodo = req.body;
-    const id = editedTodo.id;
-    let indexOfTodo = todos.reduce((prev,curr,acc) => { if (curr.id === id) {
+router.put('/:id', (req, res) => {
+    let updatedTodo = req.body;
+    
+    const { id } = req.params;
+
+    let indexOfOldTodo = todos.reduce((prev,curr,acc) => {
+        console.log(curr.id)
+        if (curr.id == id) {
+            console.log(acc, 'accumulator')
+            return acc
+        }
         return acc
-    }});
-    todos.splice(indexOfTodo, 1)
-    todos.push(editedTodo) 
+    });
+    
+    todos[indexOfOldTodo -1] = updatedTodo
     res.send(todos)
 })
 
