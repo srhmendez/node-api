@@ -328,7 +328,6 @@ p {
   .list-wrapper input[type='checkbox'] {
     margin: 0;
     padding: 0%;
-    width: 100%;
     height: auto;
   }
 
@@ -702,7 +701,6 @@ h6.empty-modal-text {
 .list-wrapper input[type='checkbox'] {
   margin: 0;
   padding: 0%;
-  width: 100%;
   height: auto;
 }
 
@@ -1030,7 +1028,6 @@ div.completed-section {
   border: none;
   display: grid;
   grid-template-columns: auto auto;
-  width: 100%;
   height: auto;
   padding: 0;
 }
