@@ -34,6 +34,7 @@ let todos = [
 
 //all routes are starting with /todos
 
+/// Tutorial I'm using: https://www.youtube.com/watch?v=W1Kttu53qTg TIMESTAMP: 1:42:23
 
 //get all todos
 router.get('/', controller.find)
@@ -46,6 +47,10 @@ router.delete('/:id', controller.delete)
 
 //update a todo
 router.put('/', controller.update)
+
+
+
+
 
 // setting global array
 let catArray = []
