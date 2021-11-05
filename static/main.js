@@ -16,10 +16,11 @@
   //Gets all Todos from the server on load
   function getTodos() {
 
+    let todoArray;
+
     fetch("/todos/")
       .then((res) => res.json())
       .then(todoArr => {
-
         todoArr.forEach( async element => { 
           await renderTodo(element);
           document.getElementById(`${element.id}`).addEventListener("click", toggleComplete, false);
@@ -31,7 +32,7 @@
         deletebtnList.forEach(icon => icon.addEventListener("click", deleteTodo, false));
         editbtnList.forEach(icon => icon.addEventListener("click", editTodo, false));
         toDoToggles.forEach(inputToggle => inputToggle.addEventListener("click", toggleComplete, false));
-        
+        todoArray = todoArr;
     })
   }
   getTodos();
@@ -93,10 +94,15 @@
       fetch('/todos/', {
         method: 'POST', 
         headers: {'Content-Type': 'application/json; charset=UTF-8'},
-        body: JSON.stringify({ newTodo }),
+        body: JSON.stringify(newTodoObject),
       })
       .then((res) => res.json())
-      .then(() => renderTodo(newTodoObject))
+      .then((data) =>{
+        console.log(data)
+        incompleteTodoList.innerHTML = "";
+        completedTodoList.innerHTML = '';
+        getTodos();
+      })
       .catch( () => console.log("error adding to DB"))
     }
 
@@ -187,17 +193,8 @@
       completedTodoList.innerHTML = '';
       getTodos();
     })
-
-    
-    
-    
   }
 
-  function removeElement(elementToRemove) {
-    let parent = elementToRemove.parentNode.parentNode.parentNode;
-    let child = elementToRemove.parentNode.parentNode;
 
-    parent.removeChild(child);
-  }
 
 })(window);
