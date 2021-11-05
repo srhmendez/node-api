@@ -140,21 +140,25 @@
 
       name = event.currentTarget.parentNode.firstChild.value;
 
-      console.log({ id, name, complete, category})
+      if (name === ''){
+        alert('A Todo Cannot Be Blank, Please Try Again.')
+      } else {
 
-      fetch('/todos/', {
-        method: 'PUT', 
-        headers: {'Content-Type': 'application/json; charset=UTF-8'},
-        body: JSON.stringify({ id, name, complete, category }),
-      })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        incompleteTodoList.innerHTML = "";
-        completedTodoList.innerHTML = '';
-        getTodos();
-      })
-    
+        console.log({ id, name, complete, category})
+
+        fetch('/todos/', {
+          method: 'PUT', 
+          headers: {'Content-Type': 'application/json; charset=UTF-8'},
+          body: JSON.stringify({ id, name, complete, category }),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          incompleteTodoList.innerHTML = "";
+          completedTodoList.innerHTML = '';
+          getTodos();
+        })
+      } 
 
   })}
 
