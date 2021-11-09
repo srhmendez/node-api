@@ -1,4 +1,4 @@
-let tododb = require('../model/model');
+let todos = require('../model/model');
 
 
 exports.create = (req, res) => {

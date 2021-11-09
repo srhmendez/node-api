@@ -1,6 +1,7 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
-const todosRoutes = require ('./Routes/router.js');
+const todosRoutes = require ('./Routes/router');
+const dotenv = require('dotenv').config({ path: '/config.env' })
 
 
 
