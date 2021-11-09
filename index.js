@@ -5,7 +5,7 @@ const todosRoutes = require ('./Routes/router.js');
 
 
 const app = express();
-const connectDB = require('./connection.js')
+const connectDB = require('./connection')
 
 
 
