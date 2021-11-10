@@ -4,7 +4,7 @@
   "description": "#### User stories for this project:",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,6 @@
     "underscore": "^1.13.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.14"
+    "nodemon": "^2.0.15"
   }
 }
