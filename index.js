@@ -1,12 +1,13 @@
 const express = require ('express');
 const bodyParser = require ('body-parser');
 const todosRoutes = require ('./Routes/router');
-const dotenv = require('dotenv').config({ path: '/config.env' })
+require('dotenv').config({ path: '/config.env' })
 
 
 
 const app = express();
-const connectDB = require('./connection')
+const connectDB = require('./connection/connection')
+const PORT = process.env.PORT || 8080;
 
 
 
@@ -28,6 +29,6 @@ app.get('/', (req, res, next) => {
     res.send('Hello World :)')
 })
 
-app.listen(console.log(`YAY server running`));         
+app.listen(PORT, () => console.log(`YAY server running on ${PORT}`));         
 
 module.exports = app;

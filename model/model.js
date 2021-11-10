@@ -1,20 +1,16 @@
 const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema({
-    id : {
-        type: Number,
-        required: true,
-        unique: true
-    },
-    name : {
+
+    "name" : {
         type: String,
         required: true
     },
-    complete : {
+    "complete" : {
         type : Boolean,
         required: true,
     },
-    category : {
+    "category" : {
         type : String,
         required: true,
     }
