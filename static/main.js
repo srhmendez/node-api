@@ -18,14 +18,15 @@
   //Gets all Todos from the server on load
   function getTodos() {
 
-    let todoArray;
 
     fetch("/todos/")
       .then((res) => res.json())
       .then(todoArr => {
         todoArr.forEach( async element => { 
+          console.log(element)
           await renderTodo(element);
-          document.getElementById(`${element.id}`).addEventListener("click", toggleComplete, false);
+          let id = element._id;
+          document.getElementById(`${id}`).addEventListener("click", toggleComplete, false);
         })
         let deletebtnList = document.querySelectorAll('.customdeletebutton');
         let editbtnList = document.querySelectorAll('.customeditbutton');
@@ -33,8 +34,7 @@
 
         deletebtnList.forEach(icon => icon.addEventListener("click", deleteTodo, false));
         editbtnList.forEach(icon => icon.addEventListener("click", editTodo, false));
-        toDoToggles.forEach(inputToggle => inputToggle.addEventListener("click", toggleComplete, false));
-        todoArray = todoArr;
+        toDoToggles.forEach(inputToggle => inputToggle.addEventListener("onChange", toggleComplete, false));
     })
   }
   getTodos();
@@ -46,11 +46,12 @@
     const todoIsComplete = todo.complete
     const taskList = todoIsComplete ? completedTodoList : incompleteTodoList;
     const checked = todoIsComplete ? "checked" : "";
+   
 
     let todoItemHTML = 
     `<div class="form-check">
       <label class="form-check-label">
-        <input id="${todo.id}" class="js-tick" type="checkbox" ${checked}/>
+        <input id="${todo._id}" class="js-tick" type="checkbox" ${checked}/>
         ${todo.name}
         </input>
         <p class="input-helper" id="incomplete-list"></p>
@@ -65,8 +66,6 @@
       
     //Add todo to DOM in either the complete or incomplete Task List Depending on variable value
     taskList.insertAdjacentHTML("afterbegin", todoItemHTML)
-    
-
   }
   
 
@@ -75,12 +74,13 @@
   function submitNewTodo(newTodoInput) {
     
     const newTodo = newTodoInput.value;
-    console.log(newTodo)
 
-    const id = Math.floor(Math.random() * 800);
+
+    let randomId = Math.floor(Math.random() * 2004321);
+
 
     const newTodoObject = {
-      "id": id,
+      "id": randomId,
       "name": newTodo,
       "complete": false,
       "category": "General"
@@ -90,6 +90,7 @@
     if(newTodo === ''){
       alert('Uh oh! Todo\'s cannot be blank. Please try again.')
     } else if (newTodo) {
+      
       //only runs if todo is not blank string
       fetch('/todos/', {
         method: 'POST', 
@@ -112,7 +113,9 @@
   
   function editTodo(event) {
     let todoDOMElement = event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1];
-    let id = Number(todoDOMElement.id);
+    console.log(todoDOMElement)
+    let id = todoDOMElement.id;
+    console.log(id)
     let oldTodo = event.currentTarget.parentNode.parentNode;
     let inputField = document.createElement('input');
     let button = document.createElement('button');
@@ -144,16 +147,13 @@
         alert('A Todo Cannot Be Blank, Please Try Again.')
       } else {
 
-        console.log({ id, name, complete, category})
-
-        fetch('/todos/', {
+        fetch(`/todos/${id}`, {
           method: 'PUT', 
           headers: {'Content-Type': 'application/json; charset=UTF-8'},
           body: JSON.stringify({ id, name, complete, category }),
         })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
           incompleteTodoList.innerHTML = "";
           completedTodoList.innerHTML = '';
           getTodos();
@@ -163,7 +163,8 @@
   })}
 
   function deleteTodo(event) {
-    let id = Number(event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id);
+    let id = event.currentTarget.parentNode.parentNode.childNodes[1].childNodes[1].id;
+    console.log(id)
     
     fetch(`/todos/` + id, {
       method: 'DELETE', 
@@ -179,14 +180,15 @@
 
   function toggleComplete(event){
     
-    let id = Number(event.target.id)
+    console.log('toggle')
+    let id = event.target.id
     let name = event.currentTarget.parentNode.innerText
     let complete = event.target.checked;
     let category = "General"
     
   
 
-    fetch('/todos/', {
+    fetch(`/todos/${id}`, {
       method: 'PUT', 
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: JSON.stringify({ id, name, complete, category }),
@@ -202,32 +204,21 @@
 
   function deleteAllCompletedTasks(event) {
     let completedTasksDOM = document.getElementById('complete-ul')
-    completedTasksDOM.innerHTML = '';
 
-    fetch('/todos/', {
-      method: 'GET', 
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
-    })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data)
-      data.forEach((todo) => {
-        let id = todo.id;
-        if (todo.complete === true) {
-          fetch(`/todos/` + id, {
-            method: 'DELETE', 
-            headers: {'Content-Type': 'application/json; charset=UTF-8'},
-            body: JSON.stringify({ id }),
-          })
-          .then((res) => res.text())
-          .then(() => window.location.reload())
-          .catch((error) => console.error(`whoopdeee doo there's an error`, error))
-      
-          console.log('deleting')
-        }
-        console.log('data after delete', data)
-      })
-    })
+    let tasksToRemoveDiv = completedTasksDOM.children
+
+    console.log(tasksToRemoveDiv.length)
+
+    let i = 0;
+    while (i < tasksToRemoveDiv.length){
+      let id = tasksToRemoveDiv[i].childNodes[1].childNodes[1].id;
+      console.log(id)
+      i++;
+    }
+    //completedTasksDOM.innerHTML = '';
+
+    
+
 
   }
 
