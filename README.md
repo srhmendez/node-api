@@ -18,8 +18,10 @@ Created by Team SKEMA
 
 
 ### Edit/Update a To Do 
-``` PUT /todos/ ```
-
+``` PUT /todos/:id ```
+|      :id        |  type  |
+|-----------------|--------|
+|        4        | number |
 
 
 ### Delete a To Do
@@ -29,43 +31,6 @@ Created by Team SKEMA
 |      :id        |  type  |
 |-----------------|--------|
 |        4        | number |
-
-
-
-### Get all To Dos for a Category
-``` GET /todos/:category ```
-
-**Path Parameters**
-|    :category    |  type  |
-|-----------------|--------|
-|     Health      | String |
-
-
-
-
-### Get Categories
-``` GET /todos/category/all ```
-
-
-
-### Edit/Update Categories
-``` PUT /todos/category/edit/:category ```
-
-**Path Parameters**
-|    :category    |  type  |
-|-----------------|--------|
-|     Health      | String |
-
-
-
-### Delete Categories
-``` GET /todos/category/delete/:category ```
-
-**Path Parameters**
-|    :category    |  type  |
-|-----------------|--------|
-|     Health      | String |
-
 
 
 
