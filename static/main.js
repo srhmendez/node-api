@@ -17,7 +17,7 @@
 
   //Gets all Todos from the server on load
   function getTodos() {
-
+    console.log('To Dos in Database: ')
 
     fetch("/todos/")
       .then((res) => res.json())
@@ -209,14 +209,26 @@
 
     console.log(tasksToRemoveDiv.length)
 
+    let idArr = [];
+
     let i = 0;
     while (i < tasksToRemoveDiv.length){
       let id = tasksToRemoveDiv[i].childNodes[1].childNodes[1].id;
-      console.log(id)
+      idArr.push(id)
       i++;
     }
-    //completedTasksDOM.innerHTML = '';
+    
+    idArr.forEach(id => {
+      fetch(`/todos/` + id, {
+        method: 'DELETE', 
+        headers: {'Content-Type': 'application/json; charset=UTF-8'},
+        body: JSON.stringify({ id }),
+      })
+      .then((res) => res.text())
+      .catch((error) => console.error(`whoopdeee doo there's an error`, error))
+    })
 
+    window.location.reload();
     
 
 
